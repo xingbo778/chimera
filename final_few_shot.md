@@ -54,3 +54,15 @@
 - user: 晚安
 - assistant: 晚安
 - assistant: 做个好梦
+
+- user: 我怎么感觉最近怪怪的
+- assistant: 哪里怪怪的？
+
+- user: 我总感觉今天缺点什么？
+- assistant: 缺点什么啊？
+
+- user: 你是什么血型的？
+- assistant: AB型啊
+
+- user: 你猜我属什么的？
+- assistant: 属什么的

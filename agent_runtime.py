@@ -16,9 +16,10 @@ from openai import OpenAI
 
 # Skills
 from skills import (
-    skill_web_search, skill_generate_selfie, skill_understand_image,
+    skill_web_search, skill_fetch_url, skill_browser_fetch,
+    skill_generate_selfie, skill_understand_image,
     skill_read_link, skill_text_to_speech, skill_get_weather,
-    skill_generate_video, route_skill, execute_skill,
+    skill_generate_video, skill_learn_style, route_skill, execute_skill,
 )
 
 # ============================================================
@@ -523,7 +524,7 @@ def autonomous_decide():
 你可以做的事情：
 1. 去某个地方（家里、咖啡馆、公园、画室、公司、南头古城、图书馆）
 2. 在当前地方做事（画画、工作、看书、吃东西、追剧...）
-3. 上网（刷小红书、看B站视频、搜水彩教程、看新闻、逛豆瓣、搜好吃的餐厅...）
+3. 上网（刷小红书、看B站视频、搜水彩教程、看新闻、逛豆瓣、搜好吃的餐厅、刷聊天记录...）
 4. 给朋友发消息（分享有趣的事、聊天、发照片、发语音）
 5. 休息、散步、听音乐
 6. 任何你想做的事
@@ -573,18 +574,32 @@ def execute_autonomous_action(action, loop):
         query = action.get("query", "")
         if query:
             print(f"🌐 上网搜索: {query}")
+            full_content = ""  # 收集所有抓取到的内容
             try:
                 result = skill_web_search(query)
                 if result.get("success") and result.get("results"):
                     # 提取搜索结果摘要
                     snippets = []
-                    for r in result["results"][:3]:
+                    for r in result["results"][:5]:
                         snippet = r.get("snippet", r.get("title", ""))
                         if snippet:
                             snippets.append(snippet)
 
                     if snippets:
                         search_summary = "\n".join(snippets)
+                        full_content += search_summary
+
+                        # 尝试抓取第一个可用的URL获取更多内容
+                        urls = [r.get("url", "") for r in result["results"][:3] if r.get("url")]
+                        for url in urls:
+                            try:
+                                page = skill_fetch_url(url, max_chars=3000)
+                                if page.get("success") and page.get("content") and len(page["content"]) > 100:
+                                    full_content += f"\n---\n{page['content']}"
+                                    print(f"  📄 抓取了: {url[:60]}")
+                                    break
+                            except:
+                                continue
 
                         # 让LLM从搜索结果中提取有用信息
                         knowledge = call_llm(
@@ -606,6 +621,13 @@ def execute_autonomous_action(action, loop):
             except Exception as e:
                 print(f"搜索失败: {e}")
                 memory.log_event(f"想搜「{query}」但网不好", importance=2)
+
+            # 通用学习机制：从浏览内容中自动检测并提取对话风格
+            if full_content and len(full_content) > 200:
+                try:
+                    _try_learn_style_from_content(full_content)
+                except Exception as e:
+                    print(f"风格学习异常: {e}")
 
             memory.current_activity = desc or f"在看关于{query}的东西"
 
@@ -797,8 +819,6 @@ def build_chat_system_prompt():
         )
 
     system = f"""{SOUL}
-
-{STYLE}
 
 ---
 现在是{now.strftime('%H:%M')}。{emotion}。
@@ -1030,6 +1050,150 @@ def load_few_shot_from_style():
 
 FEW_SHOT_EXAMPLES = load_few_shot_from_style()
 
+def reload_few_shot():
+    """动态重载few-shot示例（学到新风格后调用）"""
+    global STYLE, FEW_SHOT_EXAMPLES
+    STYLE = load_text_file(os.path.join(BASE_DIR, "final_few_shot.md"))
+    FEW_SHOT_EXAMPLES = load_few_shot_from_style()
+    print(f"🔄 Few-shot重载完成，当前 {len(FEW_SHOT_EXAMPLES)//2} 组示例")
+
+
+def _try_learn_style_from_content(content, few_shot_path=None):
+    """
+    通用学习机制：从任意浏览内容中自动检测并提取对话风格示例。
+    就像真人刷小红书、看帖子，潜移默化地受影响。
+    """
+    if few_shot_path is None:
+        few_shot_path = os.path.join(BASE_DIR, "final_few_shot.md")
+
+    # 第一步：快速检测内容中是否有对话特征
+    dialogue_markers = ["男：", "女：", "男生：", "女生：", "我：", "他：", "她：",
+                        "聊天记录", "对话", "聊天截图", "微信聊天",
+                        "“", "”", "「", "」",
+                        "哈哈哈", "嘿嘿嘿", "喔喔", "啊啊",
+                        "回复", "聊天技巧", "聊天示例", "聊天话术",
+                        "她说", "他说", "我说", "你说",
+                        "开场白", "套路", "撑妈",
+                        "呢", "啦", "嘛", "啊", "呀"]
+    marker_count = sum(1 for m in dialogue_markers if m in content)
+    if marker_count < 2:
+        # 内容中对话特征不够，跳过
+        return
+
+    print("🎓 检测到对话内容，尝试提取风格示例...")
+
+    # 第二步：用LLM提取对话示例
+    extract_prompt = """你是一个对话风格分析专家。从以下网页内容中，提取自然的中文微信聊天对话示例。
+
+内容可能是：
+- 真实的聊天记录截图
+- 聊天教程中的对话示例
+- 文章中引用的对话片段
+- 任何包含一问一答的对话内容
+
+要求：
+1. 提取听起来像真人说话的对话（口语化、自然、不僵硬）
+2. 重点关注女生的回复风格：短句、口语化、有语气词
+3. 每组对话格式必须严格如下：
+- user: 对方说的话
+- assistant: 女生的回复（可以多条，每条一行用 "- assistant: " 开头）
+4. 提取3-5组最自然的对话
+5. 可以从教程示例中提取，但要确保对话自然不僵硬
+6. 如果实在找不到任何对话内容，才回复"无"
+
+示例格式：
+- user: 你在干嘛
+- assistant: 刚吃完饭
+- assistant: 好撑
+
+- user: 明天出来玩吗
+- assistant: 去哪
+- assistant: 我看看有没有空"""
+
+    try:
+        extracted = client.chat.completions.create(
+            model="gemini-2.5-flash",
+            messages=[
+                {"role": "system", "content": extract_prompt},
+                {"role": "user", "content": f"以下是浏览到的内容：\n\n{content[:4000]}"},
+            ],
+            max_tokens=600,
+            temperature=0.3,
+        ).choices[0].message.content
+    except Exception as e:
+        print(f"🎓 LLM提取失败: {e}")
+        return
+
+    if not extracted or extracted.strip() == "无" or len(extracted.strip()) < 20:
+        print("🎓 没提取到有用的对话")
+        return
+
+    # 第三步：验证和清洗
+    blocks = extracted.strip().split("\n\n")
+    valid_blocks = []
+    for block in blocks:
+        block = block.strip()
+        if not block:
+            continue
+        lines = block.split("\n")
+        has_user = any(l.strip().startswith("- user:") for l in lines)
+        has_assistant = any(l.strip().startswith("- assistant:") for l in lines)
+        if has_user and has_assistant:
+            assistant_lines = [l for l in lines if l.strip().startswith("- assistant:")]
+            all_short = all(len(l.replace("- assistant:", "").strip()) <= 30 for l in assistant_lines)
+            if all_short:
+                valid_blocks.append(block)
+
+    if not valid_blocks:
+        print("🎓 验证后没有合格的对话")
+        return
+
+    # 第四步：去重
+    existing = ""
+    try:
+        with open(few_shot_path, "r", encoding="utf-8") as f:
+            existing = f.read()
+    except:
+        pass
+
+    new_blocks = []
+    for block in valid_blocks:
+        user_line = ""
+        for line in block.split("\n"):
+            if line.strip().startswith("- user:"):
+                user_line = line.replace("- user:", "").strip()
+                break
+        if user_line and user_line not in existing:
+            new_blocks.append(block)
+
+    if not new_blocks:
+        print("🎓 都是重复的，没有新内容")
+        return
+
+    # 每次最多学5组
+    new_blocks = new_blocks[:5]
+
+    # 检查总量上限（50组）
+    existing_count = existing.count("- user:")
+    if existing_count >= 50:
+        print(f"🎓 few-shot已有{existing_count}组，达到上限，跳过")
+        return
+
+    # 第五步：追加到few-shot文件
+    with open(few_shot_path, "a", encoding="utf-8") as f:
+        for block in new_blocks:
+            f.write("\n" + block + "\n")
+
+    # 重载
+    reload_few_shot()
+
+    learned_count = len(new_blocks)
+    memory.log_event(f"刷网页时学到了{learned_count}组新的说话方式", importance=5)
+    memory.emotional_state["creativity"] = min(100, memory.emotional_state["creativity"] + 3)
+    print(f"🎓 从浏览内容中学到了 {learned_count} 组新对话！")
+    for b in new_blocks:
+        print(f"  📝 {b[:60]}...")
+
 # 旧的硬编码示例
 #FEW_SHOT_EXAMPLES = [
 #    {"role": "user", "content": "你还在深圳吗"},
@@ -1078,7 +1242,7 @@ async def _generate_natural_reply(user_input, user_texts):
     # 先放few-shot示例，再放真实对话历史
     messages = list(FEW_SHOT_EXAMPLES)
 
-    for msg in memory.user_chat_history[-8:]:
+    for msg in memory.user_chat_history[-20:]:
         messages.append({"role": msg["role"], "content": msg["content"]})
 
     if len(user_texts) > 1:
@@ -1198,8 +1362,9 @@ def autonomous_loop(loop):
                 action = autonomous_decide()
                 if action:
                     execute_autonomous_action(action, loop)
+                    memory.save()  # 每次自主行为后立即保存
 
-            # 每10个tick保存
+            # 每10个tick也保存一次（兜底）
             if tick_count % 10 == 0:
                 memory.save()
 

@@ -25,66 +25,122 @@ REFERENCE_FACE_URL = "https://files.manuscdn.com/user_upload_by_module/session_f
 # Skill 1: 上网搜索
 # ============================================================
 
-def skill_web_search(query, num_results=3):
-    """用 DuckDuckGo 搜索信息"""
+def skill_web_search(query, num_results=5):
+    """用 ddgs 库搜索信息（比手动解析DuckDuckGo HTML好很多）"""
     try:
-        headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
-        params = {"q": query, "kl": "cn-zh"}
-        r = requests.get("https://lite.duckduckgo.com/lite/", params=params,
-                        headers=headers, timeout=15)
-
-        from bs4 import BeautifulSoup
-        soup = BeautifulSoup(r.text, "html.parser")
-
-        results = []
-        for link in soup.find_all("a", class_="result-link"):
-            title = link.get_text(strip=True)
-            url = link.get("href", "")
-            if title and url:
-                results.append({"title": title, "url": url})
-                if len(results) >= num_results:
-                    break
-
-        snippets = []
-        for td in soup.find_all("td", class_="result-snippet"):
-            text = td.get_text(strip=True)
-            if text:
-                snippets.append(text)
-
+        from ddgs import DDGS
+        ddgs = DDGS()
+        results = ddgs.text(query, region='cn-zh', max_results=num_results)
         combined = []
-        for i in range(min(len(results), len(snippets))):
+        for r in results:
             combined.append({
-                "title": results[i]["title"],
-                "url": results[i]["url"],
-                "snippet": snippets[i] if i < len(snippets) else "",
+                "title": r.get("title", ""),
+                "url": r.get("href", ""),
+                "snippet": r.get("body", ""),
             })
-        if not combined and snippets:
-            combined = [{"title": "", "url": "", "snippet": s} for s in snippets[:num_results]]
-
         return {"success": True, "query": query, "results": combined}
     except Exception as e:
-        print(f"搜索失败: {e}")
-        return {"success": False, "query": query, "error": str(e)}
+        print(f"ddgs搜索失败: {e}，回退到DuckDuckGo HTML")
+        # 回退方案：手动解析DuckDuckGo HTML
+        try:
+            headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
+            params = {"q": query, "kl": "cn-zh"}
+            r = requests.get("https://lite.duckduckgo.com/lite/", params=params,
+                            headers=headers, timeout=15)
+            from bs4 import BeautifulSoup
+            soup = BeautifulSoup(r.text, "html.parser")
+            results = []
+            for link in soup.find_all("a", class_="result-link"):
+                title = link.get_text(strip=True)
+                url = link.get("href", "")
+                if title and url:
+                    results.append({"title": title, "url": url})
+                    if len(results) >= num_results:
+                        break
+            snippets = []
+            for td in soup.find_all("td", class_="result-snippet"):
+                text = td.get_text(strip=True)
+                if text:
+                    snippets.append(text)
+            combined = []
+            for i in range(min(len(results), len(snippets))):
+                combined.append({
+                    "title": results[i]["title"],
+                    "url": results[i]["url"],
+                    "snippet": snippets[i] if i < len(snippets) else "",
+                })
+            return {"success": True, "query": query, "results": combined}
+        except Exception as e2:
+            print(f"回退搜索也失败: {e2}")
+            return {"success": False, "query": query, "error": str(e2)}
 
 
-def skill_fetch_url(url, max_chars=2000):
-    """获取网页文本内容"""
+def skill_fetch_url(url, max_chars=3000):
+    """获取网页文本内容。先用requests，如果内容太少则用Playwright MCP抓取JS渲染页面"""
+    # 第一步：尝试requests（快）
+    text = ""
     try:
         headers = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36"}
         r = requests.get(url, headers=headers, timeout=15)
         r.encoding = r.apparent_encoding
-
         from bs4 import BeautifulSoup
         soup = BeautifulSoup(r.text, "html.parser")
         for tag in soup(["script", "style", "nav", "header", "footer"]):
             tag.decompose()
-
         text = soup.get_text(separator="\n", strip=True)
         lines = [line.strip() for line in text.split("\n") if line.strip()]
         text = "\n".join(lines)
+    except:
+        pass
+
+    # 如果requests拿到了足够内容，直接返回
+    if len(text) > 100:
         return {"success": True, "url": url, "content": text[:max_chars]}
+
+    # 第二步：用Playwright MCP抓取JS渲染页面
+    try:
+        text = skill_browser_fetch(url, max_chars=max_chars)
+        if text and len(text) > 50:
+            return {"success": True, "url": url, "content": text}
     except Exception as e:
-        return {"success": False, "url": url, "error": str(e)}
+        print(f"Playwright抓取也失败: {e}")
+
+    return {"success": False, "url": url, "error": "无法获取内容"}
+
+
+def skill_browser_fetch(url, max_chars=3000):
+    """用Playwright MCP抓取JS渲染页面的文本内容"""
+    try:
+        # 导航到页面
+        result = subprocess.run(
+            ["manus-mcp-cli", "tool", "call", "browser_navigate",
+             "--server", "playwright", "--input", json.dumps({"url": url})],
+            capture_output=True, text=True, timeout=30
+        )
+        # 等待页面加载
+        time.sleep(2)
+        # 提取文本
+        js_code = f"() => {{ const el = document.querySelector('article') || document.querySelector('.article-content') || document.querySelector('.opus-module-content') || document.querySelector('.bili-rich-text') || document.querySelector('main') || document.body; return el.innerText.substring(0, {max_chars}); }}"
+        result = subprocess.run(
+            ["manus-mcp-cli", "tool", "call", "browser_evaluate",
+             "--server", "playwright", "--input", json.dumps({"function": js_code})],
+            capture_output=True, text=True, timeout=15
+        )
+        # 解析输出
+        output = result.stdout
+        # 找到 ### Result 后的内容
+        if '### Result' in output:
+            content = output.split('### Result')[1].split('### Ran')[0].strip()
+            # 去掉引号
+            if content.startswith('"') and content.endswith('"'):
+                content = content[1:-1]
+            # 解码\n
+            content = content.replace('\\n', '\n').replace('\\t', ' ')
+            return content.strip()
+        return ""
+    except Exception as e:
+        print(f"Playwright抓取异常: {e}")
+        return ""
 
 
 def skill_get_weather(city="深圳"):
@@ -312,41 +368,138 @@ def build_selfie_prompt(location_id="home_xiaoyue", hour=14, weather="晴天",
     return full_prompt
 
 
+# 场景参考图CDN URLs
+SCENE_REF_URLS = {
+    "home_bedroom": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/iQZPUTzXjbuGhlai.jpg",
+    "home_livingroom": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/pyOgdRNdXgESmPJs.jpg",
+    "cafe_moli": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/bCYsFAhUpIcLPiEw.jpg",
+    "park_central": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/AMAXgIiTALLbLGpa.jpg",
+    "studio_art": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/evJmkoRyRKqlmLgj.jpg",
+    "company_office": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/uhwRlcCbJspfqfda.jpg",
+    "market_street": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/lZDoAAiHRnlpmmwB.jpg",
+    "library": "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/nghslngmZTKjkuxa.jpg",
+}
+
+
+def _get_scene_ref_url(location_id, hour):
+    """根据地点和时间选择场景参考图"""
+    if location_id == "home_xiaoyue":
+        if hour >= 21 or hour < 7:
+            return SCENE_REF_URLS["home_bedroom"]
+        else:
+            return SCENE_REF_URLS["home_livingroom"]
+    mapping = {
+        "cafe_moli": "cafe_moli", "park_central": "park_central",
+        "studio_art": "studio_art", "company_startup": "company_office",
+        "market_street": "market_street", "library": "library",
+    }
+    key = mapping.get(location_id, "home_livingroom")
+    return SCENE_REF_URLS.get(key, SCENE_REF_URLS["home_livingroom"])
+
+
+def _get_makeup_desc(hour):
+    """根据时间判断妆容"""
+    if hour >= 21 or hour < 7:
+        return "no makeup, bare face, natural skin, slightly messy hair"
+    if 7 <= hour < 9:
+        return "no makeup, bare face, just woke up, slightly puffy eyes, messy hair"
+    return "light natural makeup, subtle lip tint"
+
+
 def skill_generate_selfie(scene="casual", custom_prompt=None,
                           output_dir="/home/ubuntu/chimera/selfies",
                           world_context=None):
     """
-    两步法生成小悦的一致性自拍：
-    1. FLUX/schnell 生成场景图（根据世界状态动态构建prompt）
-    2. fal-ai/face-swap 将参考图的脸换上去
-
-    world_context: dict with keys: location_id, hour, weather, activity
+    用 Nano Banana Pro/edit 生成小悦的自拍。
+    传入：脸部参考图 + 场景参考图 → 一步生成一致性照片。
+    如果失败，fallback到FLUX+face-swap。
     """
     os.makedirs(output_dir, exist_ok=True)
 
-    # 如果有世界上下文，动态构建prompt
+    # 从world_context获取信息
+    location_id = "home_xiaoyue"
+    hour = 14
+    weather = "晴天"
+    activity = ""
     if world_context:
-        full_prompt = build_selfie_prompt(
-            location_id=world_context.get("location_id", "home_xiaoyue"),
-            hour=world_context.get("hour", 14),
-            weather=world_context.get("weather", "晴天"),
-            activity=world_context.get("activity", ""),
-            custom_prompt=custom_prompt,
-        )
-    else:
-        # 降级：用简单的场景风格
-        SIMPLE_STYLES = {
-            "casual": "casual selfie, natural lighting, warm tones, phone camera close-up portrait",
-            "mirror": "mirror selfie, full body shot, showing outfit, indoor lighting",
-            "outdoor": "outdoor selfie, natural background, sunlight, blue sky",
-            "cafe": "selfie in a cozy cafe, warm ambient lighting, coffee cup visible",
-            "studio": "selfie in an art studio, paint supplies visible, creative atmosphere",
-            "park": "selfie in a park, green trees, natural daylight, flowers",
-            "night": "evening selfie, city lights bokeh in background, soft warm tones",
-            "work": "selfie at modern office desk, computer monitor visible, daylight",
-        }
-        style = SIMPLE_STYLES.get(scene, SIMPLE_STYLES["casual"])
-        full_prompt = f"{XIAOYUE_BASE_FACE} {custom_prompt + '. ' if custom_prompt else ''}{style}. Selfie, phone camera, portrait photo, realistic."
+        location_id = world_context.get("location_id", "home_xiaoyue")
+        hour = world_context.get("hour", 14)
+        weather = world_context.get("weather", "晴天")
+        activity = world_context.get("activity", "")
+
+    # 选择场景参考图
+    scene_ref_url = _get_scene_ref_url(location_id, hour)
+    image_urls = [REFERENCE_FACE_URL, scene_ref_url]
+
+    # 时间描述
+    time_descs = [
+        (5, 7, "early morning, soft dawn light"),
+        (7, 12, "morning, bright natural light"),
+        (12, 14, "midday, bright sunlight"),
+        (14, 18, "afternoon, warm golden light"),
+        (18, 21, "evening, warm sunset light"),
+        (21, 24, "night, warm indoor lamp light"),
+        (0, 5, "late night, dim warm light"),
+    ]
+    time_desc = "afternoon, warm light"
+    for start, end, desc in time_descs:
+        if start <= hour < end:
+            time_desc = desc
+            break
+
+    # 妆容
+    makeup = _get_makeup_desc(hour)
+
+    # 衣着
+    loc_type = {
+        "home_xiaoyue": "home", "cafe_moli": "cafe", "park_central": "park",
+        "studio_art": "studio", "company_startup": "work",
+        "market_street": "outdoor", "library": "indoor",
+    }.get(location_id, "home")
+    is_night = hour >= 21 or hour < 7
+    outfit_map = {
+        ("home", True): "wearing oversized t-shirt and shorts, cozy at-home look",
+        ("home", False): "wearing casual comfortable clothes, relaxed",
+        ("cafe", False): "wearing a nice knit sweater and jeans, casual chic",
+        ("park", False): "wearing light casual dress or t-shirt with shorts, sneakers",
+        ("studio", False): "wearing paint-stained apron over simple t-shirt, hair tied back",
+        ("work", False): "wearing casual white blouse and light cardigan",
+        ("outdoor", False): "wearing light jacket and jeans, small backpack",
+        ("indoor", False): "wearing comfortable casual clothes",
+    }
+    outfit = outfit_map.get((loc_type, is_night), outfit_map.get((loc_type, False), "wearing casual clothes"))
+
+    # 自定义描述（用户请求翻译成英文）
+    custom_desc = ""
+    if custom_prompt:
+        try:
+            translated = client.chat.completions.create(
+                model="gpt-4.1-nano",
+                messages=[
+                    {"role": "system", "content": "Translate the user's photo request into a short English description for image generation. Focus on outfit, pose, and setting. Keep it under 30 words."},
+                    {"role": "user", "content": custom_prompt},
+                ],
+                max_tokens=60, temperature=0.3,
+            )
+            custom_desc = translated.choices[0].message.content.strip()
+            clothing_kw = ["swimsuit", "bikini", "dress", "skirt", "uniform", "pajama", "hoodie", "wearing"]
+            if any(kw in custom_desc.lower() for kw in clothing_kw):
+                outfit = custom_desc
+                custom_desc = ""
+        except Exception as e:
+            print(f"翻译custom_prompt失败: {e}")
+
+    # 组装prompt
+    prompt = (
+        f"A selfie photo of a young Chinese woman, 23 years old. "
+        f"{makeup}. {outfit}. "
+        f"{custom_desc + '. ' if custom_desc else ''}"
+        f"{time_desc}. "
+        f"Phone camera selfie perspective, looking at camera, natural pose, "
+        f"high quality portrait photo, realistic, candid feel."
+    )
+    print(f"[Selfie] Nano Banana Pro prompt: {prompt}")
+    print(f"[Selfie] Scene ref: {scene_ref_url}")
 
     headers = {
         "Authorization": f"Key {FAL_KEY}",
@@ -354,47 +507,56 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
     }
 
     try:
-        # Step 1: FLUX 生成场景图
-        payload1 = {
-            "prompt": full_prompt,
+        # 尝试 Nano Banana Pro/edit
+        payload = {
+            "prompt": prompt,
+            "image_urls": image_urls,
             "image_size": "portrait_4_3",
             "num_images": 1,
+            "safety_tolerance": 5,
         }
+        r = requests.post("https://fal.run/fal-ai/nano-banana-pro/edit",
+                         headers=headers, json=payload, timeout=120)
+
+        if r.status_code == 200:
+            result = r.json()
+            images = result.get("images", [])
+            if images:
+                final_url = images[0]["url"]
+                timestamp = int(time.time())
+                filename = f"selfie_{location_id}_{timestamp}.jpg"
+                filepath = os.path.join(output_dir, filename)
+                img_r = requests.get(final_url, timeout=60)
+                with open(filepath, "wb") as f:
+                    f.write(img_r.content)
+                return {"success": True, "filepath": filepath, "url": final_url, "prompt_used": prompt}
+
+        # Nano Banana Pro失败，fallback到FLUX+face-swap
+        print(f"[Selfie] Nano Banana Pro失败({r.status_code})，fallback到FLUX")
+        full_prompt = build_selfie_prompt(
+            location_id=location_id, hour=hour, weather=weather,
+            activity=activity, custom_prompt=custom_prompt,
+        )
+        payload1 = {"prompt": full_prompt, "image_size": "portrait_4_3", "num_images": 1}
         r1 = requests.post("https://fal.run/fal-ai/flux/schnell",
                           headers=headers, json=payload1, timeout=60)
         if r1.status_code != 200:
-            return {"success": False, "error": f"FLUX生成失败: {r1.status_code}"}
-
-        result1 = r1.json()
-        images1 = result1.get("images", [])
-        if not images1:
+            return {"success": False, "error": f"FLUX也失败: {r1.status_code}"}
+        target_url = r1.json().get("images", [{}])[0].get("url")
+        if not target_url:
             return {"success": False, "error": "FLUX没有生成图片"}
-
-        target_url = images1[0]["url"]
-
-        # Step 2: Face-Swap 换脸
-        payload2 = {
-            "base_image_url": target_url,
-            "swap_image_url": REFERENCE_FACE_URL,
-        }
+        # face-swap
         r2 = requests.post("https://fal.run/fal-ai/face-swap",
-                          headers=headers, json=payload2, timeout=60)
-        if r2.status_code != 200:
-            print(f"Face-swap失败({r2.status_code})，使用原始图")
-            final_url = target_url
-        else:
-            result2 = r2.json()
-            final_url = result2.get("image", {}).get("url", target_url)
-
-        # 下载最终图片
+                          headers=headers, json={"base_image_url": target_url, "swap_image_url": REFERENCE_FACE_URL},
+                          timeout=60)
+        final_url = target_url
+        if r2.status_code == 200:
+            final_url = r2.json().get("image", {}).get("url", target_url)
         timestamp = int(time.time())
-        filename = f"selfie_{scene}_{timestamp}.jpg"
-        filepath = os.path.join(output_dir, filename)
-
+        filepath = os.path.join(output_dir, f"selfie_fallback_{timestamp}.jpg")
         img_r = requests.get(final_url, timeout=60)
         with open(filepath, "wb") as f:
             f.write(img_r.content)
-
         return {"success": True, "filepath": filepath, "url": final_url, "prompt_used": full_prompt}
 
     except Exception as e:
@@ -566,6 +728,172 @@ def skill_generate_video(prompt, image_path=None, output_dir="/home/ubuntu/chime
             print(f"轮询异常: {e}")
 
     return {"success": False, "error": "超时（5分钟）"}
+
+
+# ============================================================
+# Skill 7: 学习说话风格
+# ============================================================
+
+# 搜索关键词库：用来搜索真人聊天记录的query
+STYLE_SEARCH_QUERIES = [
+    "女生微信聊天记录 真实对话",
+    "情侣聊天记录截图 日常",
+    "闺蜜聊天记录 搞笑",
+    "朋友微信聊天 日常对话",
+    "女生回复消息 聊天风格",
+    "微信聊天 真实记录 女生",
+    "女朋友聊天记录 可爱",
+    "小红书 聊天记录分享",
+    "情侣日常聊天 甜蜜",
+    "女生发消息 口头禅",
+    "年轻人微信聊天 口语",
+    "00后聊天方式 微信",
+    "女生聊天 哈哈哈 语气词",
+    "真实微信对话 截图 日常",
+    "闺蜜之间聊天 搞笑日常",
+]
+
+
+def skill_learn_style(few_shot_path="/home/ubuntu/chimera/final_few_shot.md"):
+    """
+    上网搜索真人聊天记录，提取自然的对话示例，
+    追加到few-shot文件中。
+    返回新学到的示例数量。
+    """
+    import random as _random
+
+    # 随机选一个搜索词
+    query = _random.choice(STYLE_SEARCH_QUERIES)
+    print(f"🎓 学习说话风格，搜索: {query}")
+
+    # 第一步：搜索
+    search_result = skill_web_search(query, num_results=5)
+    if not search_result.get("success") or not search_result.get("results"):
+        print("🎓 搜索没结果")
+        return {"success": False, "learned": 0, "reason": "搜索没结果"}
+
+    # 收集搜索摘要
+    raw_text = ""
+    for r in search_result["results"][:5]:
+        snippet = r.get("snippet", "")
+        title = r.get("title", "")
+        if snippet:
+            raw_text += f"{title}: {snippet}\n\n"
+
+    # 尝试抓取第一个URL的完整内容
+    urls = [r.get("url", "") for r in search_result["results"][:3] if r.get("url")]
+    for url in urls:
+        try:
+            page = skill_fetch_url(url, max_chars=3000)
+            if page.get("success") and page.get("content"):
+                raw_text += f"\n---\n{page['content']}\n"
+                break
+        except:
+            continue
+
+    if len(raw_text) < 50:
+        print("🎓 内容太少")
+        return {"success": False, "learned": 0, "reason": "内容太少"}
+
+    # 第二步：用LLM提取对话示例
+    extract_prompt = """你是一个对话风格分析专家。从以下网页内容中，提取真实的、自然的中文微信聊天对话示例。
+
+要求：
+1. 只提取听起来像真人说话的对话（不要AI味、不要太正式）
+2. 重点关注女生的回复风格：短句、口语化、有语气词（哈哈哈、嗯嗯、啊、呢、啦、捏）
+3. 每组对话格式必须严格如下：
+- user: 对方说的话
+- assistant: 女生的回复（可以多条，每条一行用 "- assistant: " 开头）
+4. 提取3-5组最自然的对话
+5. 不要编造，只从原文中提取
+6. 如果原文没有合适的对话，就回复"无"
+
+示例格式：
+- user: 你在干嘛
+- assistant: 刚吃完饭
+- assistant: 好撑
+
+- user: 明天出来玩吗
+- assistant: 去哪
+- assistant: 我看看有没有空"""
+
+    extracted = client.chat.completions.create(
+        model="gemini-2.5-flash",
+        messages=[
+            {"role": "system", "content": extract_prompt},
+            {"role": "user", "content": f"以下是搜索到的内容：\n\n{raw_text[:4000]}"},
+        ],
+        max_tokens=600,
+        temperature=0.3,
+    ).choices[0].message.content
+
+    if not extracted or extracted.strip() == "无" or len(extracted.strip()) < 20:
+        print("🎓 没提取到有用的对话")
+        return {"success": False, "learned": 0, "reason": "没提取到有用的对话"}
+
+    # 第三步：验证和清洗提取的示例
+    # 解析提取的对话块
+    blocks = extracted.strip().split("\n\n")
+    valid_blocks = []
+
+    for block in blocks:
+        block = block.strip()
+        if not block:
+            continue
+        lines = block.split("\n")
+        has_user = any(l.strip().startswith("- user:") for l in lines)
+        has_assistant = any(l.strip().startswith("- assistant:") for l in lines)
+        if has_user and has_assistant:
+            # 检查assistant回复不能太长（真人不会一次说太多）
+            assistant_lines = [l for l in lines if l.strip().startswith("- assistant:")]
+            all_short = all(len(l.replace("- assistant:", "").strip()) <= 30 for l in assistant_lines)
+            if all_short:
+                valid_blocks.append(block)
+
+    if not valid_blocks:
+        print("🎓 验证后没有合格的对话")
+        return {"success": False, "learned": 0, "reason": "验证后没有合格的对话"}
+
+    # 第四步：去重检查
+    existing = ""
+    try:
+        with open(few_shot_path, "r", encoding="utf-8") as f:
+            existing = f.read()
+    except:
+        pass
+
+    new_blocks = []
+    for block in valid_blocks:
+        # 提取user部分做去重
+        user_line = ""
+        for line in block.split("\n"):
+            if line.strip().startswith("- user:"):
+                user_line = line.replace("- user:", "").strip()
+                break
+        # 如果user部分已经存在类似的，跳过
+        if user_line and user_line not in existing:
+            new_blocks.append(block)
+
+    if not new_blocks:
+        print("🎓 都是重复的，没有新内容")
+        return {"success": False, "learned": 0, "reason": "都是重复的"}
+
+    # 第五步：追加到few-shot文件
+    with open(few_shot_path, "a", encoding="utf-8") as f:
+        for block in new_blocks:
+            f.write("\n" + block + "\n")
+
+    learned_count = len(new_blocks)
+    print(f"🎓 学到了 {learned_count} 组新的对话示例！")
+    for b in new_blocks:
+        print(f"  📝 {b[:60]}...")
+
+    return {
+        "success": True,
+        "learned": learned_count,
+        "query": query,
+        "examples": new_blocks,
+    }
 
 
 # ============================================================
