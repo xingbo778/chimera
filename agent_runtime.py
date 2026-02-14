@@ -19,7 +19,8 @@ from skills import (
     skill_web_search, skill_fetch_url, skill_browser_fetch,
     skill_generate_selfie, skill_understand_image,
     skill_read_link, skill_text_to_speech, skill_get_weather,
-    skill_generate_video, skill_learn_style, route_skill, execute_skill,
+    skill_generate_video, skill_xhs_browse, skill_douban_browse,
+    skill_weibo_browse, route_skill, execute_skill,
 )
 
 # ============================================================
@@ -282,7 +283,19 @@ memory = Memory(BASE_DIR)
 class WorldClient:
     def __init__(self, base_url):
         self.base_url = base_url
-        self.last_event_tick = 0
+        # 初始化时获取当前tick，避免重启后拉取所有历史事件
+        self.last_event_tick = self._get_current_tick()
+
+    def _get_current_tick(self):
+        """获取world engine当前tick，重启时从当前开始而非从0"""
+        try:
+            r = requests.get(f"{self.base_url}/v1/world", timeout=3)
+            tick = r.json().get("tick", 0)
+            print(f"🌍 WorldClient初始化，从tick={tick}开始监听事件")
+            return tick
+        except:
+            print("🌍 WorldClient初始化，无法获取当前tick，从0开始")
+            return 0
 
     def register(self):
         try:
@@ -537,7 +550,8 @@ def autonomous_decide():
 type的值：
 - "move": 去某个地方。加 "location": "地点id"
 - "activity": 在当前地方做事。
-- "browse": 上网看东西。加 "query": "搜什么"
+- "browse": 上网搜东西。加 "query": "搜什么"
+- "scroll_feed": 刷社交媒体（小红书/豆瓣/微博）。加 "platform": "xhs"/"douban"/"weibo", "keyword": "可选关键词"
 - "message_user": 想找朋友聊天。加 "reason": "为什么想聊"
 - "selfie": 想拍张照。加 "reason": "为什么想拍"
 - "voice": 想发语音。加 "text": "想说什么"
@@ -631,6 +645,55 @@ def execute_autonomous_action(action, loop):
 
             memory.current_activity = desc or f"在看关于{query}的东西"
 
+    elif action_type == "scroll_feed":
+        platform = action.get("platform", "xhs")
+        keyword = action.get("keyword", None)
+        platform_names = {"xhs": "小红书", "douban": "豆瓣", "weibo": "微博"}
+        platform_name = platform_names.get(platform, platform)
+        print(f"📱 刷{platform_name}: {keyword or '随便看看'}")
+
+        try:
+            if platform == "xhs":
+                result = skill_xhs_browse(keyword)
+            elif platform == "douban":
+                result = skill_douban_browse(keyword)  # keyword这里当group_id用
+            elif platform == "weibo":
+                result = skill_weibo_browse(keyword)
+            else:
+                result = skill_xhs_browse(keyword)
+
+            if result.get("success") and result.get("content"):
+                content = result["content"]
+                # 存知识库
+                knowledge = call_llm(
+                    "从以下社交媒体内容中提取有趣的信息，用2-3句话总结。如果没什么有用的就说'没什么有用的'。",
+                    f"平台: {platform_name}\n内容:\n{content[:2000]}",
+                    max_tokens=150, temperature=0.3,
+                )
+                if knowledge and "没什么有用" not in knowledge:
+                    memory.add_knowledge(f"刷{platform_name}", knowledge, source=platform_name)
+                    memory.log_event(f"刷了会儿{platform_name}", importance=3)
+                    print(f"📚 看到: {knowledge[:80]}...")
+                else:
+                    memory.log_event(f"刷了会儿{platform_name}，没看到什么有趣的", importance=2)
+
+                # 通用风格学习：从浏览内容中自动提取对话风格
+                if len(content) > 200:
+                    try:
+                        _try_learn_style_from_content(content)
+                    except Exception as e:
+                        print(f"风格学习异常: {e}")
+            else:
+                error = result.get("error", "没加载出来")
+                memory.log_event(f"想刷{platform_name}但{error}", importance=2)
+                print(f"刷{platform_name}失败: {error}")
+
+        except Exception as e:
+            print(f"刷{platform_name}异常: {e}")
+            memory.log_event(f"想刷{platform_name}但网不好", importance=2)
+
+        memory.current_activity = desc or f"在刷{platform_name}"
+
     elif action_type == "message_user":
         reason = action.get("reason", "")
         if authorized_chat_id and telegram_app:
@@ -703,6 +766,11 @@ def execute_autonomous_action(action, loop):
             feedback = f"看到了有意思的东西：{recent_k[0].get('topic', '')}"
         else:
             feedback = "随便刷了刷"
+    elif action_type == "scroll_feed":
+        platform_name = {"xhs": "小红书", "douban": "豆瓣", "weibo": "微博"}.get(action.get("platform", ""), "手机")
+        memory.emotional_state["happiness"] = min(100, memory.emotional_state["happiness"] + 3)
+        memory.emotional_state["energy"] = max(0, memory.emotional_state["energy"] - 2)
+        feedback = f"刷了会儿{platform_name}"
     elif action_type == "message_user":
         memory.emotional_state["loneliness"] = max(0, memory.emotional_state["loneliness"] - 10)
         memory.emotional_state["happiness"] = min(100, memory.emotional_state["happiness"] + 3)
@@ -818,8 +886,37 @@ def build_chat_system_prompt():
             f"- {k['topic']}: {k['summary'][:80]}" for k in recent_knowledge
         )
 
+    style_guide = """# 说话风格
+你说话像真人微信聊天。短句、口语化、随意。
+绝对不要用书面语、长句、排比句。不要用"呢"结尾。不要感叹号连发。
+可以用语气词（嗯、啊、哈哈哈、喔喔），但别刻意堆砌。
+不用每句都回，不用每次都热情。看心情。有时候懒得回就一个字。
+不要主动问太多问题。不要每句话都带情绪词。
+
+# 风格参考（模仿这种感觉）
+对方: 你还在深圳吗
+你: 在呢
+你: 明天回去了
+
+对方: 想看你泳衣照
+你: 滚
+
+对方: 你是不是喜欢我
+你: 你想多了
+
+对方: 今天好无聊啊
+你: 嗯
+你: 不想动
+
+对方: 我被抓到北京封闭开发了哈哈哈
+你: 诶呦
+你: 这么忙
+你: 辛苦你啦
+你: 我说你最近怎么都不理我"""
+
     system = f"""{SOUL}
 
+{style_guide}
 ---
 现在是{now.strftime('%H:%M')}。{emotion}。
 在{location_name}。{memory.current_activity}。
@@ -1085,30 +1182,31 @@ def _try_learn_style_from_content(content, few_shot_path=None):
     # 第二步：用LLM提取对话示例
     extract_prompt = """你是一个对话风格分析专家。从以下网页内容中，提取自然的中文微信聊天对话示例。
 
-内容可能是：
-- 真实的聊天记录截图
-- 聊天教程中的对话示例
-- 文章中引用的对话片段
-- 任何包含一问一答的对话内容
+要提取的是朋友之间的日常聊天，不是撑妇套路。
 
-要求：
-1. 提取听起来像真人说话的对话（口语化、自然、不僵硬）
-2. 重点关注女生的回复风格：短句、口语化、有语气词
-3. 每组对话格式必须严格如下：
-- user: 对方说的话
-- assistant: 女生的回复（可以多条，每条一行用 "- assistant: " 开头）
-4. 提取3-5组最自然的对话
-5. 可以从教程示例中提取，但要确保对话自然不僵硬
-6. 如果实在找不到任何对话内容，才回复"无"
+严格过滤：
+- 不要“你猜我属什么”“你是什么血型”这类套路撩妇话术
+- 不要“我怎么感觉最近怪怪的”“我总感觉今天缺点什么”这类土味情话
+- 只要真实、自然、日常的对话
 
-示例格式：
+好的示例（自然日常）：
 - user: 你在干嘛
 - assistant: 刚吃完饭
 - assistant: 好撑
 
-- user: 明天出来玩吗
-- assistant: 去哪
-- assistant: 我看看有没有空"""
+坏的示例（套路/土味）：
+- user: 你猜我属什么的
+- assistant: 属什么的
+→ 这种不要
+
+要求：
+1. 只提取真人日常聊天风格的对话（口语化、短句、随意）
+2. 女生的回复要自然，不是配合套路的回答
+3. 每组对话格式：
+- user: 对方说的话
+- assistant: 女生的回复（可以多条，每条一行用 "- assistant: " 开头）
+4. 最多提取3-5组
+5. 找不到自然日常对话就回复"无"，宁缺毻滥"""
 
     try:
         extracted = client.chat.completions.create(

@@ -731,169 +731,252 @@ def skill_generate_video(prompt, image_path=None, output_dir="/home/ubuntu/chime
 
 
 # ============================================================
-# Skill 7: 学习说话风格
+# Skill 7: 多平台浏览（小红书/豆瓣/微博）
+# 用 browser_pool 管理 Playwright 浏览器实例，复用 Chromium cookie
 # ============================================================
 
-# 搜索关键词库：用来搜索真人聊天记录的query
-STYLE_SEARCH_QUERIES = [
-    "女生微信聊天记录 真实对话",
-    "情侣聊天记录截图 日常",
-    "闺蜜聊天记录 搞笑",
-    "朋友微信聊天 日常对话",
-    "女生回复消息 聊天风格",
-    "微信聊天 真实记录 女生",
-    "女朋友聊天记录 可爱",
-    "小红书 聊天记录分享",
-    "情侣日常聊天 甜蜜",
-    "女生发消息 口头禅",
-    "年轻人微信聊天 口语",
-    "00后聊天方式 微信",
-    "女生聊天 哈哈哈 语气词",
-    "真实微信对话 截图 日常",
-    "闺蜜之间聊天 搞笑日常",
+try:
+    from browser_pool import get_context as _get_browser_context
+except ImportError:
+    _get_browser_context = None
+
+# 小红书话题库：女生日常、生活、情感类
+XHS_TOPICS = [
+    "女生日常", "闺蜜日常", "大学生日常", "打工人日常",
+    "今日碎碎念", "生活碎片", "日常吐槽", "emo了",
+    "恋爱日常", "单身日常", "室友日常", "下班后的生活",
+    "今天的快乐", "深夜emo", "周末日常", "独居日常",
+]
+
+# 豆瓣小组：女生聚集的生活/情感小组
+DOUBAN_GROUPS = [
+    "652046",   # 豆瓣劝分小组 (37万)
+    "blabla",   # 人间情侣观察 (26万)
+    "711632",   # 今天我没有生气 (26万)
+    "694182",   # 我今天遇到一个crush (18万)
+    "711767",   # 内在力量研究中心 (19万)
+    "738593",   # 友谊的小船 (8万)
+]
+
+# 微博话题
+WEIBO_TOPICS = [
+    "女生日常", "闺蜜聊天", "今日份快乐", "打工人吐槽",
+    "恋爱脑", "单身狗日常", "大学生日常",
 ]
 
 
-def skill_learn_style(few_shot_path="/home/ubuntu/chimera/final_few_shot.md"):
-    """
-    上网搜索真人聊天记录，提取自然的对话示例，
-    追加到few-shot文件中。
-    返回新学到的示例数量。
-    """
+def skill_xhs_browse(keyword=None):
+    """刷小红书：用ddgs搜索小红书公开内容（headless被反爬拦截，降级方案）"""
     import random as _random
+    if not keyword:
+        keyword = _random.choice(XHS_TOPICS)
 
-    # 随机选一个搜索词
-    query = _random.choice(STYLE_SEARCH_QUERIES)
-    print(f"🎓 学习说话风格，搜索: {query}")
+    print(f"📱 刷小红书: {keyword}")
+    content_parts = []
 
-    # 第一步：搜索
-    search_result = skill_web_search(query, num_results=5)
-    if not search_result.get("success") or not search_result.get("results"):
-        print("🎓 搜索没结果")
-        return {"success": False, "learned": 0, "reason": "搜索没结果"}
-
-    # 收集搜索摘要
-    raw_text = ""
-    for r in search_result["results"][:5]:
-        snippet = r.get("snippet", "")
-        title = r.get("title", "")
-        if snippet:
-            raw_text += f"{title}: {snippet}\n\n"
-
-    # 尝试抓取第一个URL的完整内容
-    urls = [r.get("url", "") for r in search_result["results"][:3] if r.get("url")]
-    for url in urls:
-        try:
-            page = skill_fetch_url(url, max_chars=3000)
-            if page.get("success") and page.get("content"):
-                raw_text += f"\n---\n{page['content']}\n"
-                break
-        except:
-            continue
-
-    if len(raw_text) < 50:
-        print("🎓 内容太少")
-        return {"success": False, "learned": 0, "reason": "内容太少"}
-
-    # 第二步：用LLM提取对话示例
-    extract_prompt = """你是一个对话风格分析专家。从以下网页内容中，提取真实的、自然的中文微信聊天对话示例。
-
-要求：
-1. 只提取听起来像真人说话的对话（不要AI味、不要太正式）
-2. 重点关注女生的回复风格：短句、口语化、有语气词（哈哈哈、嗯嗯、啊、呢、啦、捏）
-3. 每组对话格式必须严格如下：
-- user: 对方说的话
-- assistant: 女生的回复（可以多条，每条一行用 "- assistant: " 开头）
-4. 提取3-5组最自然的对话
-5. 不要编造，只从原文中提取
-6. 如果原文没有合适的对话，就回复"无"
-
-示例格式：
-- user: 你在干嘛
-- assistant: 刚吃完饭
-- assistant: 好撑
-
-- user: 明天出来玩吗
-- assistant: 去哪
-- assistant: 我看看有没有空"""
-
-    extracted = client.chat.completions.create(
-        model="gemini-2.5-flash",
-        messages=[
-            {"role": "system", "content": extract_prompt},
-            {"role": "user", "content": f"以下是搜索到的内容：\n\n{raw_text[:4000]}"},
-        ],
-        max_tokens=600,
-        temperature=0.3,
-    ).choices[0].message.content
-
-    if not extracted or extracted.strip() == "无" or len(extracted.strip()) < 20:
-        print("🎓 没提取到有用的对话")
-        return {"success": False, "learned": 0, "reason": "没提取到有用的对话"}
-
-    # 第三步：验证和清洗提取的示例
-    # 解析提取的对话块
-    blocks = extracted.strip().split("\n\n")
-    valid_blocks = []
-
-    for block in blocks:
-        block = block.strip()
-        if not block:
-            continue
-        lines = block.split("\n")
-        has_user = any(l.strip().startswith("- user:") for l in lines)
-        has_assistant = any(l.strip().startswith("- assistant:") for l in lines)
-        if has_user and has_assistant:
-            # 检查assistant回复不能太长（真人不会一次说太多）
-            assistant_lines = [l for l in lines if l.strip().startswith("- assistant:")]
-            all_short = all(len(l.replace("- assistant:", "").strip()) <= 30 for l in assistant_lines)
-            if all_short:
-                valid_blocks.append(block)
-
-    if not valid_blocks:
-        print("🎓 验证后没有合格的对话")
-        return {"success": False, "learned": 0, "reason": "验证后没有合格的对话"}
-
-    # 第四步：去重检查
-    existing = ""
     try:
-        with open(few_shot_path, "r", encoding="utf-8") as f:
-            existing = f.read()
-    except:
-        pass
+        # 用ddgs搜索小红书内容
+        query = f"site:xiaohongshu.com {keyword}"
+        results = skill_web_search(query, num_results=5)
+        if not results.get("success") or not results.get("results"):
+            # 备用：不限制site
+            results = skill_web_search(f"小红书 {keyword}", num_results=5)
 
-    new_blocks = []
-    for block in valid_blocks:
-        # 提取user部分做去重
-        user_line = ""
-        for line in block.split("\n"):
-            if line.strip().startswith("- user:"):
-                user_line = line.replace("- user:", "").strip()
-                break
-        # 如果user部分已经存在类似的，跳过
-        if user_line and user_line not in existing:
-            new_blocks.append(block)
+        if results.get("results"):
+            content_parts.append(f"小红书搜索\"{keyword}\"结果:")
+            for r in results["results"][:3]:
+                title = r.get("title", "")
+                body = r.get("body", "")
+                if title:
+                    content_parts.append(f"  标题: {title}")
+                if body:
+                    content_parts.append(f"  内容: {body}")
+                content_parts.append("")
 
-    if not new_blocks:
-        print("🎓 都是重复的，没有新内容")
-        return {"success": False, "learned": 0, "reason": "都是重复的"}
+                # 尝试抓取完整内容
+                url = r.get("href", "")
+                if url and "xiaohongshu.com" in url:
+                    try:
+                        fetched = skill_fetch_url(url)
+                        if fetched.get("success") and len(fetched.get("content", "")) > 100:
+                            content_parts.append(f"  详细内容: {fetched['content'][:800]}")
+                    except:
+                        pass
 
-    # 第五步：追加到few-shot文件
-    with open(few_shot_path, "a", encoding="utf-8") as f:
-        for block in new_blocks:
-            f.write("\n" + block + "\n")
+    except Exception as e:
+        print(f"小红书搜索异常: {e}")
 
-    learned_count = len(new_blocks)
-    print(f"🎓 学到了 {learned_count} 组新的对话示例！")
-    for b in new_blocks:
-        print(f"  📝 {b[:60]}...")
+    content = "\n".join(content_parts)
+    return {"success": bool(content), "content": content, "source": "xiaohongshu", "keyword": keyword}
 
-    return {
-        "success": True,
-        "learned": learned_count,
-        "query": query,
-        "examples": new_blocks,
-    }
+
+def skill_douban_browse(group_id=None):
+    """刷豆瓣：从讨论精选页抽帖子，提取正文+评论"""
+    import random as _random
+    print(f"📚 刷豆瓣")
+    content_parts = []
+
+    if not _get_browser_context:
+        return {"success": False, "content": "", "source": "douban", "error": "browser_pool 不可用"}
+
+    page = None
+    try:
+        ctx = _get_browser_context()
+        page = ctx.new_page()
+
+        # 第一步：访问讨论精选页（不需要登录，内容丰富）
+        page.goto('https://www.douban.com/group/explore', timeout=15000, wait_until='domcontentloaded')
+        page.wait_for_timeout(3000)
+
+        # 第二步：提取帖子链接
+        topics = page.evaluate("""
+            () => {
+                return [...document.querySelectorAll('a[href*="/group/topic/"]')]
+                    .map(a => ({title: a.textContent.trim(), url: a.href}))
+                    .filter(l => l.title.length > 4 && l.url.includes('/group/topic/'))
+                    .slice(0, 20);
+            }
+        """)
+
+        if not topics:
+            print("  ❌ explore页没找到帖子")
+            # 降级：用ddgs搜索
+            results = skill_web_search("豆瓣小组 女生日常", num_results=5)
+            if results.get("results"):
+                for r in results["results"][:3]:
+                    if r.get("title"): content_parts.append(f"标题: {r['title']}")
+                    if r.get("body"): content_parts.append(f"内容: {r['body']}")
+                    content_parts.append("")
+            content = "\n".join(content_parts)
+            return {"success": bool(content), "content": content, "source": "douban"}
+
+        # 随机选一个帖子
+        topic = _random.choice(topics[:8])
+        print(f"  📝 看帖子: {topic['title'][:30]}")
+
+        # 第三步：访问帖子
+        page.goto(topic['url'], timeout=15000, wait_until='domcontentloaded')
+        page.wait_for_timeout(3000)
+
+        # 第四步：提取帖子正文 + 评论
+        data = page.evaluate("""
+            () => {
+                const post = document.querySelector('.topic-richtext, .topic-content, .rich-content')?.innerText || '';
+                const comments = [];
+                const seen = new Set();
+                document.querySelectorAll('.reply-content, .comment-item .reply-content, li[id] .reply-doc, .reply-doc .reply-content').forEach(el => {
+                    const text = el.innerText?.trim();
+                    if (text && text.length > 2 && text.length < 500 && !seen.has(text)) {
+                        seen.add(text);
+                        comments.push(text);
+                    }
+                });
+                // 如果以上都没抓到，用body全文
+                const bodyText = document.body?.innerText?.substring(0, 3000) || '';
+                return {post: post.substring(0, 1500), comments: comments.slice(0, 30), title: document.title, bodyText};
+            }
+        """)
+
+        if data.get('post'):
+            content_parts.append(f"帖子: {data.get('title', '')[:50]}")
+            content_parts.append(data['post'])
+        if data.get('comments'):
+            content_parts.append(f"\n评论区 ({len(data['comments'])}条):")
+            for c in data['comments']:
+                content_parts.append(f"  - {c}")
+        # 兆底
+        if not content_parts and data.get('bodyText'):
+            content_parts.append(f"页面内容: {data['bodyText'][:1500]}")
+
+    except Exception as e:
+        print(f"豆瓣浏览异常: {e}")
+    finally:
+        if page:
+            try: page.close()
+            except: pass
+
+    content = "\n".join(content_parts)
+    return {"success": bool(content), "content": content, "source": "douban"}
+
+
+def skill_weibo_browse(keyword=None):
+    """刷微博：用 browser_pool 看热搜页面，提取微博内容"""
+    import random as _random
+    if not keyword:
+        keyword = _random.choice(WEIBO_TOPICS)
+
+    print(f"📰 刷微博: {keyword}")
+    content_parts = []
+
+    if not _get_browser_context:
+        return {"success": False, "content": "", "source": "weibo", "error": "browser_pool 不可用"}
+
+    page = None
+    try:
+        ctx = _get_browser_context()
+        page = ctx.new_page()
+
+        # 用微博热搜页面（不需要登录，内容丰富）
+        page.goto('https://weibo.com/hot/search', timeout=15000, wait_until='domcontentloaded')
+        page.wait_for_timeout(4000)
+
+        # 提取微博内容：热搜页面的微博内容
+        posts = page.evaluate("""
+            () => {
+                const posts = [];
+                const seen = new Set();
+                // 热搜页面的微博内容
+                const selectors = [
+                    '.card-wrap .content .txt',
+                    '.card .txt',
+                    '[class*="Feed_body"] [class*="detail"]',
+                    '.wbpro-feed-content',
+                    '[class*="text"]',
+                ];
+                for (const sel of selectors) {
+                    document.querySelectorAll(sel).forEach(el => {
+                        const text = el.innerText?.trim();
+                        if (text && text.length > 15 && text.length < 500 && !seen.has(text)) {
+                            seen.add(text);
+                            posts.push(text);
+                        }
+                    });
+                }
+                // 如果上面都没抓到，用更宽泛的选择器
+                if (posts.length === 0) {
+                    const body = document.body.innerText;
+                    // 按换行分割，取有意义的段落
+                    body.split('\\n').forEach(line => {
+                        const text = line.trim();
+                        if (text.length > 20 && text.length < 500 && !seen.has(text)) {
+                            seen.add(text);
+                            posts.push(text);
+                        }
+                    });
+                }
+                return posts.slice(0, 20);
+            }
+        """)
+
+        if posts:
+            content_parts.append(f"微博热搜内容 ({len(posts)}条):")
+            for p in posts:
+                content_parts.append(f"  - {p}")
+        else:
+            # 兆底：直接取页面文本
+            body = page.evaluate("() => document.body.innerText.substring(0, 2000)")
+            if body and len(body) > 50:
+                content_parts.append(f"微博页面内容:\n{body}")
+
+    except Exception as e:
+        print(f"微博浏览异常: {e}")
+    finally:
+        if page:
+            try: page.close()
+            except: pass
+
+    content = "\n".join(content_parts)
+    return {"success": bool(content), "content": content, "source": "weibo", "keyword": keyword}
 
 
 # ============================================================
