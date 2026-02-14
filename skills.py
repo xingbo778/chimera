@@ -411,17 +411,73 @@ def _get_makeup_desc(hour):
     return "light natural makeup, subtle lip tint"
 
 
-def skill_generate_selfie(scene="casual", custom_prompt=None,
-                          output_dir="/home/ubuntu/chimera/selfies",
-                          world_context=None):
+def analyze_photo_request(desc, current_hour=None, current_location="home_xiaoyue"):
+    """用LLM分析照片描述，判断拍照类型、推断时间/场景、生成标签"""
+    if current_hour is None:
+        from datetime import datetime, timezone, timedelta
+        current_hour = (datetime.now(timezone.utc) + timedelta(hours=8)).hour
+    try:
+        result = client.chat.completions.create(
+            model="gpt-4.1-nano",
+            messages=[
+                {"role": "system", "content": """Analyze a photo description from a chat. Return JSON with:
+- photo_type (str): one of "selfie", "mirror", "scene".
+  - "selfie": front-facing camera self-portrait, face visible, no phone in frame. For: "自拍", "发张照片" (of self), "看看你", "你的照片", "拍个照片".
+  - "mirror": mirror selfie, full body visible, phone visible in hand, reflected in mirror. For: "对镜自拍", "穿搭照", "OOTD", "全身照", "照镜子".
+  - "scene": rear camera photo of something else (scenery, food, artwork, pets, other people, objects). For: "窗外风景", "拍一下周围", "我画的画", "拍食物", "拍猫咪".
+- hour (int 0-23): what time of day the photo depicts. If the description mentions a time (e.g. "早上"=8, "中午"=12, "下午"=15, "晚上"=20, "化妆"=8, "上班"=9, "刚起床"=7), use that time. Only use the current_hour hint if no time is implied at all.
+- location_id (str): one of home_xiaoyue, home_tangtang, cafe_moli, park_central, studio_art, company_startup, market_street, library. Use the hint if not clear.
+- scene_desc (str): short English description of what the photo shows (under 20 words).
+- tag (str): a short Chinese tag, e.g. "自拍", "对镜自拍", "水彩画", "窗外风景", "咖啡", "猫咪", "穿搭"
+- is_reusable (bool): whether this is a specific artwork/creation that should look the same if asked again (e.g. a painting, a craft, a pet). False for selfies, scenery, random moments.
+Return ONLY valid JSON, no markdown."""},
+                {"role": "user", "content": f"Photo description: {desc}\nCurrent hour hint: {current_hour}\nCurrent location hint: {current_location}"},
+            ],
+            max_tokens=150, temperature=0.2,
+        )
+        import json as _json
+        raw = result.choices[0].message.content.strip()
+        if raw.startswith("```"):
+            raw = raw.split("```")[1]
+            if raw.startswith("json"):
+                raw = raw[4:]
+        parsed = _json.loads(raw)
+        photo_type = parsed.get("photo_type", "selfie")
+        if photo_type not in ("selfie", "mirror", "scene"):
+            photo_type = "selfie"  # 安全默认
+        return {
+            "photo_type": photo_type,
+            "hour": parsed.get("hour", current_hour),
+            "location_id": parsed.get("location_id", current_location),
+            "scene_desc": parsed.get("scene_desc", desc),
+            "tag": parsed.get("tag", "照片"),
+            "is_reusable": parsed.get("is_reusable", False),
+        }
+    except Exception as e:
+        print(f"analyze_photo_request失败: {e}")
+        return {
+            "photo_type": "selfie", "hour": current_hour,
+            "location_id": current_location, "scene_desc": desc,
+            "tag": "自拍", "is_reusable": False,
+        }
+
+
+def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/selfies",
+                     world_context=None, override_hour=None):
     """
-    用 Nano Banana Pro/edit 生成小悦的自拍。
-    传入：脸部参考图 + 场景参考图 → 一步生成一致性照片。
-    如果失败，fallback到FLUX+face-swap。
+    统一的拍照函数。
+    photo_type:
+    - "selfie": 前置摄像头自拍，需要人脸参考图，不出现手机
+    - "mirror": 对镜自拍，需要人脸参考图，手机可见，全身可见
+    - "scene": 拍其他东西（风景/物品/别人/食物等），不需要人脸参考图
     """
     os.makedirs(output_dir, exist_ok=True)
+    headers = {
+        "Authorization": f"Key {FAL_KEY}",
+        "Content-Type": "application/json",
+    }
 
-    # 从world_context获取信息
+    # 从 world_context 获取信息
     location_id = "home_xiaoyue"
     hour = 14
     weather = "晴天"
@@ -431,12 +487,74 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
         hour = world_context.get("hour", 14)
         weather = world_context.get("weather", "晴天")
         activity = world_context.get("activity", "")
+    if override_hour is not None:
+        hour = override_hour
 
-    # 选择场景参考图
+    # 翻译描述为英文
+    try:
+        translate_instruction = (
+            "Translate this photo description into a detailed English prompt for image generation. "
+            "Describe the subject, setting, lighting, style, and mood. Keep it under 50 words. "
+            "Output ONLY the English prompt."
+        )
+        translated = client.chat.completions.create(
+            model="gpt-4.1-nano",
+            messages=[
+                {"role": "system", "content": translate_instruction},
+                {"role": "user", "content": desc},
+            ],
+            max_tokens=80, temperature=0.3,
+        )
+        en_desc = translated.choices[0].message.content.strip()
+    except:
+        en_desc = desc
+
+    if photo_type == "selfie":
+        return _take_selfie(en_desc, location_id, hour, weather, activity, output_dir, headers)
+    elif photo_type == "mirror":
+        return _take_mirror_selfie(en_desc, location_id, hour, weather, activity, output_dir, headers)
+    else:
+        return _take_scene_photo(en_desc, output_dir, headers)
+
+
+def _take_scene_photo(en_desc, output_dir, headers):
+    """非自拍：拍风景/物品/别人/食物等，后置摄像头视角"""
+    full_prompt = (
+        f"{en_desc}. "
+        f"Taken with a smartphone rear camera, realistic photo, natural lighting, "
+        f"candid feel, high quality, no watermark."
+    )
+    print(f"[Photo/Scene] prompt: {full_prompt}")
+
+    try:
+        payload = {
+            "prompt": full_prompt,
+            "image_size": "landscape_4_3",
+            "num_images": 1,
+        }
+        r = requests.post("https://fal.run/fal-ai/flux/schnell",
+                         headers=headers, json=payload, timeout=60)
+        if r.status_code == 200:
+            images = r.json().get("images", [])
+            if images:
+                img_url = images[0]["url"]
+                timestamp = int(time.time())
+                filepath = os.path.join(output_dir, f"photo_{timestamp}.jpg")
+                img_r = requests.get(img_url, timeout=60)
+                with open(filepath, "wb") as f:
+                    f.write(img_r.content)
+                return {"success": True, "filepath": filepath, "url": img_url, "prompt_used": full_prompt}
+        return {"success": False, "error": f"FLUX失败: {r.status_code}"}
+    except Exception as e:
+        print(f"场景照片生成失败: {e}")
+        return {"success": False, "error": str(e)}
+
+
+def _take_mirror_selfie(en_desc, location_id, hour, weather, activity, output_dir, headers):
+    """对镜自拍：后置摄像头对镜子，全身可见，手机可见，需要人脸参考图"""
     scene_ref_url = _get_scene_ref_url(location_id, hour)
     image_urls = [REFERENCE_FACE_URL, scene_ref_url]
 
-    # 时间描述
     time_descs = [
         (5, 7, "early morning, soft dawn light"),
         (7, 12, "morning, bright natural light"),
@@ -447,20 +565,13 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
         (0, 5, "late night, dim warm light"),
     ]
     time_desc = "afternoon, warm light"
-    for start, end, desc in time_descs:
+    for start, end, td in time_descs:
         if start <= hour < end:
-            time_desc = desc
+            time_desc = td
             break
 
-    # 妆容
     makeup = _get_makeup_desc(hour)
-
-    # 衣着
-    loc_type = {
-        "home_xiaoyue": "home", "home_tangtang": "home", "cafe_moli": "cafe", "park_central": "park",
-        "studio_art": "studio", "company_startup": "work",
-        "market_street": "outdoor", "library": "indoor",
-    }.get(location_id, "home")
+    loc_type = _location_type_from_id(location_id)
     is_night = hour >= 21 or hour < 7
     outfit_map = {
         ("home", True): "wearing oversized t-shirt and shorts, cozy at-home look",
@@ -474,45 +585,23 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
     }
     outfit = outfit_map.get((loc_type, is_night), outfit_map.get((loc_type, False), "wearing casual clothes"))
 
-    # 自定义描述（用户请求翻译成英文）
-    custom_desc = ""
-    if custom_prompt:
-        try:
-            translated = client.chat.completions.create(
-                model="gpt-4.1-nano",
-                messages=[
-                    {"role": "system", "content": "Translate the user's photo request into a short English description for image generation. Focus on outfit, pose, and setting. Keep it under 30 words."},
-                    {"role": "user", "content": custom_prompt},
-                ],
-                max_tokens=60, temperature=0.3,
-            )
-            custom_desc = translated.choices[0].message.content.strip()
-            clothing_kw = ["swimsuit", "bikini", "dress", "skirt", "uniform", "pajama", "hoodie", "wearing"]
-            if any(kw in custom_desc.lower() for kw in clothing_kw):
-                outfit = custom_desc
-                custom_desc = ""
-        except Exception as e:
-            print(f"翻译custom_prompt失败: {e}")
+    clothing_kw = ["swimsuit", "bikini", "dress", "skirt", "uniform", "pajama", "hoodie", "wearing", "outfit"]
+    if any(kw in en_desc.lower() for kw in clothing_kw):
+        outfit = en_desc
+        en_desc = ""
 
-    # 组装prompt
     prompt = (
-        f"A selfie photo of a young Chinese woman, 23 years old. "
-        f"{makeup}. {outfit}. "
-        f"{custom_desc + '. ' if custom_desc else ''}"
+        f"A young Chinese woman taking a mirror selfie in a full-length mirror. {makeup}. {outfit}. "
+        f"{en_desc + '. ' if en_desc else ''}"
         f"{time_desc}. "
-        f"Phone camera selfie perspective, looking at camera, natural pose, "
-        f"high quality portrait photo, realistic, candid feel."
+        f"Full body visible in mirror reflection, holding smartphone to take the photo, "
+        f"phone visible in hand, natural relaxed pose, "
+        f"high quality photo, realistic, candid feel."
     )
-    print(f"[Selfie] Nano Banana Pro prompt: {prompt}")
-    print(f"[Selfie] Scene ref: {scene_ref_url}")
-
-    headers = {
-        "Authorization": f"Key {FAL_KEY}",
-        "Content-Type": "application/json",
-    }
+    print(f"[Photo/Mirror] prompt: {prompt}")
+    print(f"[Photo/Mirror] scene ref: {scene_ref_url}")
 
     try:
-        # 尝试 Nano Banana Pro/edit
         payload = {
             "prompt": prompt,
             "image_urls": image_urls,
@@ -529,18 +618,133 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
             if images:
                 final_url = images[0]["url"]
                 timestamp = int(time.time())
-                filename = f"selfie_{location_id}_{timestamp}.jpg"
-                filepath = os.path.join(output_dir, filename)
+                filepath = os.path.join(output_dir, f"mirror_{location_id}_{timestamp}.jpg")
                 img_r = requests.get(final_url, timeout=60)
                 with open(filepath, "wb") as f:
                     f.write(img_r.content)
                 return {"success": True, "filepath": filepath, "url": final_url, "prompt_used": prompt}
 
-        # Nano Banana Pro失败，fallback到FLUX+face-swap
-        print(f"[Selfie] Nano Banana Pro失败({r.status_code})，fallback到FLUX")
+        # Fallback到FLUX+face-swap
+        print(f"[Photo/Mirror] Nano Banana Pro失败({r.status_code})，fallback到FLUX")
+        full_prompt = (
+            f"A young Chinese woman, 23 years old, taking a mirror selfie. {makeup}. {outfit}. "
+            f"{en_desc + '. ' if en_desc else ''}{time_desc}. "
+            f"Full body visible in mirror reflection, holding smartphone, natural pose, realistic."
+        )
+        payload1 = {"prompt": full_prompt, "image_size": "portrait_4_3", "num_images": 1}
+        r1 = requests.post("https://fal.run/fal-ai/flux/schnell",
+                          headers=headers, json=payload1, timeout=60)
+        if r1.status_code != 200:
+            return {"success": False, "error": f"FLUX也失败: {r1.status_code}"}
+        target_url = r1.json().get("images", [{}])[0].get("url")
+        if not target_url:
+            return {"success": False, "error": "FLUX没有生成图片"}
+        r2 = requests.post("https://fal.run/fal-ai/face-swap",
+                          headers=headers, json={"base_image_url": target_url, "swap_image_url": REFERENCE_FACE_URL},
+                          timeout=60)
+        final_url = target_url
+        if r2.status_code == 200:
+            final_url = r2.json().get("image", {}).get("url", target_url)
+        timestamp = int(time.time())
+        filepath = os.path.join(output_dir, f"mirror_fallback_{timestamp}.jpg")
+        img_r = requests.get(final_url, timeout=60)
+        with open(filepath, "wb") as f:
+            f.write(img_r.content)
+        return {"success": True, "filepath": filepath, "url": final_url, "prompt_used": full_prompt}
+
+    except Exception as e:
+        print(f"对镜自拍生成失败: {e}")
+        return {"success": False, "error": str(e)}
+
+
+def _take_selfie(en_desc, location_id, hour, weather, activity, output_dir, headers):
+    """自拍：前置摄像头视角，用Nano Banana Pro + 人脸参考图"""
+    # 场景参考图
+    scene_ref_url = _get_scene_ref_url(location_id, hour)
+    image_urls = [REFERENCE_FACE_URL, scene_ref_url]
+
+    # 时间描述
+    time_descs = [
+        (5, 7, "early morning, soft dawn light"),
+        (7, 12, "morning, bright natural light"),
+        (12, 14, "midday, bright sunlight"),
+        (14, 18, "afternoon, warm golden light"),
+        (18, 21, "evening, warm sunset light"),
+        (21, 24, "night, warm indoor lamp light"),
+        (0, 5, "late night, dim warm light"),
+    ]
+    time_desc = "afternoon, warm light"
+    for start, end, td in time_descs:
+        if start <= hour < end:
+            time_desc = td
+            break
+
+    # 妆容
+    makeup = _get_makeup_desc(hour)
+
+    # 衣着
+    loc_type = _location_type_from_id(location_id)
+    is_night = hour >= 21 or hour < 7
+    outfit_map = {
+        ("home", True): "wearing oversized t-shirt and shorts, cozy at-home look",
+        ("home", False): "wearing casual comfortable clothes, relaxed",
+        ("cafe", False): "wearing a nice knit sweater and jeans, casual chic",
+        ("park", False): "wearing light casual dress or t-shirt with shorts, sneakers",
+        ("studio", False): "wearing paint-stained apron over simple t-shirt, hair tied back",
+        ("work", False): "wearing casual white blouse and light cardigan",
+        ("outdoor", False): "wearing light jacket and jeans, small backpack",
+        ("indoor", False): "wearing comfortable casual clothes",
+    }
+    outfit = outfit_map.get((loc_type, is_night), outfit_map.get((loc_type, False), "wearing casual clothes"))
+
+    # 检查en_desc是否包含衣着描述，如果是则覆盖默认
+    clothing_kw = ["swimsuit", "bikini", "dress", "skirt", "uniform", "pajama", "hoodie", "wearing", "outfit"]
+    if any(kw in en_desc.lower() for kw in clothing_kw):
+        outfit = en_desc
+        en_desc = ""  # 已经在outfit里了
+
+    # 组装prompt：前置摄像头视角，不出现手机
+    prompt = (
+        f"A young Chinese woman taking a selfie. {makeup}. {outfit}. "
+        f"{en_desc + '. ' if en_desc else ''}"
+        f"{time_desc}. "
+        f"Front-facing camera point of view, looking directly at camera, "
+        f"natural relaxed expression, upper body and face visible, "
+        f"no phone visible in frame, no hand holding phone, "
+        f"high quality portrait photo, realistic, candid feel."
+    )
+    print(f"[Photo/Selfie] prompt: {prompt}")
+    print(f"[Photo/Selfie] scene ref: {scene_ref_url}")
+
+    try:
+        # Nano Banana Pro/edit
+        payload = {
+            "prompt": prompt,
+            "image_urls": image_urls,
+            "image_size": "portrait_4_3",
+            "num_images": 1,
+            "safety_tolerance": 5,
+        }
+        r = requests.post("https://fal.run/fal-ai/nano-banana-pro/edit",
+                         headers=headers, json=payload, timeout=120)
+
+        if r.status_code == 200:
+            result = r.json()
+            images = result.get("images", [])
+            if images:
+                final_url = images[0]["url"]
+                timestamp = int(time.time())
+                filepath = os.path.join(output_dir, f"selfie_{location_id}_{timestamp}.jpg")
+                img_r = requests.get(final_url, timeout=60)
+                with open(filepath, "wb") as f:
+                    f.write(img_r.content)
+                return {"success": True, "filepath": filepath, "url": final_url, "prompt_used": prompt}
+
+        # Fallback到FLUX+face-swap
+        print(f"[Photo/Selfie] Nano Banana Pro失败({r.status_code})，fallback到FLUX")
         full_prompt = build_selfie_prompt(
             location_id=location_id, hour=hour, weather=weather,
-            activity=activity, custom_prompt=custom_prompt,
+            activity=activity, custom_prompt=en_desc if en_desc else None,
         )
         payload1 = {"prompt": full_prompt, "image_size": "portrait_4_3", "num_images": 1}
         r1 = requests.post("https://fal.run/fal-ai/flux/schnell",
@@ -567,6 +771,22 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
     except Exception as e:
         print(f"自拍生成失败: {e}")
         return {"success": False, "error": str(e)}
+
+
+def skill_generate_selfie(scene="casual", custom_prompt=None,
+                          output_dir="/home/ubuntu/chimera/selfies",
+                          world_context=None, override_hour=None):
+    """兼容入口：内部调用 skill_take_photo(photo_type='selfie')"""
+    desc = custom_prompt or scene or "casual selfie"
+    return skill_take_photo(desc, photo_type="selfie", output_dir=output_dir,
+                            world_context=world_context, override_hour=override_hour)
+
+
+def skill_generate_scene_photo(prompt_desc, output_dir="/home/ubuntu/chimera/selfies",
+                               world_context=None):
+    """兼容入口：内部调用 skill_take_photo(photo_type='scene')"""
+    return skill_take_photo(prompt_desc, photo_type="scene", output_dir=output_dir,
+                            world_context=world_context)
 
 
 # ============================================================
@@ -1187,11 +1407,16 @@ def execute_skill(skill_params, image_path=None, world_context=None):
 
     if skill == "search":
         return skill_web_search(skill_params.get("query", ""))
-    elif skill == "selfie":
-        return skill_generate_selfie(
-            skill_params.get("scene", "casual"),
-            skill_params.get("prompt") or skill_params.get("custom_prompt"),
-            world_context=world_context)
+    elif skill in ("selfie", "scene_photo", "photo", "mirror"):
+        desc = skill_params.get("prompt") or skill_params.get("custom_prompt") or skill_params.get("scene", "casual selfie")
+        # 确定 photo_type：优先用显式传入的，否则从 skill 名推断
+        photo_type = skill_params.get("photo_type")
+        if not photo_type:
+            photo_type = {"selfie": "selfie", "mirror": "mirror", "scene_photo": "scene", "photo": "scene"}.get(skill, "scene")
+        return skill_take_photo(
+            desc, photo_type=photo_type,
+            world_context=world_context,
+            override_hour=skill_params.get("override_hour"))
     elif skill == "see_image":
         if image_path:
             return skill_understand_image(image_path, skill_params.get("question", "这张图片里有什么？请用中文描述。"))
