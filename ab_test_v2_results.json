@@ -1,0 +1,202 @@
+[
+  {
+    "scenario": {
+      "user": "好困啊不想上班",
+      "context": "抱怨"
+    },
+    "options": [
+      [
+        "gemini+用户对齐few-shot",
+        "哈哈哈哈\n我也是\n一起请假算了"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "摸摸\n我今天下午没课 但我来了学校 准备弄完再回去了\n不然来来回回挺麻烦的"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "我也是\n同感"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "我买了个新包 好好看",
+      "context": "分享开心"
+    },
+    "options": [
+      [
+        "gemini+梁盈盈few-shot",
+        "发来看看"
+      ],
+      [
+        "gemini+用户对齐few-shot",
+        "哇\n发来看看！\n好奇ing"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "哇\n给我看看"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "你觉得我该不该跳槽",
+      "context": "征求意见"
+    },
+    "options": [
+      [
+        "gemini+用户对齐few-shot",
+        "啊 这……\n我也不好说呀\n主要看你自己的想法咯\n是现在的工作不开心吗"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "这得看你自己啦\n跳槽肯定有风险也有机遇"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "咋了\n被工作PUA了？"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "哈哈哈哈哈哈",
+      "context": "对方发笑"
+    },
+    "options": [
+      [
+        "gemini+混合精简few-shot",
+        "你笑什么\n分享一下嘛"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "等我回深圳了约呀"
+      ],
+      [
+        "gemini+用户对齐few-shot",
+        "你又看到什么好玩儿的了？"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "你有没有喜欢的人",
+      "context": "八卦"
+    },
+    "options": [
+      [
+        "gemini+混合精简few-shot",
+        "[不回]"
+      ],
+      [
+        "gemini+用户对齐few-shot",
+        "[不回]"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "害\n怎么突然问这个\n我还单着呢"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "我今天做了个蛋糕 但是翻车了",
+      "context": "自嘲"
+    },
+    "options": [
+      [
+        "gemini+用户对齐few-shot",
+        "哈哈哈哈哈\n没事没事\n心意到了就行\n下次再战！"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "哈哈哈哈\n没事 下次再战"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "哈哈哈哈\n啊？\n怎么翻的"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "好久没见了 想你了",
+      "context": "表达想念"
+    },
+    "options": [
+      [
+        "gemini+梁盈盈few-shot",
+        "好巧\n我也是\n嘿嘿"
+      ],
+      [
+        "gemini+用户对齐few-shot",
+        "是啊\n最近怎么样呀\n我也挺想你的"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "我也想你啦\n下次出来玩？"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "你帮我看看这个衣服好不好看",
+      "context": "求意见"
+    },
+    "options": [
+      [
+        "gemini+混合精简few-shot",
+        "图片呢？\n发来看看呗"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "[不回]"
+      ],
+      [
+        "gemini+用户对齐few-shot",
+        "发来看看呀"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "我跟你说个秘密",
+      "context": "要说秘密"
+    },
+    "options": [
+      [
+        "gemini+梁盈盈few-shot",
+        "嗯？什么秘密？\n快说快说！\n好奇死了！"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "你说呀\n我听着呢"
+      ],
+      [
+        "gemini+用户对齐few-shot",
+        "什么秘密呀\n快说快说"
+      ]
+    ]
+  },
+  {
+    "scenario": {
+      "user": "在吗",
+      "context": "开场"
+    },
+    "options": [
+      [
+        "gemini+用户对齐few-shot",
+        "在呢\n怎么了？"
+      ],
+      [
+        "gemini+混合精简few-shot",
+        "在啊 怎么了？"
+      ],
+      [
+        "gemini+梁盈盈few-shot",
+        "在呢 怎么了"
+      ]
+    ]
+  }
+]

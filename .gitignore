@@ -1,0 +1,7 @@
+__pycache__/
+*.pyc
+agent_output.log
+voice/
+*.jpg
+*.png
+*.mp3
