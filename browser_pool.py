@@ -156,16 +156,42 @@ def get_context():
 
         from playwright.sync_api import sync_playwright
 
+        # 尝试加载 stealth 反检测插件
+        stealth_obj = None
+        try:
+            from playwright_stealth import Stealth
+            stealth_obj = Stealth(
+                navigator_languages_override=('zh-CN', 'zh', 'en-US', 'en'),
+                navigator_platform_override='Linux x86_64',
+                navigator_vendor_override='Google Inc.',
+            )
+            print("🥷 playwright-stealth 已加载")
+        except ImportError:
+            print("⚠️ playwright-stealth 未安装，用普通模式")
+
         _playwright = sync_playwright().start()
+
+        # stealth hook: 在 launch 之前注入反检测脚本
+        if stealth_obj:
+            stealth_obj.hook_playwright_context(_playwright)
+
         _browser = _playwright.chromium.launch(
             headless=True,
-            args=['--no-sandbox', '--disable-dev-shm-usage']
+            args=[
+                '--no-sandbox',
+                '--disable-dev-shm-usage',
+                '--disable-blink-features=AutomationControlled',
+            ]
         )
         _context = _browser.new_context(
             user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
             viewport={"width": 1280, "height": 800},
             locale="zh-CN",
         )
+
+        # 对 context 应用 stealth
+        if stealth_obj:
+            stealth_obj.apply_stealth_sync(_context)
 
         # 加载 cookie
         domains = ["xiaohongshu", "douban", "weibo"]

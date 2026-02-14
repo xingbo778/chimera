@@ -771,7 +771,7 @@ WEIBO_TOPICS = [
 
 
 def skill_xhs_browse(keyword=None):
-    """刷小红书：用ddgs搜索小红书公开内容（headless被反爬拦截，降级方案）"""
+    """刷小红书：用 stealth browser 直接浏览小红书 explore 页，点进笔记看详情+评论"""
     import random as _random
     if not keyword:
         keyword = _random.choice(XHS_TOPICS)
@@ -779,38 +779,144 @@ def skill_xhs_browse(keyword=None):
     print(f"📱 刷小红书: {keyword}")
     content_parts = []
 
+    if not _get_browser_context:
+        return _xhs_fallback_search(keyword)
+
+    page = None
     try:
-        # 用ddgs搜索小红书内容
+        ctx = _get_browser_context()
+        page = ctx.new_page()
+
+        # 直接访问 explore 页（搜索页需要登录，骨架屏加载不出内容）
+        page.goto('https://www.xiaohongshu.com/explore', timeout=20000, wait_until='domcontentloaded')
+        page.wait_for_timeout(4000)
+
+        # 从 explore 页提取笔记列表
+        notes = page.evaluate("""
+            () => {
+                const items = [];
+                document.querySelectorAll('section.note-item').forEach(el => {
+                    const text = el.textContent?.trim() || '';
+                    // note-item 内部有 a 链接指向笔记详情
+                    const links = el.querySelectorAll('a[href*="/explore/"]');
+                    let link = '';
+                    for (const a of links) {
+                        // 优先取带 xsec_token 的链接（完整链接）
+                        if (a.href.includes('xsec_token')) {
+                            link = a.href;
+                            break;
+                        }
+                        if (!link) link = a.href;
+                    }
+                    if (text && text.length > 3) {
+                        items.push({title: text.substring(0, 100), link});
+                    }
+                });
+                return items;
+            }
+        """)
+
+        if notes and len(notes) > 0:
+            # 随机选一个笔记点进去看详情
+            note = _random.choice(notes[:8])
+            print(f"  📝 看笔记: {note.get('title', '')[:40]}")
+
+            link = note.get('link', '')
+            if link:
+                try:
+                    page.goto(link, timeout=15000, wait_until='domcontentloaded')
+                    page.wait_for_timeout(4000)
+
+                    detail = page.evaluate("""
+                        () => {
+                            // 标题
+                            const title = document.querySelector('#detail-title')?.textContent?.trim()
+                                || document.querySelector('[class*="title"]')?.textContent?.trim() || '';
+                            // 正文
+                            const desc = document.querySelector('#detail-desc')?.textContent?.trim()
+                                || document.querySelector('[class*="desc"]')?.textContent?.trim()
+                                || document.querySelector('.note-text')?.textContent?.trim() || '';
+                            // 评论：提取每条评论的核心文本，去掉作者名/日期/点赞等噪音
+                            const comments = [];
+                            const seen = new Set();
+                            // 尝试精确选择器
+                            let commentEls = document.querySelectorAll('.comment-inner-content, .reply-content, .content[class*="comment"]');
+                            if (commentEls.length === 0) {
+                                // 降级：取所有 comment 相关元素中最内层的
+                                commentEls = document.querySelectorAll('[class*="comment"]');
+                            }
+                            commentEls.forEach(el => {
+                                // 跳过包含子 comment 的容器（只取叶子节点）
+                                if (el.querySelector('[class*="comment"]')) return;
+                                const text = el.innerText?.trim();
+                                // 过滤掉太短的（点赞数等）和重复的
+                                if (text && text.length > 5 && text.length < 300 && !seen.has(text)) {
+                                    seen.add(text);
+                                    comments.push(text);
+                                }
+                            });
+                            return {
+                                title,
+                                content: desc.substring(0, 1500),
+                                comments: comments.slice(0, 15)
+                            };
+                        }
+                    """)
+
+                    if detail.get('title'):
+                        content_parts.append(f"标题: {detail['title']}")
+                    if detail.get('content'):
+                        content_parts.append(f"正文: {detail['content']}")
+                    if detail.get('comments'):
+                        content_parts.append("评论:")
+                        for c in detail['comments']:
+                            content_parts.append(f"  - {c}")
+                except Exception as e:
+                    print(f"  详情页抓取失败: {e}")
+                    # 降级：至少用列表页的标题
+                    content_parts.append(f"标题: {note.get('title', '')}")
+            else:
+                content_parts.append(f"标题: {note.get('title', '')}")
+
+        # 如果还是没内容，抓页面纯文本
+        if not content_parts:
+            text = page.evaluate("() => document.body.innerText.substring(0, 1500)")
+            if text and len(text) > 50:
+                content_parts.append(text)
+
+    except Exception as e:
+        print(f"小红书浏览异常: {e}")
+        return _xhs_fallback_search(keyword)
+    finally:
+        try:
+            if page:
+                page.close()
+        except:
+            pass
+
+    content = "\n".join(content_parts)
+    return {"success": bool(content), "content": content, "source": "xiaohongshu", "keyword": keyword}
+
+
+def _xhs_fallback_search(keyword):
+    """小红书降级方案：用ddgs搜索"""
+    content_parts = []
+    try:
         query = f"site:xiaohongshu.com {keyword}"
         results = skill_web_search(query, num_results=5)
         if not results.get("success") or not results.get("results"):
-            # 备用：不限制site
             results = skill_web_search(f"小红书 {keyword}", num_results=5)
-
         if results.get("results"):
-            content_parts.append(f"小红书搜索\"{keyword}\"结果:")
             for r in results["results"][:3]:
                 title = r.get("title", "")
-                body = r.get("body", "")
+                body = r.get("snippet", "")
                 if title:
-                    content_parts.append(f"  标题: {title}")
+                    content_parts.append(f"标题: {title}")
                 if body:
-                    content_parts.append(f"  内容: {body}")
+                    content_parts.append(f"内容: {body}")
                 content_parts.append("")
-
-                # 尝试抓取完整内容
-                url = r.get("href", "")
-                if url and "xiaohongshu.com" in url:
-                    try:
-                        fetched = skill_fetch_url(url)
-                        if fetched.get("success") and len(fetched.get("content", "")) > 100:
-                            content_parts.append(f"  详细内容: {fetched['content'][:800]}")
-                    except:
-                        pass
-
     except Exception as e:
-        print(f"小红书搜索异常: {e}")
-
+        print(f"小红书搜索降级也失败: {e}")
     content = "\n".join(content_parts)
     return {"success": bool(content), "content": content, "source": "xiaohongshu", "keyword": keyword}
 
@@ -1057,7 +1163,7 @@ def execute_skill(skill_params, image_path=None, world_context=None):
     elif skill == "selfie":
         return skill_generate_selfie(
             skill_params.get("scene", "casual"),
-            skill_params.get("custom_prompt"),
+            skill_params.get("prompt") or skill_params.get("custom_prompt"),
             world_context=world_context)
     elif skill == "see_image":
         if image_path:

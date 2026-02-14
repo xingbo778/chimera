@@ -1068,31 +1068,66 @@ async def _delayed_reply():
         memory.save()
         return
     
+    # replies 现在是结构化的 parts 列表: [{"type": "text"/"photo"/"voice", "content": "..."}]
     print(f"📝 准备回复 {len(replies)} 条: {replies}")
 
     memory.user_chat_history.append({"role": "user", "content": user_input})
     memory.emotional_state["loneliness"] = max(0, memory.emotional_state["loneliness"] - 20)
     memory.emotional_state["happiness"] = min(100, memory.emotional_state["happiness"] + 2)
 
-    for i, reply_text in enumerate(replies):
-        if i == 0:
-            await context.bot.send_chat_action(chat_id=chat_id, action="typing")
-            # 打字时间跟消息长度相关
-            typing_time = min(0.5 + len(reply_text) * 0.08, 4.0)
-            await asyncio.sleep(typing_time)
-        else:
-            await context.bot.send_chat_action(chat_id=chat_id, action="typing")
-            await asyncio.sleep(random.uniform(0.5, 1.5))
+    # 收集文字部分用于聊天记录
+    text_parts = [p["content"] for p in replies if p["type"] == "text"]
+    full_response = "\n".join(text_parts) if text_parts else ""
 
-        await context.bot.send_message(chat_id=chat_id, text=reply_text)
-        print(f"💬 小悦: {reply_text}")
+    for i, part in enumerate(replies):
+        if part["type"] == "text":
+            if i == 0:
+                await context.bot.send_chat_action(chat_id=chat_id, action="typing")
+                typing_time = min(0.5 + len(part["content"]) * 0.08, 4.0)
+                await asyncio.sleep(typing_time)
+            else:
+                await context.bot.send_chat_action(chat_id=chat_id, action="typing")
+                await asyncio.sleep(random.uniform(0.5, 1.5))
+            await context.bot.send_message(chat_id=chat_id, text=part["content"])
+            print(f"💬 小悦: {part['content']}")
 
-    full_response = "\n".join(replies)
-    memory.user_chat_history.append({"role": "assistant", "content": full_response})
+        elif part["type"] == "photo":
+            await context.bot.send_chat_action(chat_id=chat_id, action="upload_photo")
+            await asyncio.sleep(random.uniform(1.0, 2.0))
+            photo_desc = part["content"]
+            photo_params = {"skill": "selfie", "prompt": photo_desc}
+            result = execute_skill(photo_params, world_context=world_context)
+            if result.get("success") and result.get("filepath"):
+                try:
+                    with open(result["filepath"], "rb") as photo_file:
+                        await context.bot.send_photo(chat_id=chat_id, photo=photo_file)
+                    print(f"📷 发送图片: {photo_desc}")
+                except Exception as e:
+                    print(f"发送图片失败: {e}")
+            else:
+                print(f"图片生成失败: {result}")
+
+        elif part["type"] == "voice":
+            await context.bot.send_chat_action(chat_id=chat_id, action="record_voice")
+            await asyncio.sleep(random.uniform(1.0, 2.0))
+            voice_text = part["content"]
+            tts_result = await tts_edge(voice_text)
+            if tts_result.get("success") and tts_result.get("filepath"):
+                try:
+                    with open(tts_result["filepath"], "rb") as voice_file:
+                        await context.bot.send_voice(chat_id=chat_id, voice=voice_file)
+                    print(f"🎙️ 发送语音: {voice_text}")
+                except Exception as e:
+                    print(f"发送语音失败: {e}")
+
+    if full_response:
+        memory.user_chat_history.append({"role": "assistant", "content": full_response})
     memory.log_event(f"跟{memory.user_name or '朋友'}聊天", importance=4)
 
-    # 自拍和语音在文字回复之后发
-    if skill_name == "selfie":
+    # 如果用户主动请求了skill但LLM没有生成对应标签，仍然执行
+    has_photo = any(p["type"] == "photo" for p in replies)
+    has_voice = any(p["type"] == "voice" for p in replies)
+    if skill_name == "selfie" and not has_photo:
         await context.bot.send_chat_action(chat_id=chat_id, action="upload_photo")
         result = execute_skill(skill_params, world_context=world_context)
         if result.get("success") and result.get("filepath"):
@@ -1101,10 +1136,8 @@ async def _delayed_reply():
                     await context.bot.send_photo(chat_id=chat_id, photo=photo_file)
             except Exception as e:
                 print(f"发送图片失败: {e}")
-
-    elif skill_name == "voice":
-        voice_text = full_response
-        tts_result = await tts_edge(voice_text)
+    elif skill_name == "voice" and not has_voice:
+        tts_result = await tts_edge(full_response or "嗯")
         if tts_result.get("success") and tts_result.get("filepath"):
             try:
                 with open(tts_result["filepath"], "rb") as voice_file:
@@ -1349,7 +1382,14 @@ async def _generate_natural_reply(user_input, user_texts):
     else:
         messages.append({"role": "user", "content": user_input})
 
-    reply_instruction = """\n\n每条消息占一行。回几条看情况。不回就写[不回]。"""
+    reply_instruction = """\n\n每条消息占一行。回几条看情况。不回就写[不回]。
+你可以发图片或语音，用以下格式：
+- [photo:描述] — 发一张照片，描述你想发的内容，比如 [photo:自拍] [photo:窗外的风景] [photo:我画的水彩]
+- [voice:内容] — 发一条语音，比如 [voice:晚安啊]
+可以混合使用，比如先发文字再发图：
+给你看看我今天拍的
+[photo:自拍]
+"""
 
     full_system = system + reply_instruction
 
@@ -1358,7 +1398,7 @@ async def _generate_natural_reply(user_input, user_texts):
         response = client.chat.completions.create(
             model=LLM_MODEL,
             messages=full_messages,
-            max_tokens=150,
+            max_tokens=200,
             temperature=1.0,
         )
         raw = response.choices[0].message.content
@@ -1366,28 +1406,46 @@ async def _generate_natural_reply(user_input, user_texts):
         print(f"LLM调用失败: {e}")
         import traceback
         traceback.print_exc()
-        return ["嗯"]
+        return [{"type": "text", "content": "嗯"}]
 
     if not raw:
-        return ["嗯"]
+        return [{"type": "text", "content": "嗯"}]
 
     raw = raw.strip()
 
     if raw == "[不回]" or raw == "[不回复]" or raw.strip() == "":
         return []
 
+    import re
     lines = [l.strip() for l in raw.split("\n") if l.strip()]
-    replies = []
+    parts = []
     for line in lines:
         cleaned = line
+        # 去掉序号前缀
         if len(line) > 2 and line[0].isdigit() and line[1] in ".）)":
             cleaned = line[2:].strip()
         elif len(line) > 3 and line[0] == "[" and line[2] == "]":
             cleaned = line[3:].strip()
-        if cleaned and cleaned != "[不回]":
-            replies.append(cleaned)
+        if not cleaned or cleaned == "[不回]":
+            continue
 
-    return replies[:4]
+        # 解析多模态标签
+        photo_match = re.match(r'\[photo[:：](.+?)\]', cleaned)
+        voice_match = re.match(r'\[voice[:：](.+?)\]', cleaned)
+        if photo_match:
+            parts.append({"type": "photo", "content": photo_match.group(1).strip()})
+        elif voice_match:
+            parts.append({"type": "voice", "content": voice_match.group(1).strip()})
+        else:
+            # 清理掉文本中嵌入的括号标记（如 "（发送图片）")
+            for marker in ["（发送图片）", "（发图）", "（发照片）", "(发送图片)", "(发图)"]:
+                if marker in cleaned:
+                    parts.append({"type": "photo", "content": "自拍"})
+                    cleaned = cleaned.replace(marker, "").strip()
+            if cleaned:
+                parts.append({"type": "text", "content": cleaned})
+
+    return parts[:6]
 
 
 def _extract_user_info_async(recent_chat):
@@ -1500,7 +1558,7 @@ async def main():
     print(f"📝 STYLE: {len(STYLE)} chars")
     print(f"📚 知识库: {len(os.listdir(memory.knowledge_dir))} 条")
 
-    telegram_app = Application.builder().token(TELEGRAM_TOKEN).build()
+    telegram_app = Application.builder().token(TELEGRAM_TOKEN).read_timeout(60).write_timeout(60).connect_timeout(30).build()
 
     telegram_app.add_handler(CommandHandler("start", start_command))
     telegram_app.add_handler(CommandHandler("status", status_command))
