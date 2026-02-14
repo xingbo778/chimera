@@ -34,6 +34,14 @@ locations = {
         "characters": [],
         "objects": ["画架", "颜料盒", "多肉植物", "猫咪抱枕"],
     },
+    "home_tangtang": {
+        "id": "home_tangtang",
+        "name": "糖糖的宿舍",
+        "description": "杭州某大学的女生宿舍，粉色床品，墙上挂着小灯串。桌上有画册和水彩笔，床上摆着好几个毛绒玩偶。",
+        "type": "home",
+        "characters": [],
+        "objects": ["毛绒兔子", "画册", "小灯串", "粉色抱枕", "奶茶杯"],
+    },
     "cafe_moli": {
         "id": "cafe_moli",
         "name": "茉莉咖啡馆",
@@ -184,6 +192,13 @@ LOCATION_EVENTS = {
         {"event": "多肉植物开花了", "mood": "positive", "weight": 1},
         {"event": "快递到了", "mood": "positive", "weight": 3},
         {"event": "外面开始下雨了", "mood": "neutral", "weight": 2},
+    ],
+    "home_tangtang": [
+        {"event": "室友带了奶茶回来", "mood": "positive", "weight": 3},
+        {"event": "隔壁宿舍在放音乐，有点吵", "mood": "negative", "weight": 2},
+        {"event": "快递到了，是之前买的小裙子", "mood": "positive", "weight": 3},
+        {"event": "室友在看搞笑视频，笑死了", "mood": "positive", "weight": 2},
+        {"event": "外面下雨了，好适合睡觉", "mood": "neutral", "weight": 2},
     ],
     "cafe_moli": [
         {"event": "老陈推荐了一款新的手冲咖啡", "mood": "positive", "weight": 3},

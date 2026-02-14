@@ -182,6 +182,10 @@ LOCATION_TO_ENV = {
         "env": "cozy small apartment, warm indoor lighting, potted succulents on windowsill, small desk with painting supplies, cat pillow on sofa",
         "objects": ["painting easel", "watercolor palette", "succulent plants", "cat pillow"],
     },
+    "home_tangtang": {
+        "env": "cute college dorm room, pink bedding, fairy lights on wall, plush toys on bed, small desk with sketchbook and watercolors, warm cozy atmosphere",
+        "objects": ["plush bunny", "sketchbook", "fairy lights", "pink pillow", "matcha latte"],
+    },
     "cafe_moli": {
         "env": "cozy wooden cafe interior, warm amber lighting, wooden tables, chalkboard menu on wall, coffee machine in background",
         "objects": ["coffee cup", "latte art", "pastry plate", "book on table"],
@@ -281,6 +285,7 @@ def _location_type_from_id(location_id):
     """从location_id推断地点类型"""
     mapping = {
         "home_xiaoyue": "home",
+        "home_tangtang": "home",
         "cafe_moli": "cafe",
         "park_central": "park",
         "studio_art": "studio",
@@ -383,7 +388,7 @@ SCENE_REF_URLS = {
 
 def _get_scene_ref_url(location_id, hour):
     """根据地点和时间选择场景参考图"""
-    if location_id == "home_xiaoyue":
+    if location_id in ("home_xiaoyue", "home_tangtang"):
         if hour >= 21 or hour < 7:
             return SCENE_REF_URLS["home_bedroom"]
         else:
@@ -452,7 +457,7 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
 
     # 衣着
     loc_type = {
-        "home_xiaoyue": "home", "cafe_moli": "cafe", "park_central": "park",
+        "home_xiaoyue": "home", "home_tangtang": "home", "cafe_moli": "cafe", "park_central": "park",
         "studio_art": "studio", "company_startup": "work",
         "market_street": "outdoor", "library": "indoor",
     }.get(location_id, "home")
