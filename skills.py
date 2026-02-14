@@ -825,7 +825,12 @@ def skill_xhs_browse(keyword=None):
             if link:
                 try:
                     page.goto(link, timeout=15000, wait_until='domcontentloaded')
-                    page.wait_for_timeout(4000)
+                    page.wait_for_timeout(3000)
+                    # 滚动到评论区，触发懒加载
+                    page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.5)")
+                    page.wait_for_timeout(1500)
+                    page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.8)")
+                    page.wait_for_timeout(1500)
 
                     detail = page.evaluate("""
                         () => {
@@ -836,25 +841,47 @@ def skill_xhs_browse(keyword=None):
                             const desc = document.querySelector('#detail-desc')?.textContent?.trim()
                                 || document.querySelector('[class*="desc"]')?.textContent?.trim()
                                 || document.querySelector('.note-text')?.textContent?.trim() || '';
-                            // 评论：提取每条评论的核心文本，去掉作者名/日期/点赞等噪音
+                            // 评论：基于实际DOM结构 .comment-item
                             const comments = [];
                             const seen = new Set();
-                            // 尝试精确选择器
-                            let commentEls = document.querySelectorAll('.comment-inner-content, .reply-content, .content[class*="comment"]');
-                            if (commentEls.length === 0) {
-                                // 降级：取所有 comment 相关元素中最内层的
-                                commentEls = document.querySelectorAll('[class*="comment"]');
-                            }
-                            commentEls.forEach(el => {
-                                // 跳过包含子 comment 的容器（只取叶子节点）
-                                if (el.querySelector('[class*="comment"]')) return;
-                                const text = el.innerText?.trim();
-                                // 过滤掉太短的（点赞数等）和重复的
-                                if (text && text.length > 5 && text.length < 300 && !seen.has(text)) {
-                                    seen.add(text);
-                                    comments.push(text);
+                            // 只取顶层 comment-item（排除子评论容器）
+                            document.querySelectorAll('.parent-comment > .comment-item, .comment-item:not(.comment-item-sub)').forEach(el => {
+                                // 提取评论文本：找 .comment-inner-container 内的文本
+                                const inner = el.querySelector('.comment-inner-container');
+                                if (!inner) return;
+                                // 取所有文本节点，跳过作者名、日期、按钮等
+                                const textParts = [];
+                                // 作者名
+                                const author = el.querySelector('.author-wrapper .name')?.textContent?.trim() || '';
+                                // 评论内容：可能在 .comment-picture 后面的文本节点，或直接在 inner 中
+                                const contentEl = inner.querySelector('.content, .comment-content');
+                                let commentText = '';
+                                if (contentEl) {
+                                    commentText = contentEl.textContent?.trim();
+                                } else {
+                                    // 降级：取 inner 的所有文本，去掉作者名和日期
+                                    commentText = inner.textContent?.trim();
+                                    // 去掉常见噪音
+                                    commentText = commentText.replace(/[0-9]+天前|[0-9]+小时前|昨天|[0-9]+分钟前/g, '')
+                                        .replace(/赞|回复|作者|置顶评论/g, '')
+                                        .replace(/\s+/g, ' ').trim();
+                                }
+                                if (commentText && commentText.length > 2 && !seen.has(commentText)) {
+                                    seen.add(commentText);
+                                    const entry = author ? `${author}: ${commentText}` : commentText;
+                                    comments.push(entry);
                                 }
                             });
+                            // 如果上面没抓到，降级用更宽松的选择器
+                            if (comments.length === 0) {
+                                document.querySelectorAll('.comment-item').forEach(el => {
+                                    const text = el.innerText?.trim();
+                                    if (text && text.length > 5 && text.length < 500 && !seen.has(text)) {
+                                        seen.add(text);
+                                        comments.push(text.substring(0, 200));
+                                    }
+                                });
+                            }
                             return {
                                 title,
                                 content: desc.substring(0, 1500),
