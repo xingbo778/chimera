@@ -23,6 +23,7 @@ from skills import (
     analyze_photo_request,
 )
 from style_rag import StyleRAG
+from memory_rag import MemoryRAG
 from agent_config import AgentConfig
 
 from telegram import Update
@@ -478,6 +479,16 @@ class AgentRuntime:
             few_shot_path=config.few_shot_path,
         )
 
+        # 初始化 MemoryRAG
+        self.memory_rag = MemoryRAG(
+            persist_dir=os.path.join(config.base_dir, "memory_rag_db"),
+        )
+        # 从现有数据导入（增量，已有的会跳过）
+        imported_events = self.memory_rag.import_from_daily_log(self.memory._today_events)
+        imported_knowledge = self.memory_rag.import_from_knowledge_dir(self.memory.knowledge_dir)
+        stats = self.memory_rag.stats()
+        print(f"🧠 MemoryRAG: {stats['events']} events, {stats['knowledge']} knowledge")
+
         # 设置 skills 的参考图
         import skills
         if config.reference_face_url:
@@ -522,10 +533,17 @@ class AgentRuntime:
             f"孤独感：{self.memory.emotional_state['loneliness']}/100",
         ]
         if recent:
-            context_parts.append(f"最近做了：{'; '.join(recent[-2:])}")
-        if self.memory._last_action if hasattr(self.memory, '_last_action') else None:
-            la = self.memory._last_action
-            context_parts.append(f"上一个行动：{la['type']} - {la.get('feedback', '')}")
+            context_parts.append(f"最近发生的事：{'; '.join(recent[-2:])}")
+
+        # 行为反馈循环：注入最近几次动作的结果
+        action_history = getattr(self.memory, '_action_history', [])
+        if action_history:
+            history_lines = []
+            for ah in action_history[-3:]:
+                result_emoji = "✅" if ah.get('success', True) else "❌"
+                history_lines.append(f"  {result_emoji} {ah['type']}: {ah.get('feedback', '')[:40]}")
+            context_parts.append("最近的行动结果：\n" + "\n".join(history_lines))
+
         if recent_knowledge:
             k = recent_knowledge[0]
             context_parts.append(f"最近看到：{k['topic']}")
@@ -548,7 +566,7 @@ class AgentRuntime:
 - rest: 休息/发呆
 - learn: 看书/学东西
 
-回复JSON格式：{{"action": "动作", "desc": "简短描述", "platform": "xhs/weibo/douban(仅scroll_feed时)"}}"""
+回复JSON格式：{{"action": "动作", "desc": "简短描述", "platform": "xhs/weibo/douban(仅scroll_feed时)", "follow_up": "做完这件事后想接着做什么，没有则留空"}}"""
 
         result = call_llm_json(self.SOUL, prompt, max_tokens=100, temperature=0.9)
         if not result:
@@ -609,6 +627,7 @@ class AgentRuntime:
                     content = result["content"]
                     topic = result.get("title", platform)
                     self.memory.add_knowledge(topic, content[:500], source=platform)
+                    self.memory_rag.add_knowledge(topic, content[:500], source=platform)
                     self._try_learn_style_from_content(content)
             except Exception as e:
                 print(f"浏览失败: {e}")
@@ -642,6 +661,9 @@ class AgentRuntime:
                     self.memory.add_knowledge(
                         result.get("title", "学习"), result["content"][:500], source="学习",
                     )
+                    self.memory_rag.add_knowledge(
+                        result.get("title", "学习"), result["content"][:500], source="学习",
+                    )
             except:
                 pass
             recent_k = self.memory.get_recent_knowledge(1)
@@ -659,7 +681,22 @@ class AgentRuntime:
 
         self.memory.current_activity = desc or feedback
         self.memory._last_action = {"type": action_type, "desc": desc, "feedback": feedback}
+
+        # 行为反馈循环：记录动作结果（保留最近 10 条）
+        if not hasattr(self.memory, '_action_history'):
+            self.memory._action_history = []
+        success = bool(feedback and "失败" not in feedback and "错误" not in feedback)
+        self.memory._action_history.append({
+            "type": action_type,
+            "desc": desc,
+            "feedback": feedback,
+            "success": success,
+            "timestamp": time.time(),
+        })
+        self.memory._action_history = self.memory._action_history[-10:]  # 只保留最近 10 条
+
         self.memory.log_event(f"{feedback}", importance=3)
+        self.memory_rag.add_event(feedback, importance=3)
         print(f"🎯 [{beijing_now().strftime('%H:%M')}] {action_type}: {desc} → {feedback}")
 
     # ============================================================
@@ -735,7 +772,7 @@ class AgentRuntime:
     # 聊天系统
     # ============================================================
 
-    def build_chat_system_prompt(self):
+    def build_chat_system_prompt(self, user_input=""):
         emotion = self.memory.get_emotion_tag()
         recent = self.memory.get_today_events(3)
         long_term = self.memory.get_long_term()
@@ -743,17 +780,18 @@ class AgentRuntime:
         now = beijing_now()
         hour = now.hour
         location_name = LOCATION_NAMES.get(self.memory.current_location, self.memory.current_location)
-        recent_knowledge = self.memory.get_recent_knowledge(2)
 
         life_context = ""
         if recent:
             life_context = "\n最近发生的事：\n" + "\n".join(f"- {e}" for e in recent[-2:])
 
+        # 用 MemoryRAG 语义搜索相关记忆（替代固定的 recent_knowledge）
         knowledge_context = ""
-        if recent_knowledge:
-            knowledge_context = "\n最近看过的：\n" + "\n".join(
-                f"- {k['topic']}: {k['summary'][:80]}" for k in recent_knowledge
-            )
+        if user_input:
+            search_results = self.memory_rag.search(user_input, n_events=3, n_knowledge=2, min_importance=3)
+            memory_context = self.memory_rag.format_for_context(search_results, max_chars=300)
+            if memory_context:
+                knowledge_context = "\n" + memory_context
 
         # style_guide 从配置中获取，不硬编码
         style_guide = self.config.style_guide
@@ -775,7 +813,7 @@ class AgentRuntime:
 
     async def _generate_natural_reply(self, user_input, user_texts):
         """让LLM自己决定回不回、回几条、每条什么内容"""
-        system = self.build_chat_system_prompt()
+        system = self.build_chat_system_prompt(user_input=user_input)
 
         # 用 StyleRAG 动态检索最相关的 few-shot 样本
         recent_history = self.memory.user_chat_history[-20:]
@@ -1127,6 +1165,7 @@ class AgentRuntime:
                 now = beijing_now()
                 entry = f"[{now.strftime('%m/%d %H:%M')}] {result.strip()}"
                 self.memory.log_event(entry, importance=6)
+                self.memory_rag.add_event(entry, importance=6)
                 current = self.memory.get_long_term()
                 section = current.split("## 关于用户")[-1].split("## ")[0] if "## 关于用户" in current else ""
                 if result.strip() not in section:
@@ -1309,6 +1348,33 @@ class AgentRuntime:
     # 自主循环
     # ============================================================
 
+    def _daily_summary(self):
+        """每日记忆总结：让LLM总结当天的关键事件，写入长期记忆"""
+        today_events = self.memory.get_today_events(20)
+        if not today_events or len(today_events) < 3:
+            return  # 事件太少，不值得总结
+
+        events_text = "\n".join(f"- {e}" for e in today_events)
+        user_name = self.memory.user_name or "朋友"
+
+        try:
+            summary = call_llm(
+                f"你是{self.config.agent_name}。请用第一人称总结今天发生的事情，用简短的日记体。只记录有意义的事，不要流水账。如果和{user_name}聊了天，记录聊了什么。",
+                f"今天的事件：\n{events_text}",
+                max_tokens=200, temperature=0.3,
+            )
+            if summary and len(summary.strip()) > 10:
+                now = beijing_now()
+                date_str = now.strftime('%m/%d')
+                entry = f"[{date_str} 日记] {summary.strip()}"
+                self.memory.update_long_term("最近日记", entry)
+                self.memory_rag.add_event(entry, importance=7)
+                self.memory._today_events = []  # 清空当天事件，已总结
+                self.memory.save()
+                print(f"📖 每日总结完成: {summary.strip()[:60]}")
+        except Exception as e:
+            print(f"每日总结失败: {e}")
+
     def autonomous_loop(self, loop):
         print("🧠 自主循环启动...")
         result = self.world.register()
@@ -1317,6 +1383,7 @@ class AgentRuntime:
         print("🌍 世界已启动（实时同步模式）")
 
         tick_count = 0
+        last_summary_date = None
         while True:
             try:
                 ws = self.world.get_world_state()
@@ -1334,15 +1401,31 @@ class AgentRuntime:
                             self.memory.update_emotion(mood)
 
                 if tick_count % 5 == 0:
-                    action = self.autonomous_decide()
-                    if action:
+                    # 轻量 ReAct：允许连续 2-3 步动作
+                    for step in range(3):
+                        action = self.autonomous_decide()
+                        if not action:
+                            break
                         self.execute_autonomous_action(action, loop)
-                        self.memory.save()
+
+                        # 检查是否需要后续动作（只有特定动作类型可以触发后续）
+                        action_type = action.get("action", "")
+                        follow_up = action.get("follow_up", "")
+                        if not follow_up and action_type not in ("scroll_feed", "learn"):
+                            break  # 没有后续意图，停止
+                        if step < 2:
+                            print(f"🔄 ReAct step {step+1} → 继续决策...")
+                    self.memory.save()
 
                 if tick_count % 10 == 0:
                     self.memory.save()
 
+                # 每日总结：凌晨1点触发（每天只触发一次）
                 hour = beijing_now().hour
+                today = beijing_now().strftime('%Y-%m-%d')
+                if hour == 1 and last_summary_date != today:
+                    self._daily_summary()
+                    last_summary_date = today
                 if 7 <= hour < 23:
                     self.memory.emotional_state["energy"] = max(0, self.memory.emotional_state["energy"] - 0.5)
                     self.memory.emotional_state["loneliness"] = min(100, self.memory.emotional_state["loneliness"] + 0.3)
