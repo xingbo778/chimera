@@ -1,0 +1,53 @@
+{
+  "draw_watercolor": {
+    "skill_id": "draw_watercolor",
+    "name": "画水彩画",
+    "description": "用水彩颜料画画，喜欢画风景和小动物",
+    "learned_from": "从小就喜欢画画",
+    "learned_at": "2026-02-15T20:32:32.836783+08:00",
+    "proficiency": 0.6,
+    "type": "creative",
+    "execution": {
+      "method": "llm_simulate",
+      "url": null,
+      "steps_hint": null
+    },
+    "use_count": 0,
+    "last_used": null,
+    "cooldown_hours": 2
+  },
+  "write_diary": {
+    "skill_id": "write_diary",
+    "name": "写日记",
+    "description": "在本子上写日记，记录每天的心情和想法",
+    "learned_from": "一直有写日记的习惯",
+    "learned_at": "2026-02-15T20:32:32.837256+08:00",
+    "proficiency": 0.7,
+    "type": "creative",
+    "execution": {
+      "method": "llm_simulate",
+      "url": null,
+      "steps_hint": null
+    },
+    "use_count": 0,
+    "last_used": null,
+    "cooldown_hours": 2
+  },
+  "take_film_photo": {
+    "skill_id": "take_film_photo",
+    "name": "拍胶片照片",
+    "description": "用胶片相机拍照，喜欢拍日常生活中的小细节",
+    "learned_from": "大学时开始玩胶片",
+    "learned_at": "2026-02-15T20:32:32.837431+08:00",
+    "proficiency": 0.5,
+    "type": "creative",
+    "execution": {
+      "method": "llm_simulate",
+      "url": null,
+      "steps_hint": null
+    },
+    "use_count": 0,
+    "last_used": null,
+    "cooldown_hours": 2
+  }
+}
