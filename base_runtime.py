@@ -28,6 +28,8 @@ from agent_config import AgentConfig
 from sticker_manager import StickerManager, collect_sticker_set
 from life_events import generate_life_detail, LifeBuffer
 from skill_learner import SkillRegistry, discover_skills_from_content, execute_skill_simulated, init_seed_skills
+from skill_connector import should_attempt_real, attempt_real_execution
+from capability_memory import CapabilityMemory
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -574,6 +576,10 @@ class AgentRuntime:
         # 常量
         self.TICK_INTERVAL = 60
 
+        # 能力记忆 — 从经验中自主发现的能力
+        self.capability_memory = CapabilityMemory(config.base_dir)
+        print(f"💡 能力记忆: {self.capability_memory.get_capability_count()} 个已知能力")
+
         # 已处理过的知识内容hash，避免重复触发技能发现
         self._processed_knowledge_hashes = set()
 
@@ -747,6 +753,13 @@ class AgentRuntime:
                         self._send_proactive_photo(self.authorized_chat_id, result["filepath"], desc), loop
                     )
                 self.memory.record_photo("自拍", desc, result["filepath"])
+                # 💡 能力涌现：记录“我能生成图片”的经验
+                self.capability_memory.record_capability(
+                    "generate_image",
+                    "生成图片，可以画画、拍照、做配图",
+                    example=f"拍了一张{desc[:15]}",
+                    source_action="take_selfie"
+                )
             self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 3)
             feedback = "拍了张照片"
 
@@ -770,6 +783,14 @@ class AgentRuntime:
                     self.memory.add_knowledge(topic, content[:500], source=platform)
                     self.memory_rag.add_knowledge(topic, content[:500], source=platform)
                     self._try_learn_style_from_content(content)
+                    # 💡 能力涌现：记录“我能浏览网页”的经验
+                    platform_cn = {"xhs": "小红书", "douban": "豆瓣", "weibo": "微博"}.get(platform, platform)
+                    self.capability_memory.record_capability(
+                        "browse_web",
+                        "打开网页看内容，能看到文字和图片",
+                        example=f"刷{platform_cn}看到了{topic[:15]}",
+                        source_action="scroll_feed"
+                    )
                     # 生活细节：用真实浏览内容作为体验
                     # 如果 topic 就是平台名，用 content 前几个字代替
                     if topic in ("xhs", "douban", "weibo", platform):
@@ -864,12 +885,84 @@ class AgentRuntime:
 
             if skill:
                 context_str = f"{LOCATION_NAMES.get(location, location)}，{weather}，{hour}点"
-                experience = execute_skill_simulated(skill, self.SOUL, context=context_str)
-                self.skill_registry.use_skill(skill["skill_id"])
-                self.life_buffer.add(experience, "use_skill")
-                self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 5)
-                self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
-                feedback = experience
+                world_ctx = {
+                    "location_id": location,
+                    "hour": hour,
+                    "weather": weather,
+                    "activity": desc,
+                }
+                
+                # 🌟 涌现机制：先判断是否应该尝试真实执行
+                real_result = None
+                if should_attempt_real(skill, self.life_buffer, self.tick_count):
+                    real_result = attempt_real_execution(
+                        skill, self.SOUL, context=context_str, world_context=world_ctx,
+                        capability_memory=self.capability_memory
+                    )
+                
+                if real_result and real_result.get("success"):
+                    # 🌟 真实执行成功！
+                    artifact = real_result.get("artifact")
+                    # 用 LLM 生成自然的体验描述（结合真实结果）
+                    real_desc_prompt = f"""你刚刚真的{skill['name']}了！
+结果：{real_result.get('description', '')}
+情境：{context_str}
+用一两句话描述你的体验和感受。要具体、自然。"""
+                    experience = call_llm(self.SOUL, real_desc_prompt, max_tokens=60, temperature=0.9)
+                    if not experience:
+                        experience = real_result.get("description", f"用了{skill['name']}")
+                    
+                    self.skill_registry.use_skill(skill["skill_id"])
+                    self.life_buffer.add(experience, "use_skill", source="real", artifact=artifact)
+                    
+                    # 真实执行给更多情绪奖励
+                    self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 10)
+                    self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 8)
+                    
+                    # 标记技能为可真实执行
+                    if skill["skill_id"] in self.skill_registry.skills:
+                        self.skill_registry.skills[skill["skill_id"]]["execution"]["method"] = "real"
+                        self.skill_registry._save()
+                    
+                    # 如果有图片/视频产出物，主动发给用户
+                    if artifact and artifact.get("path") and self.authorized_chat_id and self.telegram_app:
+                        artifact_type = artifact.get("type", "image")
+                        filepath = artifact["path"]
+                        if artifact_type == "image" and os.path.exists(filepath):
+                            share_msg = call_llm(
+                                self.SOUL,
+                                f"你刚{skill['name']}，做出了一个作品。想分享给朋友看。写一句自然的分享语，比如'看我画的！'或'嘿嘿画了个东西'。一句话就好。",
+                                max_tokens=20, temperature=0.9
+                            ) or "看我做的！"
+                            asyncio.run_coroutine_threadsafe(
+                                self._send_proactive_photo(self.authorized_chat_id, filepath, share_msg), loop
+                            )
+                            self._last_proactive_time = time.time()
+                    
+                    # 💡 能力涌现：记录涌现过程中使用的原子能力
+                    recipe = real_result.get("_recipe")
+                    if recipe:
+                        for step in recipe.get("steps", []):
+                            action_name = step.get("action", "")
+                            step_desc = step.get("description", "")
+                            if action_name:
+                                self.capability_memory.record_capability(
+                                    action_name,
+                                    step_desc or f"能够{action_name}",
+                                    example=f"在{skill['name']}中使用",
+                                    source_action="skill_emergence"
+                                )
+                    
+                    print(f"🌟 涌现成功！{skill['name']} 真实执行，产出: {artifact}")
+                    feedback = experience
+                else:
+                    # 降级到模拟执行
+                    experience = execute_skill_simulated(skill, self.SOUL, context=context_str)
+                    self.skill_registry.use_skill(skill["skill_id"])
+                    self.life_buffer.add(experience, "use_skill", source="imagined")
+                    self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 5)
+                    self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
+                    feedback = experience
             else:
                 feedback = "想用技能但没找到合适的"
 
@@ -1726,11 +1819,11 @@ class AgentRuntime:
         self.world.start_world()
         print("🌍 世界已启动（实时同步模式）")
 
-        tick_count = 0
+        self.tick_count = 0
         last_summary_date = None
         while True:
             try:
-                print(f"🔁 自主循环 tick={tick_count}")
+                print(f"🔁 自主循环 tick={self.tick_count}")
                 ws = self.world.get_world_state()
                 if not ws:
                     print("🔁 world state 为空，等待...")
@@ -1770,7 +1863,7 @@ class AgentRuntime:
                                 print(f"💬 回复{sender}: {reply}")
 
                 # 每 10 个 tick 尝试从最近浏览内容中发现新技能
-                if tick_count > 0 and tick_count % 10 == 0:
+                if self.tick_count > 0 and self.tick_count % 10 == 0:
                     recent_k = self.memory.get_recent_knowledge(3)
                     for k in recent_k:
                         content = k.get("summary", k.get("content", ""))
@@ -1800,8 +1893,8 @@ class AgentRuntime:
                         except Exception as e:
                             print(f"技能发现失败: {e}")
 
-                if tick_count % 5 == 0:
-                    print(f"🔁 开始自主决策 (tick={tick_count})")
+                if self.tick_count % 5 == 0:
+                    print(f"🔁 开始自主决策 (tick={self.tick_count})")
                     # 轻量 ReAct：允许连续 2-3 步动作
                     with self._memory_lock:
                         for step in range(3):
@@ -1822,11 +1915,11 @@ class AgentRuntime:
                                 print(f"🔄 ReAct step {step+1} → 继续决策...")
                         self.memory.save()
 
-                if tick_count % 10 == 0:
+                if self.tick_count % 10 == 0:
                     self.memory.save()
 
                 # BUG-J: 每 100 tick（约 1.5 小时）清理一次过期文件
-                if tick_count % 100 == 0 and tick_count > 0:
+                if self.tick_count % 100 == 0 and self.tick_count > 0:
                     self._cleanup_old_files()
 
                 # 每日总结：凌晨1点触发（每天只触发一次）
@@ -1855,7 +1948,7 @@ class AgentRuntime:
                     self.memory.emotional_state["energy"] = min(100, self.memory.emotional_state["energy"] + 2)
                     self.memory.emotional_state["stress"] = max(0, self.memory.emotional_state["stress"] - 1)
 
-                tick_count += 1
+                self.tick_count += 1
                 time.sleep(self.TICK_INTERVAL)
 
             except Exception as e:
