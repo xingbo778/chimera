@@ -394,6 +394,85 @@ def get_login_status() -> dict:
 
 
 # ============================================================
+# Cookie 持久化
+# ============================================================
+
+COOKIE_DIR = os.path.expanduser("~/.browser_cookies")
+
+PLATFORM_DOMAINS = {
+    "xiaohongshu": [".xiaohongshu.com", "xiaohongshu.com"],
+    "weibo": [".weibo.com", "weibo.com", ".weibo.cn", ".sina.com.cn", "sina.com.cn"],
+    "douban": [".douban.com", "douban.com"],
+}
+
+
+def save_cookies(platform: Optional[str] = None) -> dict:
+    """
+    保存浏览器 cookie 到磁盘。
+    如果指定 platform，只保存该平台的 cookie；
+    否则保存所有平台 + 全量 cookie。
+    返回各平台保存的 cookie 数量。
+    """
+    ctx = get_context()
+    if not ctx:
+        return {}
+
+    cookies = ctx.cookies()
+    os.makedirs(COOKIE_DIR, exist_ok=True)
+    result = {}
+
+    targets = {platform: PLATFORM_DOMAINS[platform]} if platform and platform in PLATFORM_DOMAINS else PLATFORM_DOMAINS
+
+    for name, domains in targets.items():
+        platform_cookies = [c for c in cookies if any(d in c.get("domain", "") for d in domains)]
+        if platform_cookies:
+            path = os.path.join(COOKIE_DIR, f"{name}_cookies.json")
+            with open(path, "w") as f:
+                json.dump(platform_cookies, f, ensure_ascii=False, indent=2)
+            result[name] = len(platform_cookies)
+            logger.info("保存 %s cookie: %d 个 -> %s", name, len(platform_cookies), path)
+
+    # 保存全量
+    all_path = os.path.join(COOKIE_DIR, "all_cookies.json")
+    with open(all_path, "w") as f:
+        json.dump(cookies, f, ensure_ascii=False, indent=2)
+    result["_total"] = len(cookies)
+
+    return result
+
+
+def load_cookies(platform: Optional[str] = None) -> int:
+    """
+    从磁盘加载 cookie 到浏览器。
+    如果指定 platform，只加载该平台；否则加载所有平台。
+    返回加载的 cookie 总数。
+    """
+    ctx = get_context()
+    if not ctx:
+        return 0
+
+    total = 0
+    if platform:
+        files = [os.path.join(COOKIE_DIR, f"{platform}_cookies.json")]
+    else:
+        files = [os.path.join(COOKIE_DIR, f"{p}_cookies.json") for p in PLATFORM_DOMAINS]
+
+    for path in files:
+        if not os.path.exists(path):
+            continue
+        try:
+            with open(path) as f:
+                cookies = json.load(f)
+            ctx.add_cookies(cookies)
+            total += len(cookies)
+            logger.info("加载 cookie: %d 个 <- %s", len(cookies), path)
+        except (json.JSONDecodeError, IOError) as e:
+            logger.error("加载 cookie 失败 (%s): %s", path, e)
+
+    return total
+
+
+# ============================================================
 # CDP 原始操作（用于远程控制和验证码处理）
 # ============================================================
 

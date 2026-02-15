@@ -74,6 +74,30 @@ async def get_status():
     }
 
 
+@app.post("/api/save_cookies")
+async def api_save_cookies(payload: dict = {}):
+    """保存浏览器 cookie 到磁盘"""
+    try:
+        from browser_pool import save_cookies
+        platform = payload.get("platform") if payload else None
+        result = save_cookies(platform)
+        return {"success": True, "saved": result}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+@app.post("/api/load_cookies")
+async def api_load_cookies(payload: dict = {}):
+    """从磁盘加载 cookie 到浏览器"""
+    try:
+        from browser_pool import load_cookies
+        platform = payload.get("platform") if payload else None
+        total = load_cookies(platform)
+        return {"success": True, "loaded": total}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
 @app.get("/api/screenshot")
 async def take_screenshot():
     """获取浏览器当前截图（通过 CDP 原始协议，避免 sync/async 冲突）"""
