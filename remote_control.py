@@ -204,6 +204,98 @@ async def cdp_click(payload: dict):
         return {"success": False, "error": str(e)}
 
 
+@app.post("/api/drag")
+async def cdp_drag(payload: dict):
+    """
+    通过 CDP 在浏览器中执行拖拽操作。
+    从 (startX, startY) 拖拽到 (endX, endY)，
+    带中间步骤模拟真实人类拖拽。
+    """
+    start_x = payload.get("startX", 0)
+    start_y = payload.get("startY", 0)
+    end_x = payload.get("endX", 0)
+    end_y = payload.get("endY", 0)
+    steps = payload.get("steps", 20)  # 拖拽中间步数
+    duration = payload.get("duration", 0.5)  # 拖拽总时长（秒）
+
+    try:
+        import websockets
+        ws_url = await _get_page_ws_url()
+        if not ws_url:
+            return {"success": False, "error": "无活动页面"}
+
+        async with websockets.connect(ws_url, max_size=10 * 1024 * 1024) as ws:
+            msg_id = 1
+
+            # 1. 移动到起点
+            await ws.send(json.dumps({
+                "id": msg_id, "method": "Input.dispatchMouseEvent",
+                "params": {"type": "mouseMoved", "x": start_x, "y": start_y}
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=5)
+            msg_id += 1
+            await asyncio.sleep(0.1)
+
+            # 2. 按下鼠标
+            await ws.send(json.dumps({
+                "id": msg_id, "method": "Input.dispatchMouseEvent",
+                "params": {
+                    "type": "mousePressed",
+                    "x": start_x, "y": start_y,
+                    "button": "left", "clickCount": 1,
+                }
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=5)
+            msg_id += 1
+            await asyncio.sleep(0.1)
+
+            # 3. 中间步骤 — 模拟真实拖拽轨迹（带微小随机抖动）
+            import random
+            step_delay = duration / max(steps, 1)
+            for i in range(1, steps + 1):
+                progress = i / steps
+                # 缓动曲线：开始快、结束慢
+                eased = 1 - (1 - progress) ** 2
+                cx = start_x + (end_x - start_x) * eased + random.uniform(-2, 2)
+                cy = start_y + (end_y - start_y) * eased + random.uniform(-1, 1)
+                await ws.send(json.dumps({
+                    "id": msg_id, "method": "Input.dispatchMouseEvent",
+                    "params": {"type": "mouseMoved", "x": cx, "y": cy, "button": "left"}
+                }))
+                await asyncio.wait_for(ws.recv(), timeout=5)
+                msg_id += 1
+                await asyncio.sleep(step_delay)
+
+            # 4. 移动到精确终点
+            await ws.send(json.dumps({
+                "id": msg_id, "method": "Input.dispatchMouseEvent",
+                "params": {"type": "mouseMoved", "x": end_x, "y": end_y, "button": "left"}
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=5)
+            msg_id += 1
+            await asyncio.sleep(0.05)
+
+            # 5. 释放鼠标
+            await ws.send(json.dumps({
+                "id": msg_id, "method": "Input.dispatchMouseEvent",
+                "params": {
+                    "type": "mouseReleased",
+                    "x": end_x, "y": end_y,
+                    "button": "left", "clickCount": 1,
+                }
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=5)
+
+        return {
+            "success": True,
+            "from": {"x": start_x, "y": start_y},
+            "to": {"x": end_x, "y": end_y},
+            "steps": steps,
+        }
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
 async def _get_page_ws_url() -> Optional[str]:
     """获取当前活动页面的 WebSocket URL"""
     try:
@@ -588,11 +680,11 @@ REMOTE_CONTROL_HTML = """
     </div>
     <div class="main">
         <div class="screen-panel">
-            <div class="screen-container" id="screenContainer" onclick="handleScreenClick(event)">
-                <img id="screenImg" src="" alt="等待截图...">
+            <div class="screen-container" id="screenContainer">
+                <img id="screenImg" src="" alt="等待截图..." draggable="false">
             </div>
             <div style="margin-top: 8px; font-size: 12px; color: #666;">
-                点击截图可在浏览器中执行点击操作
+                <span id="modeIndicator">🖱️ 点击模式</span> — 点击执行点击，按住拖动执行拖拽
             </div>
         </div>
         <div class="control-panel">
@@ -743,30 +835,123 @@ REMOTE_CONTROL_HTML = """
             log(result.success ? `🚀 ${platform} 登录已启动` : `❌ ${result.error}`);
         }
 
-        async function handleScreenClick(event) {
+        // ============ 拖拽 + 点击系统 ============
+        let isDragging = false;
+        let dragStart = null;
+        let dragLine = null;
+        const DRAG_THRESHOLD = 5; // 像素，超过这个距离才算拖拽
+
+        const container = document.getElementById('screenContainer');
+
+        function getScaledCoords(event) {
             const img = document.getElementById('screenImg');
             const rect = img.getBoundingClientRect();
             const scaleX = img.naturalWidth / rect.width;
             const scaleY = img.naturalHeight / rect.height;
-            const x = Math.round((event.clientX - rect.left) * scaleX);
-            const y = Math.round((event.clientY - rect.top) * scaleY);
-
-            // 显示点击标记
-            const marker = document.createElement('div');
-            marker.className = 'click-marker';
-            marker.style.left = (event.clientX - rect.left) + 'px';
-            marker.style.top = (event.clientY - rect.top) + 'px';
-            document.getElementById('screenContainer').appendChild(marker);
-            setTimeout(() => marker.remove(), 1000);
-
-            const resp = await fetch('/api/click', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({x, y}),
-            });
-            const result = await resp.json();
-            log(result.success ? `🖱️ 点击 (${x}, ${y})` : `❌ 点击失败: ${result.error}`);
+            return {
+                x: Math.round((event.clientX - rect.left) * scaleX),
+                y: Math.round((event.clientY - rect.top) * scaleY),
+                localX: event.clientX - rect.left,
+                localY: event.clientY - rect.top,
+            };
         }
+
+        container.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            const coords = getScaledCoords(e);
+            dragStart = { ...coords, time: Date.now() };
+            isDragging = false;
+
+            // 创建拖拽线指示器
+            dragLine = document.createElement('div');
+            dragLine.style.cssText = 'position:absolute;border:2px dashed #e94560;pointer-events:none;display:none;z-index:10;';
+            container.appendChild(dragLine);
+        });
+
+        container.addEventListener('mousemove', (e) => {
+            if (!dragStart) return;
+            const coords = getScaledCoords(e);
+            const dx = coords.localX - dragStart.localX;
+            const dy = coords.localY - dragStart.localY;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+
+            if (dist > DRAG_THRESHOLD) {
+                isDragging = true;
+                document.getElementById('modeIndicator').textContent = '↔️ 拖拽中...';
+                // 更新拖拽线
+                if (dragLine) {
+                    const left = Math.min(dragStart.localX, coords.localX);
+                    const top = Math.min(dragStart.localY, coords.localY);
+                    const w = Math.abs(dx);
+                    const h = Math.max(Math.abs(dy), 2);
+                    dragLine.style.display = 'block';
+                    dragLine.style.left = dragStart.localX + 'px';
+                    dragLine.style.top = (dragStart.localY - 1) + 'px';
+                    dragLine.style.width = (coords.localX - dragStart.localX) + 'px';
+                    dragLine.style.height = '0';
+                    dragLine.style.borderTop = '3px solid #e94560';
+                    dragLine.style.border = 'none';
+                    dragLine.style.borderBottom = '3px solid #e94560';
+                    // 用简单的线条表示
+                    dragLine.style.cssText = `position:absolute;pointer-events:none;z-index:10;
+                        left:${dragStart.localX}px;top:${dragStart.localY}px;
+                        width:${Math.sqrt(dx*dx+dy*dy)}px;height:3px;
+                        background:#e94560;opacity:0.7;
+                        transform-origin:0 0;transform:rotate(${Math.atan2(dy,dx)}rad);`;
+                }
+            }
+        });
+
+        container.addEventListener('mouseup', async (e) => {
+            if (!dragStart) return;
+            const coords = getScaledCoords(e);
+
+            // 清理拖拽线
+            if (dragLine) { dragLine.remove(); dragLine = null; }
+
+            if (isDragging) {
+                // 执行拖拽
+                log(`↔️ 拖拽: (${dragStart.x},${dragStart.y}) → (${coords.x},${coords.y})`);
+                const resp = await fetch('/api/drag', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        startX: dragStart.x, startY: dragStart.y,
+                        endX: coords.x, endY: coords.y,
+                        steps: 25, duration: 0.6,
+                    }),
+                });
+                const result = await resp.json();
+                log(result.success ? `✅ 拖拽完成` : `❌ 拖拽失败: ${result.error}`);
+            } else {
+                // 执行点击
+                const marker = document.createElement('div');
+                marker.className = 'click-marker';
+                marker.style.left = coords.localX + 'px';
+                marker.style.top = coords.localY + 'px';
+                container.appendChild(marker);
+                setTimeout(() => marker.remove(), 1000);
+
+                const resp = await fetch('/api/click', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({x: coords.x, y: coords.y}),
+                });
+                const result = await resp.json();
+                log(result.success ? `🖱️ 点击 (${coords.x}, ${coords.y})` : `❌ 点击失败: ${result.error}`);
+            }
+
+            dragStart = null;
+            isDragging = false;
+            document.getElementById('modeIndicator').textContent = '🖱️ 点击模式';
+        });
+
+        container.addEventListener('mouseleave', () => {
+            if (dragLine) { dragLine.remove(); dragLine = null; }
+            dragStart = null;
+            isDragging = false;
+            document.getElementById('modeIndicator').textContent = '🖱️ 点击模式';
+        });
 
         async function refreshScreenshot() {
             const resp = await fetch('/api/screenshot');
