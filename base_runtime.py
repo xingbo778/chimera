@@ -28,7 +28,7 @@ from agent_config import AgentConfig
 from sticker_manager import StickerManager, collect_sticker_set
 from life_events import generate_life_detail, LifeBuffer
 from skill_learner import SkillRegistry, discover_skills_from_content, execute_skill_simulated, init_seed_skills
-from skill_connector import should_attempt_real, attempt_real_execution
+from skill_connector import should_attempt_real, attempt_real_execution, load_recipes_from_registry
 from capability_memory import CapabilityMemory
 
 from telegram import Update
@@ -580,6 +580,9 @@ class AgentRuntime:
         self.capability_memory = CapabilityMemory(config.base_dir)
         print(f"💡 能力记忆: {self.capability_memory.get_capability_count()} 个已知能力")
 
+        # 加载已有的 Recipe（上次涌现成功的执行步骤）
+        load_recipes_from_registry(self.skill_registry)
+
         # 已处理过的知识内容hash，避免重复触发技能发现
         self._processed_knowledge_hashes = set()
 
@@ -919,9 +922,16 @@ class AgentRuntime:
                     self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 10)
                     self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 8)
                     
-                    # 标记技能为可真实执行
+                    # 标记技能为可真实执行，并持久化 Recipe
                     if skill["skill_id"] in self.skill_registry.skills:
-                        self.skill_registry.skills[skill["skill_id"]]["execution"]["method"] = "real"
+                        sk = self.skill_registry.skills[skill["skill_id"]]
+                        sk["execution"]["method"] = "real"
+                        # 💡 Recipe 沉淀：保存成功的执行步骤，下次直接复用
+                        recipe = real_result.get("_recipe")
+                        if recipe and recipe.get("steps"):
+                            sk["execution"]["recipe"] = recipe["steps"]
+                            sk["execution"]["recipe_saved_at"] = datetime.now(timezone(timedelta(hours=8))).isoformat()
+                            print(f"💾 Recipe 已沉淀为技能！「{skill['name']}」→ {len(recipe['steps'])} 步")
                         self.skill_registry._save()
                     
                     # 如果有图片/视频产出物，主动发给用户

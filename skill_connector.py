@@ -87,6 +87,29 @@ _intent_cache = {}  # {skill_name: recipe or "none"}
 _recipe_cache = {}  # {skill_name: recipe}
 
 
+def load_recipes_from_registry(skill_registry):
+    """
+    从技能注册表中加载已有的 Recipe 到缓存。
+    这样重启后不需要重新规划。
+    """
+    global _recipe_cache, _intent_cache
+    loaded = 0
+    for sid, skill in skill_registry.skills.items():
+        exec_info = skill.get("execution", {})
+        if exec_info.get("method") == "real" and exec_info.get("recipe"):
+            recipe = {
+                "can_execute": True,
+                "reason": "from saved recipe",
+                "steps": exec_info["recipe"]
+            }
+            skill_name = skill.get("name", "")
+            _recipe_cache[skill_name] = recipe
+            _intent_cache[skill_name] = recipe
+            loaded += 1
+    if loaded:
+        print(f"💾 从技能库加载了 {loaded} 个已有 Recipe")
+
+
 # ============================================================
 # 系统原子能力描述（给 LLM 看的，用于生成 Recipe）
 # ============================================================
@@ -204,12 +227,15 @@ def _get_recipe(skill_name, skill_desc, context="", capability_memory=None):
 
 规则：
 - 最多3步！不要拆得太细
-- 如果你知道自己能浏览网页，那你也能在网页上做互动操作（browser_action）
-- browser_action 是智能的，一步就能完成“打开网站并发帖”这样的复杂操作
+- action 必须使用以下标准名称之一：generate_image, generate_video, generate_voice, web_search, browse_url, browser_action, send_email
+- 如果你知道自己能浏览网页，那你也能在网页上做互动操作，action 用 "browser_action"
+- browser_action 是智能的，一步就能完成"打开网站并发帖"这样的复杂操作
+- browser_action 的 input 必须包含 "url"（目标网址）和 "goal"（要完成的操作目标）
+- generate_image 的 input 必须包含 "prompt"（图片描述，英文）
 - 如果技能无法通过任何已知能力执行，can_execute 填 false
 
 返回 JSON（不要用markdown代码块）：
-{{"can_execute": true, "reason": "理由", "steps": [{{"step": 1, "action": "能力名", "input": {{"key": "value"}}, "output_var": "var_name", "description": "描述"}}]}}
+{{"can_execute": true, "reason": "理由", "steps": [{{"step": 1, "action": "browser_action", "input": {{"url": "https://...", "goal": "操作目标"}}, "output_var": "var_name", "description": "描述"}}]}}
 
 只返回 JSON。"""
 

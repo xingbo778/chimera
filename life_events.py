@@ -238,16 +238,23 @@ class LifeBuffer:
         self.experiences = []  # [{"detail": str, "action": str, "time": float, "used": bool}]
         self.max_size = max_size
 
-    def add(self, detail, action_type=""):
-        """添加一条生活体验"""
+    def add(self, detail, action_type="", source="imagined", artifact=None):
+        """添加一条生活体验
+        source: 'real' / 'world' / 'imagined'
+        artifact: 真实产出物 {'type': 'image'/'video'/'voice', 'path': filepath}
+        """
         if not detail:
             return
-        self.experiences.append({
+        entry = {
             "detail": detail,
             "action": action_type,
             "time": time.time(),
             "used": False,
-        })
+            "source": source,
+        }
+        if artifact:
+            entry["artifact"] = artifact
+        self.experiences.append(entry)
         # 保持缓冲区大小
         if len(self.experiences) > self.max_size:
             self.experiences = self.experiences[-self.max_size:]
@@ -270,13 +277,40 @@ class LifeBuffer:
     def get_shareable(self):
         """
         获取最适合分享的一条体验：
+        - 优先有真实产出物的（可以发图片/视频）
         - 优先未使用过的
         - 优先最近的
-        - 优先有趣的（不是"休息了一下"这种）
         """
         unused = [e for e in self.experiences if not e["used"]]
-        if unused:
-            chosen = unused[-1]  # 最近的未使用体验
+        # 优先有真实产出物的
+        real_unused = [e for e in unused if e.get("artifact")]
+        if real_unused:
+            chosen = real_unused[-1]
             chosen["used"] = True
-            return chosen["detail"]
+            return chosen["detail"], chosen.get("artifact")
+        if unused:
+            chosen = unused[-1]
+            chosen["used"] = True
+            return chosen["detail"], None
+        return None, None
+
+    def get_recent_artifacts(self, n=5):
+        """获取最近的真实产出物"""
+        artifacts = []
+        for e in reversed(self.experiences):
+            if e.get("artifact") and e["artifact"].get("path"):
+                artifacts.append({
+                    "detail": e["detail"],
+                    "artifact": e["artifact"],
+                    "time": e["time"],
+                })
+                if len(artifacts) >= n:
+                    break
+        return artifacts
+
+    def has_real_artifact_for(self, keyword):
+        """检查是否有与关键词相关的真实产出物"""
+        for e in reversed(self.experiences):
+            if e.get("artifact") and keyword in e.get("detail", ""):
+                return e["artifact"]
         return None
