@@ -180,6 +180,158 @@ async def cdp_click(payload: dict):
         return {"success": False, "error": str(e)}
 
 
+async def _get_page_ws_url() -> Optional[str]:
+    """获取当前活动页面的 WebSocket URL"""
+    try:
+        import requests as _req
+        resp = _req.get("http://127.0.0.1:9222/json", timeout=3)
+        pages = resp.json()
+        if not pages:
+            return None
+        for p in pages:
+            if p.get("type") == "page":
+                return p.get("webSocketDebuggerUrl")
+        return pages[0].get("webSocketDebuggerUrl")
+    except Exception:
+        return None
+
+
+@app.post("/api/go_back")
+async def go_back():
+    """浏览器后退"""
+    try:
+        import websockets
+        ws_url = await _get_page_ws_url()
+        if not ws_url:
+            return {"success": False, "error": "无活动页面"}
+        async with websockets.connect(ws_url, max_size=10 * 1024 * 1024) as ws:
+            await ws.send(json.dumps({"id": 1, "method": "Page.goBack"}))
+            await asyncio.wait_for(ws.recv(), timeout=5)
+        return {"success": True}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+@app.post("/api/refresh")
+async def refresh_page():
+    """刷新当前页面"""
+    try:
+        import websockets
+        ws_url = await _get_page_ws_url()
+        if not ws_url:
+            return {"success": False, "error": "无活动页面"}
+        async with websockets.connect(ws_url, max_size=10 * 1024 * 1024) as ws:
+            await ws.send(json.dumps({"id": 1, "method": "Page.reload"}))
+            await asyncio.wait_for(ws.recv(), timeout=5)
+        return {"success": True}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+@app.post("/api/type_text")
+async def type_text(payload: dict):
+    """在当前焦点元素中输入文本"""
+    text = payload.get("text", "")
+    if not text:
+        return {"success": False, "error": "文本不能为空"}
+    try:
+        import websockets
+        ws_url = await _get_page_ws_url()
+        if not ws_url:
+            return {"success": False, "error": "无活动页面"}
+        async with websockets.connect(ws_url, max_size=10 * 1024 * 1024) as ws:
+            # 逐字符输入，模拟真实键盘
+            for char in text:
+                await ws.send(json.dumps({
+                    "id": 1,
+                    "method": "Input.dispatchKeyEvent",
+                    "params": {
+                        "type": "keyDown",
+                        "text": char,
+                        "key": char,
+                        "unmodifiedText": char,
+                    }
+                }))
+                await asyncio.wait_for(ws.recv(), timeout=3)
+                await ws.send(json.dumps({
+                    "id": 2,
+                    "method": "Input.dispatchKeyEvent",
+                    "params": {"type": "keyUp", "key": char}
+                }))
+                await asyncio.wait_for(ws.recv(), timeout=3)
+                await asyncio.sleep(0.03)
+        return {"success": True, "text": text}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+@app.post("/api/navigate")
+async def navigate_to(payload: dict):
+    """导航到指定 URL"""
+    url = payload.get("url", "").strip()
+    if not url:
+        return {"success": False, "error": "URL 不能为空"}
+    try:
+        import websockets
+        ws_url = await _get_page_ws_url()
+        if not ws_url:
+            return {"success": False, "error": "无活动页面"}
+        async with websockets.connect(ws_url, max_size=10 * 1024 * 1024) as ws:
+            await ws.send(json.dumps({
+                "id": 1,
+                "method": "Page.navigate",
+                "params": {"url": url}
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=10)
+        return {"success": True, "url": url}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
+@app.post("/api/press_key")
+async def press_key(payload: dict):
+    """按下指定按键（如 Enter、Tab、Backspace 等）"""
+    key = payload.get("key", "")
+    if not key:
+        return {"success": False, "error": "key 不能为空"}
+
+    # 常见按键映射
+    key_map = {
+        "Enter": {"key": "Enter", "code": "Enter", "windowsVirtualKeyCode": 13},
+        "Tab": {"key": "Tab", "code": "Tab", "windowsVirtualKeyCode": 9},
+        "Backspace": {"key": "Backspace", "code": "Backspace", "windowsVirtualKeyCode": 8},
+        "Escape": {"key": "Escape", "code": "Escape", "windowsVirtualKeyCode": 27},
+        "Delete": {"key": "Delete", "code": "Delete", "windowsVirtualKeyCode": 46},
+        "ArrowLeft": {"key": "ArrowLeft", "code": "ArrowLeft", "windowsVirtualKeyCode": 37},
+        "ArrowRight": {"key": "ArrowRight", "code": "ArrowRight", "windowsVirtualKeyCode": 39},
+        "ArrowUp": {"key": "ArrowUp", "code": "ArrowUp", "windowsVirtualKeyCode": 38},
+        "ArrowDown": {"key": "ArrowDown", "code": "ArrowDown", "windowsVirtualKeyCode": 40},
+    }
+    params = key_map.get(key, {"key": key})
+
+    try:
+        import websockets
+        ws_url = await _get_page_ws_url()
+        if not ws_url:
+            return {"success": False, "error": "无活动页面"}
+        async with websockets.connect(ws_url, max_size=10 * 1024 * 1024) as ws:
+            await ws.send(json.dumps({
+                "id": 1,
+                "method": "Input.dispatchKeyEvent",
+                "params": {"type": "rawKeyDown", **params}
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=3)
+            await ws.send(json.dumps({
+                "id": 2,
+                "method": "Input.dispatchKeyEvent",
+                "params": {"type": "keyUp", **params}
+            }))
+            await asyncio.wait_for(ws.recv(), timeout=3)
+        return {"success": True, "key": key}
+    except Exception as e:
+        return {"success": False, "error": str(e)}
+
+
 @app.post("/api/login")
 async def trigger_login(payload: dict):
     """触发平台登录"""
@@ -445,11 +597,41 @@ REMOTE_CONTROL_HTML = """
                 <div id="loginStatus" style="margin-top: 8px;"></div>
             </div>
 
+            <!-- 浏览器导航 -->
+            <div class="section">
+                <h3>🌐 浏览器导航</h3>
+                <div style="display:flex; gap:4px; margin-bottom:8px;">
+                    <button class="btn-secondary" onclick="goBack()" title="后退">⬅️ 后退</button>
+                    <button class="btn-secondary" onclick="refreshPage()" title="刷新">🔄 刷新</button>
+                    <button class="btn-secondary" onclick="refreshScreenshot()" title="截图">📸 截图</button>
+                </div>
+                <div style="display:flex; gap:4px;">
+                    <input type="text" id="urlInput" placeholder="输入网址..." style="flex:1;">
+                    <button class="btn-primary" onclick="navigateTo()">前往</button>
+                </div>
+            </div>
+
+            <!-- 文本输入 -->
+            <div class="section">
+                <h3>⌨️ 键盘输入</h3>
+                <div style="display:flex; gap:4px; margin-bottom:8px;">
+                    <input type="text" id="textInput" placeholder="输入文本（先点击截图中的输入框）" style="flex:1;">
+                    <button class="btn-primary" onclick="typeText()">输入</button>
+                </div>
+                <div style="display:flex; gap:4px; flex-wrap:wrap;">
+                    <button class="btn-secondary" onclick="pressKey('Enter')" style="font-size:12px;">Enter</button>
+                    <button class="btn-secondary" onclick="pressKey('Tab')" style="font-size:12px;">Tab</button>
+                    <button class="btn-secondary" onclick="pressKey('Backspace')" style="font-size:12px;">Backspace</button>
+                    <button class="btn-secondary" onclick="pressKey('Escape')" style="font-size:12px;">Esc</button>
+                    <button class="btn-secondary" onclick="pressKey('ArrowDown')" style="font-size:12px;">⬇️</button>
+                    <button class="btn-secondary" onclick="pressKey('ArrowUp')" style="font-size:12px;">⬆️</button>
+                </div>
+            </div>
+
             <!-- 操作 -->
             <div class="section">
-                <h3>🎮 操作</h3>
-                <button class="btn-secondary" onclick="refreshScreenshot()">🔄 刷新截图</button>
-                <button class="btn-secondary" onclick="checkStatus()">📊 检查状态</button>
+                <h3>📊 系统</h3>
+                <button class="btn-secondary" onclick="checkStatus()">检查状态</button>
             </div>
 
             <!-- 日志 -->
@@ -590,9 +772,65 @@ REMOTE_CONTROL_HTML = """
             }
         }
 
+        async function goBack() {
+            const resp = await fetch('/api/go_back', {method: 'POST'});
+            const result = await resp.json();
+            log(result.success ? '⬅️ 已后退' : '❌ 后退失败: ' + result.error);
+        }
+
+        async function refreshPage() {
+            const resp = await fetch('/api/refresh', {method: 'POST'});
+            const result = await resp.json();
+            log(result.success ? '🔄 已刷新页面' : '❌ 刷新失败: ' + result.error);
+        }
+
+        async function navigateTo() {
+            let url = document.getElementById('urlInput').value.trim();
+            if (!url) { alert('请输入网址'); return; }
+            if (!url.startsWith('http')) url = 'https://' + url;
+            const resp = await fetch('/api/navigate', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({url}),
+            });
+            const result = await resp.json();
+            log(result.success ? `🌐 已导航到: ${url}` : `❌ 导航失败: ${result.error}`);
+        }
+
+        async function typeText() {
+            const text = document.getElementById('textInput').value;
+            if (!text) { alert('请输入文本'); return; }
+            const resp = await fetch('/api/type_text', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({text}),
+            });
+            const result = await resp.json();
+            log(result.success ? `⌨️ 已输入: ${text}` : `❌ 输入失败: ${result.error}`);
+            document.getElementById('textInput').value = '';
+        }
+
+        async function pressKey(key) {
+            const resp = await fetch('/api/press_key', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({key}),
+            });
+            const result = await resp.json();
+            log(result.success ? `⌨️ 按键: ${key}` : `❌ 按键失败: ${result.error}`);
+        }
+
         // 回车提交验证码
         document.getElementById('codeInput').addEventListener('keypress', (e) => {
             if (e.key === 'Enter') submitCode();
+        });
+        // 回车导航
+        document.getElementById('urlInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') navigateTo();
+        });
+        // 回车输入文本
+        document.getElementById('textInput').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') typeText();
         });
 
         // 启动
