@@ -26,6 +26,7 @@ from style_rag import StyleRAG
 from memory_rag import MemoryRAG
 from agent_config import AgentConfig
 from sticker_manager import StickerManager, collect_sticker_set
+from life_events import generate_life_detail, LifeBuffer
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -531,6 +532,9 @@ class AgentRuntime:
         )
         print(f"🎭 贴纸库: {self.sticker_mgr.count()} 张")
 
+        # 生活体验缓冲区
+        self.life_buffer = LifeBuffer(max_size=20)
+
         # Telegram 相关
         self.authorized_chat_id = None
         self.telegram_app = None
@@ -621,6 +625,12 @@ class AgentRuntime:
         desc = action.get("desc", "")
         feedback = ""
 
+        # 获取当前世界状态，用于生成生活细节
+        ws = self.world.get_world_state()
+        weather = ws.get("weather", "晴天") if ws else "晴天"
+        hour = beijing_now().hour
+        location = self.memory.current_location
+
         if action_type == "message_user":
             # 主动消息冷却检查：至少30分钟不重复发
             last_proactive = getattr(self, '_last_proactive_time', 0)
@@ -635,7 +645,6 @@ class AgentRuntime:
                     is_duplicate = False
                     for line in msg_lines:
                         for prev in recent_msgs:
-                            # 如果新消息和旧消息有超过50%的字重叠，就算重复
                             common = set(line) & set(prev)
                             if len(line) > 2 and len(common) / len(set(line)) > 0.5:
                                 is_duplicate = True
@@ -654,11 +663,10 @@ class AgentRuntime:
             feedback = feedback or "跟朋友聊了会儿天"
 
         elif action_type == "take_selfie":
-            ws = self.world.get_world_state()
             world_context = {
-                "location_id": self.memory.current_location,
-                "hour": beijing_now().hour,
-                "weather": ws.get("weather", "晴天") if ws else "晴天",
+                "location_id": location,
+                "hour": hour,
+                "weather": weather,
                 "activity": desc,
             }
             result = execute_skill(
@@ -677,6 +685,7 @@ class AgentRuntime:
         elif action_type == "scroll_feed":
             platform = action.get("platform", random.choice(["xhs", "douban", "weibo"]))
             self.memory.current_activity = f"刷{platform}"
+            browse_detail = None
             try:
                 if platform == "xhs":
                     result = skill_xhs_browse()
@@ -693,25 +702,41 @@ class AgentRuntime:
                     self.memory.add_knowledge(topic, content[:500], source=platform)
                     self.memory_rag.add_knowledge(topic, content[:500], source=platform)
                     self._try_learn_style_from_content(content)
+                    # 生活细节：用真实浏览内容作为体验
+                    # 如果 topic 就是平台名，用 content 前几个字代替
+                    if topic in ("xhs", "douban", "weibo", platform):
+                        # 取 content 第一行作为描述
+                        first_line = content.split("\n")[0].strip()[:30]
+                        browse_detail = f"刷到一个有意思的帖子：{first_line}" if first_line else None
+                    else:
+                        browse_detail = f"看到了一个关于{topic}的帖子"
             except Exception as e:
                 print(f"浏览失败: {e}")
+
+            # 生成生活细节
+            life_detail = browse_detail or generate_life_detail("scroll_feed", location, hour, weather)
+            if life_detail:
+                self.life_buffer.add(life_detail, "scroll_feed")
 
             platform_name = {"xhs": "小红书", "douban": "豆瓣", "weibo": "微博"}.get(platform, "手机")
             self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
             self.memory.emotional_state["energy"] = max(0, self.memory.emotional_state["energy"] - 2)
-            feedback = f"刷了会儿{platform_name}"
+            feedback = life_detail or f"刷了会儿{platform_name}"
 
         elif action_type == "explore":
             current = self.memory.current_location
             available = [loc for loc in ALL_LOCATIONS if loc != current]
             if available:
                 new_loc = random.choice(available)
-                # BUG-E: 先通知 World Engine，成功后再更新本地
                 move_result = self.world.act({"tool": "move", "target_location_id": new_loc})
                 if move_result and move_result.get("success"):
                     self.memory.current_location = new_loc
                     loc_name = LOCATION_NAMES.get(new_loc, new_loc)
-                    feedback = f"去了{loc_name}"
+                    # 生成到达新地点的生活细节
+                    life_detail = generate_life_detail("explore", new_loc, hour, weather)
+                    if life_detail:
+                        self.life_buffer.add(life_detail, "explore")
+                    feedback = life_detail or f"去了{loc_name}"
                 else:
                     loc_name = LOCATION_NAMES.get(new_loc, new_loc)
                     feedback = f"想去{loc_name}但没去成"
@@ -721,10 +746,12 @@ class AgentRuntime:
         elif action_type == "create":
             self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 5)
             self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
-            feedback = f"做了点创作：{desc}"
+            life_detail = generate_life_detail("create", location, hour, weather)
+            if life_detail:
+                self.life_buffer.add(life_detail, "create")
+            feedback = life_detail or f"做了点创作：{desc}"
 
         elif action_type == "learn":
-            # 浏览学习内容
             try:
                 result = skill_xhs_browse()
                 if result.get("success") and result.get("content"):
@@ -736,15 +763,21 @@ class AgentRuntime:
                     )
             except:
                 pass
+            life_detail = generate_life_detail("learn", location, hour, weather)
+            if life_detail:
+                self.life_buffer.add(life_detail, "learn")
             recent_k = self.memory.get_recent_knowledge(1)
             if recent_k and recent_k[0].get('topic'):
                 self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 5)
-                feedback = f"看到了有意思的东西：{recent_k[0].get('topic', '')}"
+                feedback = life_detail or f"看到了有意思的东西：{recent_k[0].get('topic', '')}"
             else:
-                feedback = "随便刷了刷"
+                feedback = life_detail or "随便刷了刷"
 
         elif action_type == "rest":
-            feedback = "休息了一下"
+            life_detail = generate_life_detail("rest", location, hour, weather)
+            if life_detail:
+                self.life_buffer.add(life_detail, "rest")
+            feedback = life_detail or "休息了一下"
 
         else:
             feedback = desc or "做了点事"
@@ -776,39 +809,46 @@ class AgentRuntime:
     def _generate_proactive_message(self, reason=None):
         user_name = self.memory.user_name or "你"
         emotion = self.memory.get_emotion_tag()
-        recent_knowledge = self.memory.get_recent_knowledge(3)
 
-        # 核心改动：把最近浏览到的具体内容注入给LLM
-        knowledge_detail = ""
-        if recent_knowledge:
-            details = []
-            for k in recent_knowledge[:2]:
-                topic = k.get('topic', '')
-                content = k.get('content', '')[:150]
-                if topic and content:
-                    details.append(f"{topic}: {content}")
-                elif topic:
-                    details.append(topic)
-            if details:
-                knowledge_detail = "\n最近看到的具体内容：\n" + "\n".join(details)
+        # 从生活缓冲区取最近的真实体验作为聊天素材（只取1条，避免一次分享太多）
+        recent_experiences = self.life_buffer.get_unused(1)
+        life_context = ""
+        if recent_experiences:
+            exp_lines = [e["detail"] for e in recent_experiences]
+            life_context = "\n最近经历的事：\n" + "\n".join(f"- {l}" for l in exp_lines)
+            # 标记为已使用
+            for e in recent_experiences:
+                self.life_buffer.mark_used(e["detail"])
 
-        context = f"心情：{emotion}\n在做：{self.memory.current_activity}{knowledge_detail}"
+        # 如果没有生活体验，尝试用知识库
+        if not life_context:
+            recent_knowledge = self.memory.get_recent_knowledge(2)
+            if recent_knowledge:
+                details = []
+                for k in recent_knowledge[:2]:
+                    topic = k.get('topic', '')
+                    content = k.get('content', '')[:100]
+                    if topic:
+                        details.append(f"- {topic}")
+                if details:
+                    life_context = "\n最近看到的：\n" + "\n".join(details)
 
-        # 示例改为分享具体内容，而不是泛泛而谈
+        context = f"心情：{emotion}\n在做：{self.memory.current_activity}{life_context}"
+
         prompt = f"""{context}
 
 想找{user_name}聊几句。{f'原因：{reason}' if reason else ''}
 
-写微信消息，每条一行。真人不会说“我在刷小红书”，而是分享具体看到了什么。
+写微信消息，每条一行。把你刚刚经历的小事自然地分享出来。
 参考这种感觉：
-刚看到一只巨可爱的猫
-我也想养
+刚在公园看到一只柯基屁股好圆
+心都化了
 
 或者：
-天气好热啊
-你吃饭了没"""
+画了一只歪歪扭扭的猫
+越看越像我家那只"""
 
-        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=40, temperature=0.9, model=self.LLM_MODEL)
+        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=30, temperature=0.9, model=self.LLM_MODEL)
         return msg
 
     async def _send_proactive_message(self, chat_id, message):
