@@ -591,12 +591,14 @@ class AgentRuntime:
 
         context = "\n".join(context_parts)
 
-        # 孤独值高时强制提示
-        loneliness_hint = ""
+        # 根据情绪状态给出行为提示
+        mood_hint = ""
         if self.memory.emotional_state["loneliness"] > 70:
-            loneliness_hint = f"\n\n提示：你已经很久没跟{user_name}聊天了，有点想ta。可以考虑发消息。"
+            mood_hint = f"\n\n提示：你已经很久没跟{user_name}聊天了，有点想ta。可以考虑发消息。"
+        elif self.memory.emotional_state["loneliness"] < 30:
+            mood_hint = "\n\n提示：你刚跟朋友聊过天，不需要频繁发消息。做点自己的事吧。"
 
-        prompt = f"""{context}{loneliness_hint}
+        prompt = f"""{context}{mood_hint}
 
 你现在想做什么？从以下选一个：
 - message_user: 找{user_name}聊天
@@ -620,17 +622,27 @@ class AgentRuntime:
         feedback = ""
 
         if action_type == "message_user":
-            # 主动消息冷却检查：至少15分钟不重复发
+            # 主动消息冷却检查：至少30分钟不重复发
             last_proactive = getattr(self, '_last_proactive_time', 0)
-            if time.time() - last_proactive < 900:  # 15分钟冷却
+            if time.time() - last_proactive < 1800:  # 30分钟冷却
                 feedback = "刚发过消息，等会儿再说"
             elif self.authorized_chat_id and self.telegram_app:
                 msg = self._generate_proactive_message(desc)
                 if msg:
-                    # 去重检查：不要发和最近一样的内容
-                    recent_msgs = [m["content"] for m in self.memory.user_chat_history[-5:] if m["role"] == "assistant"]
-                    first_line = msg.split("\n")[0].strip()
-                    if first_line in recent_msgs:
+                    # 模糊去重：检查和最近发的消息是否过于相似
+                    recent_msgs = [m["content"] for m in self.memory.user_chat_history[-10:] if m["role"] == "assistant"]
+                    msg_lines = [l.strip() for l in msg.split("\n") if l.strip()]
+                    is_duplicate = False
+                    for line in msg_lines:
+                        for prev in recent_msgs:
+                            # 如果新消息和旧消息有超过50%的字重叠，就算重复
+                            common = set(line) & set(prev)
+                            if len(line) > 2 and len(common) / len(set(line)) > 0.5:
+                                is_duplicate = True
+                                break
+                        if is_duplicate:
+                            break
+                    if is_duplicate:
                         feedback = "想发但觉得重复了，算了"
                     else:
                         asyncio.run_coroutine_threadsafe(
@@ -762,34 +774,41 @@ class AgentRuntime:
     # ============================================================
 
     def _generate_proactive_message(self, reason=None):
-        recent = self.memory.get_today_events(3)
         user_name = self.memory.user_name or "你"
         emotion = self.memory.get_emotion_tag()
-        recent_knowledge = self.memory.get_recent_knowledge(1)
+        recent_knowledge = self.memory.get_recent_knowledge(3)
 
-        context_parts = [f"心情：{emotion}", f"在做：{self.memory.current_activity}"]
-        if recent:
-            context_parts.append(f"最近：{'; '.join(recent[-2:])}")
+        # 核心改动：把最近浏览到的具体内容注入给LLM
+        knowledge_detail = ""
         if recent_knowledge:
-            k = recent_knowledge[0]
-            context_parts.append(f"刚看到：{k['topic']}")
+            details = []
+            for k in recent_knowledge[:2]:
+                topic = k.get('topic', '')
+                content = k.get('content', '')[:150]
+                if topic and content:
+                    details.append(f"{topic}: {content}")
+                elif topic:
+                    details.append(topic)
+            if details:
+                knowledge_detail = "\n最近看到的具体内容：\n" + "\n".join(details)
 
-        context = "\n".join(context_parts)
+        context = f"心情：{emotion}\n在做：{self.memory.current_activity}{knowledge_detail}"
 
-        if reason:
-            prompt = f"""{context}\n\n想跟{user_name}说：{reason}
+        # 示例改为分享具体内容，而不是泛泛而谈
+        prompt = f"""{context}
 
-写微信消息，每条一行。参考这种感觉：
-在干嘛
-我好无聊"""
-        else:
-            prompt = f"""{context}\n\n想找{user_name}聊几句。
+想找{user_name}聊几句。{f'原因：{reason}' if reason else ''}
 
-写微信消息，每条一行。参考这种感觉：
-下雨了好烦
-你在干嘛"""
+写微信消息，每条一行。真人不会说“我在刷小红书”，而是分享具体看到了什么。
+参考这种感觉：
+刚看到一只巨可爱的猫
+我也想养
 
-        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=60, temperature=0.9, model=self.LLM_MODEL)
+或者：
+天气好热啊
+你吃饭了没"""
+
+        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=40, temperature=0.9, model=self.LLM_MODEL)
         return msg
 
     async def _send_proactive_message(self, chat_id, message):
@@ -800,7 +819,7 @@ class AgentRuntime:
             if not lines:
                 return
 
-            for i, line in enumerate(lines[:4]):  # 最多4条
+            for i, line in enumerate(lines[:3]):  # 最多3条
                 await self.telegram_app.bot.send_chat_action(chat_id=chat_id, action="typing")
                 # 模拟打字时间：根据消息长度
                 typing_time = random.uniform(0.5, 1.0) + len(line) * 0.08
