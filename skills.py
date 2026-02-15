@@ -1051,8 +1051,60 @@ WEIBO_TOPICS = [
 ]
 
 
+def _safe_goto(page, url, timeout=30000, retries=2):
+    """
+    安全的页面导航：支持重试、多种等待策略。
+    优先用 commit（首字节到达），失败后降级到 domcontentloaded。
+    """
+    last_err = None
+    for attempt in range(retries):
+        try:
+            page.goto(url, timeout=timeout, wait_until='commit')
+            # commit 后等待关键内容渲染
+            page.wait_for_timeout(3000)
+            return True
+        except Exception as e:
+            last_err = e
+            logger.warning("导航尝试 %d/%d 失败 (%s): %s", attempt + 1, retries, url, e)
+            # 如果页面已经部分加载了（URL 变了），也算成功
+            try:
+                if page.url and page.url != 'about:blank' and page.url != url:
+                    page.wait_for_timeout(2000)
+                    return True
+            except Exception:
+                pass
+            if attempt < retries - 1:
+                page.wait_for_timeout(2000)
+    logger.error("导航最终失败 (%s): %s", url, last_err)
+    return False
+
+
+def _get_or_create_page(ctx):
+    """
+    复用已有空白标签页，或创建新标签页。
+    同时清理多余的标签页（保留最多 3 个）。
+    """
+    pages = ctx.pages
+    # 清理多余标签页（保留最多 3 个）
+    while len(pages) > 3:
+        try:
+            pages[0].close()
+            pages = ctx.pages
+        except Exception:
+            break
+    # 尝试复用空白页
+    for p in pages:
+        try:
+            if p.url in ('about:blank', 'chrome://newtab/', ''):
+                return p
+        except Exception:
+            continue
+    # 没有空白页，创建新的
+    return ctx.new_page()
+
+
 def skill_xhs_browse(keyword=None):
-    """刷小红书：用 stealth browser 直接浏览小红书 explore 页，点进笔记看详情+评论"""
+    """刷小红书：用 CDP 浏览器直接浏览小红书 explore 页，点进笔记看详情+评论"""
     import random as _random
     if not keyword:
         keyword = _random.choice(XHS_TOPICS)
@@ -1066,122 +1118,125 @@ def skill_xhs_browse(keyword=None):
     page = None
     try:
         ctx = _get_browser_context()
-        page = ctx.new_page()
+        page = _get_or_create_page(ctx)
 
-        # 直接访问 explore 页（搜索页需要登录，骨架屏加载不出内容）
-        page.goto('https://www.xiaohongshu.com/explore', timeout=20000, wait_until='domcontentloaded')
-        page.wait_for_timeout(4000)
+        # 直接访问 explore 页
+        if not _safe_goto(page, 'https://www.xiaohongshu.com/explore', timeout=30000, retries=2):
+            # 导航失败但页面可能已部分加载，检查一下
+            try:
+                current_url = page.url
+                if 'xiaohongshu.com' not in current_url:
+                    return _xhs_fallback_search(keyword)
+            except Exception:
+                return _xhs_fallback_search(keyword)
+
+        # 等待笔记卡片出现（最多 10 秒）
+        try:
+            page.wait_for_selector('section.note-item, [class*="note-item"], .feeds-container a', timeout=10000)
+        except Exception:
+            logger.warning("小红书笔记卡片未出现，尝试提取页面文本")
 
         # 从 explore 页提取笔记列表
         notes = page.evaluate("""
             () => {
                 const items = [];
-                document.querySelectorAll('section.note-item').forEach(el => {
+                // 多种选择器兼容不同版本的小红书页面
+                const noteEls = document.querySelectorAll('section.note-item, [class*="note-item"]');
+                noteEls.forEach(el => {
                     const text = el.textContent?.trim() || '';
-                    // note-item 内部有 a 链接指向笔记详情
-                    const links = el.querySelectorAll('a[href*="/explore/"]');
+                    const links = el.querySelectorAll('a[href*="/explore/"], a[href*="/search_result/"], a[href*="/discovery/item/"]');
                     let link = '';
                     for (const a of links) {
-                        // 优先取带 xsec_token 的链接（完整链接）
-                        if (a.href.includes('xsec_token')) {
-                            link = a.href;
-                            break;
-                        }
+                        if (a.href.includes('xsec_token')) { link = a.href; break; }
                         if (!link) link = a.href;
                     }
                     if (text && text.length > 3) {
                         items.push({title: text.substring(0, 100), link});
                     }
                 });
+                // 降级：从 feeds-container 中提取
+                if (items.length === 0) {
+                    document.querySelectorAll('.feeds-container a[href*="/explore/"]').forEach(a => {
+                        const text = a.textContent?.trim() || '';
+                        if (text.length > 3) items.push({title: text.substring(0, 100), link: a.href});
+                    });
+                }
                 return items;
             }
         """)
 
         if notes and len(notes) > 0:
-            # 随机选一个笔记点进去看详情
             note = _random.choice(notes[:8])
             print(f"  📝 看笔记: {note.get('title', '')[:40]}")
 
             link = note.get('link', '')
             if link:
                 try:
-                    page.goto(link, timeout=15000, wait_until='domcontentloaded')
-                    page.wait_for_timeout(3000)
-                    # 滚动到评论区，触发懒加载
-                    page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.5)")
-                    page.wait_for_timeout(1500)
-                    page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.8)")
-                    page.wait_for_timeout(1500)
+                    if not _safe_goto(page, link, timeout=20000, retries=2):
+                        content_parts.append(f"标题: {note.get('title', '')}")
+                    else:
+                        # 等待正文出现
+                        try:
+                            page.wait_for_selector('#detail-title, [class*="title"], .note-text', timeout=8000)
+                        except Exception:
+                            pass
+                        # 滚动触发懒加载
+                        page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.5)")
+                        page.wait_for_timeout(1500)
+                        page.evaluate("window.scrollTo(0, document.body.scrollHeight * 0.8)")
+                        page.wait_for_timeout(1500)
 
-                    detail = page.evaluate("""
-                        () => {
-                            // 标题
-                            const title = document.querySelector('#detail-title')?.textContent?.trim()
-                                || document.querySelector('[class*="title"]')?.textContent?.trim() || '';
-                            // 正文
-                            const desc = document.querySelector('#detail-desc')?.textContent?.trim()
-                                || document.querySelector('[class*="desc"]')?.textContent?.trim()
-                                || document.querySelector('.note-text')?.textContent?.trim() || '';
-                            // 评论：基于实际DOM结构 .comment-item
-                            const comments = [];
-                            const seen = new Set();
-                            // 只取顶层 comment-item（排除子评论容器）
-                            document.querySelectorAll('.parent-comment > .comment-item, .comment-item:not(.comment-item-sub)').forEach(el => {
-                                // 提取评论文本：找 .comment-inner-container 内的文本
-                                const inner = el.querySelector('.comment-inner-container');
-                                if (!inner) return;
-                                // 取所有文本节点，跳过作者名、日期、按钮等
-                                const textParts = [];
-                                // 作者名
-                                const author = el.querySelector('.author-wrapper .name')?.textContent?.trim() || '';
-                                // 评论内容：可能在 .comment-picture 后面的文本节点，或直接在 inner 中
-                                const contentEl = inner.querySelector('.content, .comment-content');
-                                let commentText = '';
-                                if (contentEl) {
-                                    commentText = contentEl.textContent?.trim();
-                                } else {
-                                    // 降级：取 inner 的所有文本，去掉作者名和日期
-                                    commentText = inner.textContent?.trim();
-                                    // 去掉常见噪音
-                                    commentText = commentText.replace(/[0-9]+天前|[0-9]+小时前|昨天|[0-9]+分钟前/g, '')
-                                        .replace(/赞|回复|作者|置顶评论/g, '')
-                                        .replace(/\s+/g, ' ').trim();
-                                }
-                                if (commentText && commentText.length > 2 && !seen.has(commentText)) {
-                                    seen.add(commentText);
-                                    const entry = author ? `${author}: ${commentText}` : commentText;
-                                    comments.push(entry);
-                                }
-                            });
-                            // 如果上面没抓到，降级用更宽松的选择器
-                            if (comments.length === 0) {
-                                document.querySelectorAll('.comment-item').forEach(el => {
-                                    const text = el.innerText?.trim();
-                                    if (text && text.length > 5 && text.length < 500 && !seen.has(text)) {
-                                        seen.add(text);
-                                        comments.push(text.substring(0, 200));
+                        detail = page.evaluate("""
+                            () => {
+                                const title = document.querySelector('#detail-title')?.textContent?.trim()
+                                    || document.querySelector('[class*="title"]')?.textContent?.trim() || '';
+                                const desc = document.querySelector('#detail-desc')?.textContent?.trim()
+                                    || document.querySelector('[class*="desc"]')?.textContent?.trim()
+                                    || document.querySelector('.note-text')?.textContent?.trim() || '';
+                                const comments = [];
+                                const seen = new Set();
+                                document.querySelectorAll('.parent-comment > .comment-item, .comment-item:not(.comment-item-sub)').forEach(el => {
+                                    const inner = el.querySelector('.comment-inner-container');
+                                    if (!inner) return;
+                                    const author = el.querySelector('.author-wrapper .name')?.textContent?.trim() || '';
+                                    const contentEl = inner.querySelector('.content, .comment-content');
+                                    let commentText = '';
+                                    if (contentEl) {
+                                        commentText = contentEl.textContent?.trim();
+                                    } else {
+                                        commentText = inner.textContent?.trim()
+                                            .replace(/[0-9]+天前|[0-9]+小时前|昨天|[0-9]+分钟前/g, '')
+                                            .replace(/赞|回复|作者|置顶评论/g, '')
+                                            .replace(/\s+/g, ' ').trim();
+                                    }
+                                    if (commentText && commentText.length > 2 && !seen.has(commentText)) {
+                                        seen.add(commentText);
+                                        comments.push(author ? `${author}: ${commentText}` : commentText);
                                     }
                                 });
+                                if (comments.length === 0) {
+                                    document.querySelectorAll('.comment-item').forEach(el => {
+                                        const text = el.innerText?.trim();
+                                        if (text && text.length > 5 && text.length < 500 && !seen.has(text)) {
+                                            seen.add(text);
+                                            comments.push(text.substring(0, 200));
+                                        }
+                                    });
+                                }
+                                return { title, content: desc.substring(0, 1500), comments: comments.slice(0, 15) };
                             }
-                            return {
-                                title,
-                                content: desc.substring(0, 1500),
-                                comments: comments.slice(0, 15)
-                            };
-                        }
-                    """)
+                        """)
 
-                    if detail.get('title'):
-                        content_parts.append(f"标题: {detail['title']}")
-                    if detail.get('content'):
-                        content_parts.append(f"正文: {detail['content']}")
-                    if detail.get('comments'):
-                        content_parts.append("评论:")
-                        for c in detail['comments']:
-                            content_parts.append(f"  - {c}")
+                        if detail.get('title'):
+                            content_parts.append(f"标题: {detail['title']}")
+                        if detail.get('content'):
+                            content_parts.append(f"正文: {detail['content']}")
+                        if detail.get('comments'):
+                            content_parts.append("评论:")
+                            for c in detail['comments']:
+                                content_parts.append(f"  - {c}")
                 except Exception as e:
-                    print(f"  详情页抓取失败: {e}")
-                    # 降级：至少用列表页的标题
+                    logger.warning("详情页抓取失败: %s", e)
                     content_parts.append(f"标题: {note.get('title', '')}")
             else:
                 content_parts.append(f"标题: {note.get('title', '')}")
@@ -1193,7 +1248,7 @@ def skill_xhs_browse(keyword=None):
                 content_parts.append(text)
 
     except Exception as e:
-        print(f"小红书浏览异常: {e}")
+        logger.error("小红书浏览异常: %s", e)
         return _xhs_fallback_search(keyword)
     finally:
         try:
@@ -1241,11 +1296,19 @@ def skill_douban_browse(group_id=None):
     page = None
     try:
         ctx = _get_browser_context()
-        page = ctx.new_page()
+        page = _get_or_create_page(ctx)
 
-        # 第一步：访问讨论精选页（不需要登录，内容丰富）
-        page.goto('https://www.douban.com/group/explore', timeout=15000, wait_until='domcontentloaded')
-        page.wait_for_timeout(3000)
+        # 第一步：访问讨论精选页
+        if not _safe_goto(page, 'https://www.douban.com/group/explore', timeout=25000, retries=2):
+            logger.warning("豆瓣导航失败，降级到搜索")
+            results = skill_web_search("豆瓣小组 女生日常", num_results=5)
+            if results.get("results"):
+                for r in results["results"][:3]:
+                    if r.get("title"): content_parts.append(f"标题: {r['title']}")
+                    if r.get("snippet"): content_parts.append(f"内容: {r['snippet']}")
+                    content_parts.append("")
+            content = "\n".join(content_parts)
+            return {"success": bool(content), "content": content, "source": "douban"}
 
         # 第二步：提取帖子链接
         topics = page.evaluate("""
@@ -1274,8 +1337,7 @@ def skill_douban_browse(group_id=None):
         print(f"  📝 看帖子: {topic['title'][:30]}")
 
         # 第三步：访问帖子
-        page.goto(topic['url'], timeout=15000, wait_until='domcontentloaded')
-        page.wait_for_timeout(3000)
+        _safe_goto(page, topic['url'], timeout=20000, retries=2)
 
         # 第四步：提取帖子正文 + 评论
         data = page.evaluate("""
@@ -1319,7 +1381,7 @@ def skill_douban_browse(group_id=None):
 
 
 def skill_weibo_browse(keyword=None):
-    """刷微博：用 browser_pool 看热搜页面，提取微博内容"""
+    """刷微博：用 CDP 浏览器看热搜页面，提取微博内容"""
     import random as _random
     if not keyword:
         keyword = _random.choice(WEIBO_TOPICS)
@@ -1333,55 +1395,95 @@ def skill_weibo_browse(keyword=None):
     page = None
     try:
         ctx = _get_browser_context()
-        page = ctx.new_page()
+        page = _get_or_create_page(ctx)
 
-        # 用微博热搜页面（不需要登录，内容丰富）
-        # 微博会重定向，需要等待更长时间
+        # 微博热搜页面（JS 较重，用 domcontentloaded + 更长等待）
         try:
-            page.goto('https://weibo.com/hot/search', timeout=20000, wait_until='networkidle')
-        except Exception:
-            # networkidle 可能超时，降级到 domcontentloaded
+            page.goto('https://weibo.com/hot/search', timeout=30000, wait_until='domcontentloaded')
+        except Exception as nav_err:
+            logger.warning("微博导航异常: %s，检查页面状态", nav_err)
             try:
-                page.goto('https://weibo.com/hot/search', timeout=15000, wait_until='domcontentloaded')
+                if 'weibo.com' not in page.url:
+                    return {"success": False, "content": "", "source": "weibo", "error": "导航失败"}
             except Exception:
-                pass
-        page.wait_for_timeout(5000)
+                return {"success": False, "content": "", "source": "weibo", "error": "导航失败"}
 
-        # 提取微博内容：热搜页面的微博内容
+        # 微博 JS 渲染较慢，等待内容元素出现
+        try:
+            page.wait_for_selector('[class*="Feed"], .card-wrap, [class*="hot-topic"], .wbpro-feed, [node-type="feed_list"]', timeout=15000)
+        except Exception:
+            logger.warning("微博内容元素未出现，尝试滚动触发渲染")
+        # 滚动触发懒加载
+        page.evaluate("window.scrollTo(0, 500)")
+        page.wait_for_timeout(3000)
+        page.evaluate("window.scrollTo(0, 1000)")
+        page.wait_for_timeout(2000)
+
+        # 提取微博热搜内容
+        # 微博热搜页的 DOM 结构是纯文本列表，直接从 body text 中提取
         posts = page.evaluate("""
             () => {
                 const posts = [];
                 const seen = new Set();
-                // 热搜页面的微博内容
-                const selectors = [
+                const noise = ['Video Player', 'modal window', 'dialog window', 'Opacity',
+                    'ColorWhite', 'Semi-Transparent', 'Close Modal', 'Beginning of',
+                    'End of dialog', 'is loading', 'Escape will cancel', '\u65e0\u969c\u788d',
+                    '\u5173\u6ce8', '\u6362\u4e00\u6362', '\u521b\u4f5c\u8005\u4e2d\u5fc3', '\u5e2e\u52a9\u4e2d\u5fc3',
+                    '\u5fae\u535a\u5ba2\u670d', '\u5f00\u653e\u5e73\u53f0', '\u4e3e\u62a5\u4e2d\u5fc3', 'Copyright',
+                    '\u8425\u4e1a\u6267\u7167', '\u7f51\u7ad9\u5907\u6848', '\u5fae\u535a\u62db\u8058',
+                    '没有更多内容了', '你可能感兴趣的人', '微博原创视频博主',
+                    '客户端下载', '微博隐私', '合作热线', '自助服务中心',
+                    '违规投诉', '处理大厅', '舞弊举报', 'About Weibo',
+                    '数据中心', '内容管理', '收益中心', '私信管理',
+                    '进入创作者中心', '常见问题', '微博营销', '扮演者'];
+                function isNoise(text) {
+                    return noise.some(n => text.includes(n));
+                }
+                
+                // \u65b9\u6848 1\uff1a\u5c1d\u8bd5\u4ece\u5217\u8868\u5143\u7d20\u4e2d\u63d0\u53d6
+                const listSelectors = [
+                    '[class*="HotTopic"] [class*="title"]',
+                    '[class*="hot"] [class*="title"]',
                     '.card-wrap .content .txt',
-                    '.card .txt',
-                    '[class*="Feed_body"] [class*="detail"]',
                     '.wbpro-feed-content',
-                    '[class*="text"]',
                 ];
-                for (const sel of selectors) {
+                for (const sel of listSelectors) {
                     document.querySelectorAll(sel).forEach(el => {
                         const text = el.innerText?.trim();
-                        if (text && text.length > 15 && text.length < 500 && !seen.has(text)) {
-                            seen.add(text);
-                            posts.push(text);
+                        if (text && text.length > 4 && text.length < 200 && !seen.has(text) && !isNoise(text)) {
+                            const chineseCount = (text.match(/[\u4e00-\u9fff]/g) || []).length;
+                            if (chineseCount >= 2) {
+                                seen.add(text);
+                                posts.push(text);
+                            }
                         }
                     });
                 }
-                // 如果上面都没抓到，用更宽泛的选择器
-                if (posts.length === 0) {
+                
+                // \u65b9\u6848 2\uff1a\u4ece body \u6587\u672c\u4e2d\u63d0\u53d6\u70ed\u641c\u6761\u76ee\uff08\u5fae\u535a\u70ed\u641c\u9875\u662f\u7eaf\u6587\u672c\u5217\u8868\uff09
+                if (posts.length < 5) {
                     const body = document.body.innerText;
-                    // 按换行分割，取有意义的段落
-                    body.split('\\n').forEach(line => {
+                    const lines = body.split(String.fromCharCode(10));
+                    // 页脚截断标志 — 这些内容之后都是推荐博主和底部链接
+                    const footerMarkers = ['换一换', '创作者中心', '帮助中心', '微博客服'];
+                    let hitFooter = false;
+                    for (const line of lines) {
                         const text = line.trim();
-                        if (text.length > 20 && text.length < 500 && !seen.has(text)) {
+                        if (!text) continue;
+                        // 检查是否到达页脚区域
+                        if (footerMarkers.some(m => text.includes(m))) { hitFooter = true; break; }
+                        if (text.length < 4 || text.length > 200) continue;
+                        if (seen.has(text) || isNoise(text)) continue;
+                        const chineseCount = (text.match(/[一-鿿]/g) || []).length;
+                        const isNumber = /^[\d,]+$/.test(text);
+                        const isNav = ['推荐', '热门推荐', '热门榜单', '微博热搜', '我的', '热搜', '文娱', '生活', '社会'].includes(text);
+                        if (chineseCount >= 2 && !isNumber && !isNav) {
                             seen.add(text);
                             posts.push(text);
                         }
-                    });
+                    }
                 }
-                return posts.slice(0, 20);
+                return posts.slice(0, 30);
             }
         """)
 

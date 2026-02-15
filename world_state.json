@@ -1,0 +1,25 @@
+{
+  "tick": 20,
+  "weather": {
+    "weather": "晴天",
+    "temperature": 21,
+    "last_update_date": "2026-02-16"
+  },
+  "registered_agents": {
+    "xiaoyue": {
+      "id": "xiaoyue",
+      "name": "小悦",
+      "location": "home_xiaoyue",
+      "registered_at": "2026-02-15T13:02:01.199861"
+    }
+  },
+  "agent_ack_ticks": {
+    "xiaoyue": 3
+  },
+  "npc_locations": {
+    "npc_lili": "company_startup",
+    "npc_wang_boss": "company_startup",
+    "npc_su_teacher": "studio_art",
+    "npc_cafe_boss": "cafe_moli"
+  }
+}
