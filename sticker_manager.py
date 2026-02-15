@@ -8,7 +8,10 @@ Telegram 贴纸管理器
 import json
 import os
 import random
+import logging
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 STICKER_DB_PATH = "/home/ubuntu/chimera/sticker_library.json"
 
@@ -44,8 +47,8 @@ class StickerManager:
             try:
                 with open(self.db_path, "r", encoding="utf-8") as f:
                     return json.load(f)
-            except:
-                pass
+            except (json.JSONDecodeError, IOError) as e:
+                logger.warning("加载贴纸库失败: %s", e)
         return {
             "by_emotion": {},     # emotion -> [file_id, ...]
             "by_set": {},         # set_name -> [file_id, ...]
@@ -219,5 +222,5 @@ async def collect_sticker_set(bot, set_name):
             "stickers": stickers_data,
         }
     except Exception as e:
-        print(f"获取贴纸包失败 {set_name}: {e}")
+        logger.warning("获取贴纸包失败 %s: %s", set_name, e)
         return None

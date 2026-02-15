@@ -7,7 +7,10 @@ import json
 import os
 import sqlite3
 import time
+import logging
 import threading
+
+logger = logging.getLogger(__name__)
 
 # 延迟导入 playwright
 _playwright = None
@@ -26,11 +29,11 @@ def _decrypt_chromium_cookies(domains):
         from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
         from cryptography.hazmat.primitives import hashes
     except ImportError:
-        print("⚠️ cryptography 未安装，尝试用缓存的 cookie")
+        logger.warning("cryptography 未安装，尝试用缓存的 cookie")
         return _load_cached_cookies()
 
     if not os.path.exists(COOKIE_DB):
-        print("⚠️ Chromium cookie 数据库不存在")
+        logger.warning("Chromium cookie 数据库不存在")
         return _load_cached_cookies()
 
     # Linux Chromium 默认密钥
@@ -45,12 +48,14 @@ def _decrypt_chromium_cookies(domains):
     conn = sqlite3.connect(COOKIE_DB)
     c = conn.cursor()
 
-    conditions = " OR ".join([f"host_key LIKE '%{d}%'" for d in domains])
+    # 使用参数化查询避免 SQL 注入
+    placeholders = " OR ".join(["host_key LIKE ?" for _ in domains])
+    params = [f"%{d}%" for d in domains]
     c.execute(f"""
         SELECT host_key, name, encrypted_value, value, path,
                expires_utc, is_secure, is_httponly, samesite
-        FROM cookies WHERE {conditions}
-    """)
+        FROM cookies WHERE {placeholders}
+    """, params)
 
     cookies = []
     for row in c.fetchall():
@@ -90,7 +95,7 @@ def _decrypt_chromium_cookies(domains):
     with open(COOKIE_CACHE, 'w') as f:
         json.dump(cookies, f)
 
-    print(f"🍪 从 Chromium 导出了 {len(cookies)} 个 cookie")
+    logger.info("从 Chromium 导出了 %d 个 cookie", len(cookies))
     return cookies
 
 
@@ -99,7 +104,7 @@ def _decrypt_v10(encrypted_value, key):
     if encrypted_value[:3] != b'v10':
         try:
             return encrypted_value.decode('utf-8', errors='replace')
-        except:
+        except UnicodeDecodeError:
             return None
 
     try:
@@ -113,7 +118,7 @@ def _decrypt_v10(encrypted_value, key):
         if pad_len > 16:
             return None
         return decrypted[:-pad_len].decode('utf-8')
-    except:
+    except Exception:
         pass
 
     try:
@@ -123,7 +128,7 @@ def _decrypt_v10(encrypted_value, key):
         aesgcm = AESGCM(key)
         plaintext = aesgcm.decrypt(nonce, ciphertext_with_tag, None)
         return plaintext.decode('utf-8')
-    except:
+    except Exception:
         pass
 
     return None
@@ -134,7 +139,7 @@ def _load_cached_cookies():
     if os.path.exists(COOKIE_CACHE):
         with open(COOKIE_CACHE) as f:
             cookies = json.load(f)
-        print(f"🍪 从缓存加载了 {len(cookies)} 个 cookie")
+        logger.info("从缓存加载了 %d 个 cookie", len(cookies))
         return cookies
     return []
 
@@ -149,7 +154,7 @@ def get_context():
                 # 检查上下文是否还活着
                 _context.pages
                 return _context
-            except:
+            except Exception:
                 _context = None
                 _browser = None
                 _playwright = None
@@ -165,9 +170,9 @@ def get_context():
                 navigator_platform_override='Linux x86_64',
                 navigator_vendor_override='Google Inc.',
             )
-            print("🥷 playwright-stealth 已加载")
+            logger.info("playwright-stealth 已加载")
         except ImportError:
-            print("⚠️ playwright-stealth 未安装，用普通模式")
+            logger.info("playwright-stealth 未安装，用普通模式")
 
         _playwright = sync_playwright().start()
 
@@ -221,9 +226,9 @@ def get_context():
 
             try:
                 _context.add_cookies(valid_cookies)
-                print(f"🍪 已加载 {len(valid_cookies)} 个 cookie 到浏览器上下文")
+                logger.info("已加载 %d 个 cookie 到浏览器上下文", len(valid_cookies))
             except Exception as e:
-                print(f"⚠️ 加载 cookie 失败: {e}")
+                logger.warning("加载 cookie 失败: %s", e)
 
         return _context
 
@@ -256,12 +261,12 @@ def fetch_page(url, wait_seconds=2, extract_js=None, max_chars=3000):
             """)
             return text
     except Exception as e:
-        print(f"fetch_page 异常: {e}")
+        logger.warning("fetch_page 异常: %s", e)
         return None
     finally:
         try:
             page.close()
-        except:
+        except Exception:
             pass
 
 
@@ -276,7 +281,7 @@ def close():
                 _browser.close()
             if _playwright:
                 _playwright.stop()
-        except:
+        except Exception:
             pass
         _context = None
         _browser = None

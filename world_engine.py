@@ -8,9 +8,11 @@ import time
 import threading
 import random
 import os
+import logging
 from datetime import datetime
 from flask import Flask, jsonify, request
 
+logger = logging.getLogger(__name__)
 app = Flask(__name__)
 
 # ============================================================

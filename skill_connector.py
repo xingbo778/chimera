@@ -14,9 +14,12 @@ import os
 import re
 import json
 import time
+import random
+import logging
 import subprocess
 from openai import OpenAI
 
+logger = logging.getLogger(__name__)
 client = OpenAI()
 
 def _parse_json_robust(text):
@@ -561,11 +564,11 @@ def _exec_browser_action(inputs, skill_name, agent_soul):
                     m = re.search(r'\{.*\}', decision_text, re.DOTALL)
                     if m:
                         decision = json.loads(m.group())
-            except:
+            except (json.JSONDecodeError, ValueError):
                 pass
             
             if not decision:
-                print(f"  ⚠️ Step {step_num}: LLM 决策解析失败")
+                logger.warning("  Step %d: LLM 决策解析失败", step_num)
                 break
             
             # 检查是否完成
@@ -685,23 +688,27 @@ def _exec_send_email(inputs, skill_name):
 # ============================================================
 
 def _mcp_call(tool_name, inputs, server="playwright"):
-    """调用 MCP 工具"""
+    """调用 MCP 工具（使用列表形式避免 shell 注入）"""
     try:
         input_json = json.dumps(inputs, ensure_ascii=False)
-        cmd = f"manus-mcp-cli tool call {tool_name} --server {server} --input '{input_json}'"
+        cmd = [
+            "manus-mcp-cli", "tool", "call", tool_name,
+            "--server", server,
+            "--input", input_json,
+        ]
         result = subprocess.run(
-            cmd, shell=True, capture_output=True, text=True, timeout=30
+            cmd, capture_output=True, text=True, timeout=30
         )
         if result.returncode == 0:
             return result.stdout.strip()
         else:
-            print(f"  MCP 调用失败 ({tool_name}): {result.stderr[:200]}")
+            logger.warning("MCP 调用失败 (%s): %s", tool_name, result.stderr[:200])
             return None
     except subprocess.TimeoutExpired:
-        print(f"  MCP 调用超时 ({tool_name})")
+        logger.warning("MCP 调用超时 (%s)", tool_name)
         return None
     except Exception as e:
-        print(f"  MCP 调用异常 ({tool_name}): {e}")
+        logger.error("MCP 调用异常 (%s): %s", tool_name, e)
         return None
 
 
@@ -753,7 +760,6 @@ def should_attempt_real(skill, life_buffer, tick_count):
             score += 0.2
     
     # 触发力 4：随机好奇心
-    import random
     if random.random() < 0.15:
         score += 0.2
     

@@ -11,6 +11,9 @@ Capability Memory — Agent 的能力记忆
 import os
 import json
 import time
+import logging
+
+logger = logging.getLogger(__name__)
 
 CAPABILITY_FILE = "capability_memory.json"
 
@@ -39,7 +42,8 @@ class CapabilityMemory:
             try:
                 with open(self.filepath, "r") as f:
                     self.capabilities = json.load(f)
-            except:
+            except (json.JSONDecodeError, IOError) as e:
+                logger.warning("加载能力记忆失败: %s", e)
                 self.capabilities = {}
     
     def _save(self):
@@ -47,7 +51,7 @@ class CapabilityMemory:
             with open(self.filepath, "w") as f:
                 json.dump(self.capabilities, f, ensure_ascii=False, indent=2)
         except Exception as e:
-            print(f"保存能力记忆失败: {e}")
+            logger.error("保存能力记忆失败: %s", e)
     
     def record_capability(self, capability_id, description, example="", source_action=""):
         """
@@ -78,7 +82,7 @@ class CapabilityMemory:
                 "examples": [example] if example else [],
                 "source_action": source_action,
             }
-            print(f"💡 发现新能力！「{capability_id}」- {description}")
+            logger.info("💡 发现新能力！「%s」- %s", capability_id, description)
         
         self._save()
     

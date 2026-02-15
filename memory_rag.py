@@ -11,8 +11,11 @@ Memory RAG: 基于向量检索的语义记忆搜索。
 import os
 import hashlib
 import time
+import logging
 import chromadb
 from chromadb.utils import embedding_functions
+
+logger = logging.getLogger(__name__)
 
 # 复用 StyleRAG 的 embedding 模型（中文效果好）
 EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
@@ -71,7 +74,7 @@ class MemoryRAG:
             existing = self._events.get(ids=[doc_id])
             if existing and existing["ids"]:
                 return
-        except:
+        except Exception:
             pass
 
         self._events.add(
@@ -125,7 +128,7 @@ class MemoryRAG:
             existing = self._knowledge.get(ids=[doc_id])
             if existing and existing["ids"]:
                 return
-        except:
+        except Exception:
             pass
 
         self._knowledge.add(
@@ -232,8 +235,8 @@ class MemoryRAG:
                 if content.strip():
                     self.add_knowledge(topic, content[:500], source="knowledge_file")
                     count += 1
-            except:
-                pass
+            except (IOError, UnicodeDecodeError) as e:
+                logger.warning("导入知识文件失败 %s: %s", filename, e)
         return count
 
     # ============================================================

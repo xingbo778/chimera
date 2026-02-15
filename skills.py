@@ -8,14 +8,16 @@ import json
 import re
 import time
 import base64
+import logging
 import subprocess
 import requests
 from pathlib import Path
 from openai import OpenAI
 
+logger = logging.getLogger(__name__)
 client = OpenAI()
 
-FAL_KEY = os.environ.get("FAL_KEY", "b6d0f15a-4115-468e-b74b-70a8b038a7ff:27058454565d68bb1c0bf79982b25a24")
+FAL_KEY = os.environ.get("FAL_KEY", "")  # 必须通过环境变量设置，不硬编码
 YUNWU_API_KEY = os.environ.get("YUNWU_API_KEY", "")
 
 # 小悦的参考图（上传后的公开URL）
@@ -90,8 +92,8 @@ def skill_fetch_url(url, max_chars=3000):
         text = soup.get_text(separator="\n", strip=True)
         lines = [line.strip() for line in text.split("\n") if line.strip()]
         text = "\n".join(lines)
-    except:
-        pass
+    except Exception as e:
+        logger.debug("requests 拓取失败: %s", e)
 
     # 如果requests拿到了足够内容，直接返回
     if len(text) > 100:
@@ -506,7 +508,7 @@ def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/
             max_tokens=80, temperature=0.3,
         )
         en_desc = translated.choices[0].message.content.strip()
-    except:
+    except Exception:
         en_desc = desc
 
     if photo_type == "selfie":
@@ -1186,7 +1188,7 @@ def skill_xhs_browse(keyword=None):
         try:
             if page:
                 page.close()
-        except:
+        except Exception:
             pass
 
     content = "\n".join(content_parts)
@@ -1299,7 +1301,7 @@ def skill_douban_browse(group_id=None):
     finally:
         if page:
             try: page.close()
-            except: pass
+            except Exception: pass
 
     content = "\n".join(content_parts)
     return {"success": bool(content), "content": content, "source": "douban"}
@@ -1379,7 +1381,7 @@ def skill_weibo_browse(keyword=None):
     finally:
         if page:
             try: page.close()
-            except: pass
+            except Exception: pass
 
     content = "\n".join(content_parts)
     return {"success": bool(content), "content": content, "source": "weibo", "keyword": keyword}

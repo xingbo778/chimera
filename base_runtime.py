@@ -6,13 +6,34 @@ Base Agent Runtime — 通用逻辑
 import os
 import json
 import time
+import math
 import random
 import asyncio
+import hashlib
+import logging
 import threading
 import requests
 import re
 from datetime import datetime, timezone, timedelta
 from openai import OpenAI
+
+logger = logging.getLogger(__name__)
+
+# ============================================================
+# 常量配置
+# ============================================================
+
+DEFAULT_TICK_INTERVAL = 60          # 自主循环 tick 间隔（秒）
+PROACTIVE_MSG_COOLDOWN = 1800       # 主动消息冷却（秒）
+SKILL_DISCOVER_INTERVAL = 10        # 每 N 个 tick 尝试发现新技能
+AUTONOMOUS_DECIDE_INTERVAL = 5      # 每 N 个 tick 做一次自主决策
+CLEANUP_INTERVAL = 100              # 每 N 个 tick 清理一次过期文件
+MIN_EVENTS_FOR_SUMMARY = 3          # 触发每日总结的最少事件数
+MAX_REACT_STEPS = 3                 # ReAct 最大连续步数
+KNOWLEDGE_MIN_LENGTH = 50           # 触发技能发现的最小内容长度
+SLEEP_HOUR_START = 2                # 深夜强制休息开始时间
+SLEEP_HOUR_END = 6                  # 深夜强制休息结束时间
+FILE_RETENTION_DAYS = 3             # 文件保留天数
 
 from skills import (
     skill_web_search, skill_fetch_url, skill_browser_fetch,
@@ -48,7 +69,8 @@ def load_text_file(path):
     try:
         with open(path, "r", encoding="utf-8") as f:
             return f.read()
-    except:
+    except (IOError, OSError) as e:
+        logger.debug("读取文件失败 %s: %s", path, e)
         return ""
 
 
@@ -237,6 +259,10 @@ class Memory:
                     return photo
         return None
 
+    def clear_today_events(self):
+        """清空当天事件（线程安全：调用方应持有 _memory_lock）"""
+        self._today_events = []
+
     def save(self, filepath=None):
         if filepath is None:
             filepath = os.path.join(self.base_dir, "memory_state.json")
@@ -295,8 +321,8 @@ class WorldClient:
             tick = r.json().get("tick", 0)
             print(f"🌍 WorldClient初始化，从tick={tick}开始监听事件")
             return tick
-        except:
-            print("🌍 WorldClient初始化，无法获取当前tick，从0开始")
+        except Exception:
+            logger.info("WorldClient初始化，无法获取当前tick，从0开始")
             return 0
 
     def register(self):
@@ -314,21 +340,21 @@ class WorldClient:
         try:
             r = requests.get(f"{self.base_url}/v1/world")
             return r.json()
-        except:
+        except Exception:
             return None
 
     def perceive(self, location_id):
         try:
             r = requests.get(f"{self.base_url}/v1/locations/{location_id}/perceive")
             return r.json()
-        except:
+        except Exception:
             return None
 
     def act(self, action):
         try:
             r = requests.post(f"{self.base_url}/v1/agents/{self.agent_id}/act", json=action)
             return r.json()
-        except:
+        except Exception:
             return None
 
     def get_events(self):
@@ -342,16 +368,16 @@ class WorldClient:
                 # BUG-B: ACK 已消费的事件
                 self._ack_events(max_tick)
             return events
-        except:
+        except Exception:
             return []
 
     def _ack_events(self, tick):
-        """BUG-B: 确认已消费事件到指定 tick"""
+        """确认已消费事件到指定 tick"""
         try:
             requests.post(f"{self.base_url}/v1/events/ack", json={
                 "agent_id": self.agent_id, "ack_tick": tick,
             }, timeout=3)
-        except:
+        except Exception:
             pass
 
     def get_nearby(self, location_id):
@@ -359,21 +385,21 @@ class WorldClient:
         try:
             r = requests.get(f"{self.base_url}/v1/locations/{location_id}/nearby", timeout=3)
             return r.json()
-        except:
+        except Exception:
             return {"agents": [], "npcs": []}
 
     def start_world(self):
         try:
             r = requests.post(f"{self.base_url}/v1/control/start")
             return r.json()
-        except:
+        except Exception:
             return None
 
     def get_locations(self):
         try:
             r = requests.get(f"{self.base_url}/v1/locations")
             return r.json()
-        except:
+        except Exception:
             return []
 
     def send_message_to_agent(self, target_id, message):
@@ -382,7 +408,7 @@ class WorldClient:
             r = requests.post(f"{self.base_url}/v1/agents/{self.agent_id}/send_message",
                             json={"target_id": target_id, "message": message}, timeout=5)
             return r.json()
-        except:
+        except Exception:
             return None
 
     def check_inbox(self):
@@ -390,7 +416,7 @@ class WorldClient:
         try:
             r = requests.get(f"{self.base_url}/v1/agents/{self.agent_id}/inbox", timeout=5)
             return r.json()
-        except:
+        except Exception:
             return []
 
 
@@ -574,7 +600,7 @@ class AgentRuntime:
         self._memory_lock = threading.Lock()
 
         # 常量
-        self.TICK_INTERVAL = 60
+        self.TICK_INTERVAL = DEFAULT_TICK_INTERVAL
 
         # 能力记忆 — 从经验中自主发现的能力
         self.capability_memory = CapabilityMemory(config.base_dir)
@@ -592,8 +618,8 @@ class AgentRuntime:
 
     def autonomous_decide(self):
         hour = beijing_now().hour
-        # 深夜强制休息（缩短范围，只有2-6点）
-        if 2 <= hour < 6:
+        # 深夜强制休息
+        if SLEEP_HOUR_START <= hour < SLEEP_HOUR_END:
             self.memory.current_activity = "睡觉"
             self.memory.emotional_state["energy"] = min(100, self.memory.emotional_state["energy"] + 3)
             return None
@@ -711,7 +737,7 @@ class AgentRuntime:
         if action_type == "message_user":
             # 主动消息冷却检查：至少30分钟不重复发
             last_proactive = getattr(self, '_last_proactive_time', 0)
-            if time.time() - last_proactive < 1800:  # 30分钟冷却
+            if time.time() - last_proactive < PROACTIVE_MSG_COOLDOWN:
                 feedback = "刚发过消息，等会儿再说"
             elif self.authorized_chat_id and self.telegram_app:
                 msg = self._generate_proactive_message(desc)
@@ -853,7 +879,7 @@ class AgentRuntime:
                     self.memory_rag.add_knowledge(
                         result.get("title", "学习"), result["content"][:500], source="学习",
                     )
-            except:
+            except Exception:
                 pass
             life_detail = generate_life_detail("learn", location, hour, weather)
             if life_detail:
@@ -1672,7 +1698,7 @@ class AgentRuntime:
         try:
             with open(few_shot_path, "r", encoding="utf-8") as f:
                 existing = f.read()
-        except:
+        except (IOError, OSError):
             pass
 
         new_blocks = []
@@ -1797,9 +1823,10 @@ class AgentRuntime:
 
     def _daily_summary(self):
         """每日记忆总结：让LLM总结当天的关键事件，写入长期记忆"""
-        today_events = self.memory.get_today_events(20)
-        if not today_events or len(today_events) < 3:
-            return  # 事件太少，不值得总结
+        with self._memory_lock:
+            today_events = self.memory.get_today_events(20)
+            if not today_events or len(today_events) < MIN_EVENTS_FOR_SUMMARY:
+                return  # 事件太少，不值得总结
 
         events_text = "\n".join(f"- {e}" for e in today_events)
         user_name = self.memory.user_name or "朋友"
@@ -1814,13 +1841,14 @@ class AgentRuntime:
                 now = beijing_now()
                 date_str = now.strftime('%m/%d')
                 entry = f"[{date_str} 日记] {summary.strip()}"
-                self.memory.update_long_term("最近日记", entry)
-                self.memory_rag.add_event(entry, importance=7)
-                self.memory._today_events = []  # 清空当天事件，已总结
-                self.memory.save()
-                print(f"📖 每日总结完成: {summary.strip()[:60]}")
+                with self._memory_lock:
+                    self.memory.update_long_term("最近日记", entry)
+                    self.memory_rag.add_event(entry, importance=7)
+                    self.memory.clear_today_events()
+                    self.memory.save()
+                logger.info("📖 每日总结完成: %s", summary.strip()[:60])
         except Exception as e:
-            print(f"每日总结失败: {e}")
+            logger.error("每日总结失败: %s", e)
 
     def autonomous_loop(self, loop):
         print("🧠 自主循环启动...")
@@ -1872,15 +1900,15 @@ class AgentRuntime:
                                 self.world.send_message_to_agent(sender_id, reply)
                                 print(f"💬 回复{sender}: {reply}")
 
-                # 每 10 个 tick 尝试从最近浏览内容中发现新技能
-                if self.tick_count > 0 and self.tick_count % 10 == 0:
+                # 每 N 个 tick 尝试从最近浏览内容中发现新技能
+                if self.tick_count > 0 and self.tick_count % SKILL_DISCOVER_INTERVAL == 0:
                     recent_k = self.memory.get_recent_knowledge(3)
                     for k in recent_k:
                         content = k.get("summary", k.get("content", ""))
                         if not content or len(content) <= 50:
                             continue
-                        # 跳过已处理过的知识
-                        content_hash = hash(content[:200])
+                        # 跳过已处理过的知识（使用 hashlib 保证跨进程稳定）
+                        content_hash = hashlib.md5(content[:200].encode('utf-8')).hexdigest()
                         if content_hash in self._processed_knowledge_hashes:
                             continue
                         self._processed_knowledge_hashes.add(content_hash)
@@ -1903,11 +1931,11 @@ class AgentRuntime:
                         except Exception as e:
                             print(f"技能发现失败: {e}")
 
-                if self.tick_count % 5 == 0:
+                if self.tick_count % AUTONOMOUS_DECIDE_INTERVAL == 0:
                     print(f"🔁 开始自主决策 (tick={self.tick_count})")
                     # 轻量 ReAct：允许连续 2-3 步动作
                     with self._memory_lock:
-                        for step in range(3):
+                        for step in range(MAX_REACT_STEPS):
                             action = self.autonomous_decide()
                             if action:
                                 print(f"🔁 决策结果: {action}")
@@ -1925,11 +1953,11 @@ class AgentRuntime:
                                 print(f"🔄 ReAct step {step+1} → 继续决策...")
                         self.memory.save()
 
-                if self.tick_count % 10 == 0:
+                if self.tick_count % SKILL_DISCOVER_INTERVAL == 0:
                     self.memory.save()
 
-                # BUG-J: 每 100 tick（约 1.5 小时）清理一次过期文件
-                if self.tick_count % 100 == 0 and self.tick_count > 0:
+                # 定期清理过期文件
+                if self.tick_count % CLEANUP_INTERVAL == 0 and self.tick_count > 0:
                     self._cleanup_old_files()
 
                 # 每日总结：凌晨1点触发（每天只触发一次）
@@ -1938,8 +1966,7 @@ class AgentRuntime:
                 if hour == 1 and last_summary_date != today:
                     self._daily_summary()
                     last_summary_date = today
-                # BUG-D: 自然情绪节律（替代固定衰减）
-                import math
+                # 自然情绪节律
                 if 7 <= hour < 23:
                     # 精力曲线：早上充沛，午后犯困，傍晚回升，深夜疑惫
                     energy_curve = {
@@ -1962,9 +1989,7 @@ class AgentRuntime:
                 time.sleep(self.TICK_INTERVAL)
 
             except Exception as e:
-                print(f"自主循环错误: {e}")
-                import traceback
-                traceback.print_exc()
+                logger.error("自主循环错误: %s", e, exc_info=True)
                 time.sleep(5)
 
     # ============================================================
@@ -1972,9 +1997,8 @@ class AgentRuntime:
     # ============================================================
 
     def _cleanup_old_files(self):
-        """BUG-J: 清理超过 3 天的语音和自拍文件"""
-        import glob
-        cutoff = time.time() - 3 * 86400
+        """清理超过指定天数的语音和自拍文件"""
+        cutoff = time.time() - FILE_RETENTION_DAYS * 86400
         cleanup_dirs = [
             os.path.join(self.config.base_dir, "voice"),
             os.path.join(self.config.base_dir, "selfies"),
@@ -1990,10 +2014,10 @@ class AgentRuntime:
                     if os.path.isfile(fp) and os.path.getmtime(fp) < cutoff:
                         os.remove(fp)
                         total_cleaned += 1
-                except:
+                except (OSError, PermissionError):
                     pass
         if total_cleaned > 0:
-            print(f"🧹 清理了 {total_cleaned} 个过期文件")
+            logger.info("清理了 %d 个过期文件", total_cleaned)
 
     # ============================================================
     # 主入口

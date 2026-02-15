@@ -10,8 +10,11 @@ Style RAG: 基于向量检索的动态 few-shot 风格样本选择。
 
 import os
 import hashlib
+import logging
 import chromadb
 from chromadb.utils import embedding_functions
+
+logger = logging.getLogger(__name__)
 
 # 使用 multilingual 模型，中文效果好
 EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
@@ -73,7 +76,7 @@ class StyleRAG:
             with open(filepath, "r", encoding="utf-8") as f:
                 text = f.read()
         except FileNotFoundError:
-            print(f"[StyleRAG] 文件不存在: {filepath}")
+            logger.warning("[StyleRAG] 文件不存在: %s", filepath)
             return 0
 
         examples = self._parse_few_shot_blocks(text)
@@ -116,7 +119,7 @@ class StyleRAG:
                 ids=new_ids,
                 metadatas=new_metas,
             )
-            print(f"[StyleRAG] 添加了 {len(new_docs)} 组新样本，总计 {self._collection.count()}")
+            logger.info("[StyleRAG] 添加了 %d 组新样本，总计 %d", len(new_docs), self._collection.count())
 
         return len(new_docs)
 

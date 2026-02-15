@@ -4,12 +4,15 @@ Skill Learner — Agent 技能自学习系统
 """
 
 import os
+import re
 import json
 import time
 import random
+import logging
 from datetime import datetime, timezone, timedelta
 from openai import OpenAI
 
+logger = logging.getLogger(__name__)
 client = OpenAI()
 
 def beijing_now():
@@ -29,7 +32,8 @@ class SkillRegistry:
             try:
                 with open(self.save_path, "r") as f:
                     self.skills = json.load(f)
-            except:
+            except (json.JSONDecodeError, IOError) as e:
+                logger.warning("加载技能库失败: %s", e)
                 self.skills = {}
 
     def _save(self):
@@ -84,7 +88,7 @@ class SkillRegistry:
                     cooldown = skill.get("cooldown_hours", 2) * 3600
                     if now - last < cooldown:
                         continue
-                except:
+                except (ValueError, TypeError):
                     pass
             available.append(skill)
         return available
@@ -158,12 +162,11 @@ def discover_skills_from_content(content, agent_soul, existing_skills):
         # 提取 JSON
         if text.startswith("["):
             return json.loads(text)
-        import re
         m = re.search(r'\[.*\]', text, re.DOTALL)
         if m:
             return json.loads(m.group())
     except Exception as e:
-        print(f"技能发现失败: {e}")
+        logger.warning("技能发现失败: %s", e)
     return []
 
 
@@ -209,7 +212,7 @@ def execute_skill_simulated(skill, agent_soul, context=""):
         )
         return resp.choices[0].message.content.strip().strip('"')
     except Exception as e:
-        print(f"技能执行模拟失败: {e}")
+        logger.warning("技能执行模拟失败: %s", e)
         return f"用了一下{skill['name']}的技能"
 
 

@@ -189,8 +189,6 @@ def generate_life_detail(action_type, location=None, hour=None, weather=None):
         hour = 12
     if hour < 10:
         time_period = "morning"
-    elif hour < 14:
-        time_period = "afternoon"
     elif hour < 19:
         time_period = "afternoon"
     elif hour < 23:
