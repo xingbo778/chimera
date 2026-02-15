@@ -21,8 +21,12 @@ _world_lock = threading.Lock()      # 保护 world_state、locations、registere
 _event_lock = threading.Lock()      # 保护 event_log、agent_ack_ticks
 _start_lock = threading.Lock()      # 保护 start_world 防止多线程启动
 _tick_thread = None                 # 保存 tick_loop 线程引用
+_inbox_lock = threading.Lock()       # 保护 agent 间消息信箱
 
 # ============================================================
+# Agent 间消息信箱
+agent_inboxes = {}  # {agent_id: [{from, message, timestamp, tick}]}
+
 # 持久化路径
 # ============================================================
 
@@ -706,6 +710,47 @@ def get_nearby(location_id):
                 })
 
     return jsonify(result)
+
+
+# ============================================================
+# Agent 间消息系统
+# ============================================================
+
+@app.route("/v1/agents/<agent_id>/send_message", methods=["POST"])
+def send_agent_message(agent_id):
+    """一个 agent 给另一个 agent 发消息"""
+    data = request.json
+    target_id = data.get("target_id")
+    message = data.get("message", "")
+
+    if not target_id or not message:
+        return jsonify({"error": "缺少 target_id 或 message"}), 400
+
+    if agent_id not in registered_agents:
+        return jsonify({"error": f"发送者 {agent_id} 未注册"}), 404
+
+    sender_name = registered_agents.get(agent_id, {}).get("name", agent_id)
+
+    with _inbox_lock:
+        if target_id not in agent_inboxes:
+            agent_inboxes[target_id] = []
+        agent_inboxes[target_id].append({
+            "from_id": agent_id,
+            "from_name": sender_name,
+            "message": message,
+            "timestamp": time.time(),
+            "tick": world_state["tick"],
+        })
+
+    return jsonify({"success": True, "message": f"消息已发送给 {target_id}"})
+
+
+@app.route("/v1/agents/<agent_id>/inbox", methods=["GET"])
+def get_agent_inbox(agent_id):
+    """获取并清空 agent 的消息信箱"""
+    with _inbox_lock:
+        messages = agent_inboxes.pop(agent_id, [])
+    return jsonify(messages)
 
 
 @app.route("/v1/control/start", methods=["POST"])

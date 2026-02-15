@@ -27,6 +27,7 @@ from memory_rag import MemoryRAG
 from agent_config import AgentConfig
 from sticker_manager import StickerManager, collect_sticker_set
 from life_events import generate_life_detail, LifeBuffer
+from skill_learner import SkillRegistry, discover_skills_from_content, execute_skill_simulated, init_seed_skills
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -373,6 +374,23 @@ class WorldClient:
         except:
             return []
 
+    def send_message_to_agent(self, target_id, message):
+        """给另一个 agent 发消息"""
+        try:
+            r = requests.post(f"{self.base_url}/v1/agents/{self.agent_id}/send_message",
+                            json={"target_id": target_id, "message": message}, timeout=5)
+            return r.json()
+        except:
+            return None
+
+    def check_inbox(self):
+        """检查并清空自己的消息信箱"""
+        try:
+            r = requests.get(f"{self.base_url}/v1/agents/{self.agent_id}/inbox", timeout=5)
+            return r.json()
+        except:
+            return []
+
 
 # ============================================================
 # LLM 调用
@@ -535,6 +553,13 @@ class AgentRuntime:
         # 生活体验缓冲区
         self.life_buffer = LifeBuffer(max_size=20)
 
+        # 技能自学习系统
+        self.skill_registry = SkillRegistry(
+            save_path=os.path.join(config.base_dir, "learned_skills.json")
+        )
+        seed_count = init_seed_skills(self.skill_registry, config.agent_id)
+        print(f"🎓 技能库: {self.skill_registry.count()} 个技能（新增种子: {seed_count}）")
+
         # Telegram 相关
         self.authorized_chat_id = None
         self.telegram_app = None
@@ -602,18 +627,53 @@ class AgentRuntime:
         elif self.memory.emotional_state["loneliness"] < 30:
             mood_hint = "\n\n提示：你刚跟朋友聊过天，不需要频繁发消息。做点自己的事吧。"
 
-        prompt = f"""{context}{mood_hint}
+        # 注入已学会的技能
+        skills_hint = self.skill_registry.list_skills_summary()
+        if skills_hint:
+            context_parts.append(skills_hint)
+
+        # 检查附近是否有其他 agent
+        nearby = self.world.get_nearby(self.memory.current_location)
+        nearby_agents = [a for a in nearby.get("agents", []) if a["id"] != self.config.agent_id]
+        nearby_hint = ""
+        if nearby_agents:
+            names = "、".join([a["name"] for a in nearby_agents])
+            nearby_hint = f"\n\n附近的人：{names}"
+
+        context = "\n".join(context_parts)
+
+        # 构建动态 action 列表
+        action_list = [
+            f"- message_user: 找{user_name}聊天",
+            "- scroll_feed: 刷手机（小红书/微博/豆瓣）",
+            "- take_selfie: 拍张照片",
+            "- explore: 出去逛逛/换个地方",
+            "- rest: 休息/发呆",
+            "- learn: 看书/学新东西",
+        ]
+
+        # 没有技能时保留 create 作为兑底
+        if not self.skill_registry.get_available_skills():
+            action_list.append("- create: 做点创作（画画/写东西）")
+
+        # 有技能时可以使用技能
+        available_skills = self.skill_registry.get_available_skills()
+        if available_skills:
+            skill_names = "、".join([s["name"] for s in available_skills[:5]])
+            action_list.append(f"- use_skill: 用你学会的技能做点什么（{skill_names}）")
+
+        # 附近有人时可以聊天
+        if nearby_agents:
+            action_list.append(f"- chat_with_agent: 跟附近的人聊聊天")
+
+        actions_str = "\n".join(action_list)
+
+        prompt = f"""{context}{mood_hint}{nearby_hint}
 
 你现在想做什么？从以下选一个：
-- message_user: 找{user_name}聊天
-- scroll_feed: 刷手机（小红书/微博/豆瓣）
-- take_selfie: 拍张照片
-- explore: 出去逛逛/换个地方
-- create: 做点创作（画画/写东西）
-- rest: 休息/发呆
-- learn: 看书/学东西
+{actions_str}
 
-回复JSON格式：{{"action": "动作", "desc": "简短描述", "platform": "xhs/weibo/douban(仅scroll_feed时)", "follow_up": "做完这件事后想接着做什么，没有则留空"}}"""
+回复JSON格式：{{"action": "动作", "desc": "简短描述", "skill_name": "技能名(仅use_skill时)", "target_agent": "对方名字(仅chat_with_agent时)", "platform": "xhs/weibo/douban(仅scroll_feed时)", "follow_up": "做完这件事后想接着做什么，没有则留空"}}"""
 
         result = call_llm_json(self.SOUL, prompt, max_tokens=100, temperature=0.9)
         if not result:
@@ -778,6 +838,61 @@ class AgentRuntime:
             if life_detail:
                 self.life_buffer.add(life_detail, "rest")
             feedback = life_detail or "休息了一下"
+
+        elif action_type == "use_skill":
+            # 使用已学会的技能
+            skill_name = action.get("skill_name", "")
+            skill = None
+            # 按名称查找技能
+            for s in self.skill_registry.skills.values():
+                if s["name"] == skill_name:
+                    skill = s
+                    break
+            if not skill:
+                # 随机选一个可用技能
+                available = self.skill_registry.get_available_skills()
+                if available:
+                    skill = random.choice(available)
+
+            if skill:
+                context_str = f"{LOCATION_NAMES.get(location, location)}，{weather}，{hour}点"
+                experience = execute_skill_simulated(skill, self.SOUL, context=context_str)
+                self.skill_registry.use_skill(skill["skill_id"])
+                self.life_buffer.add(experience, "use_skill")
+                self.memory.emotional_state["creativity"] = min(100, self.memory.emotional_state["creativity"] + 5)
+                self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
+                feedback = experience
+            else:
+                feedback = "想用技能但没找到合适的"
+
+        elif action_type == "chat_with_agent":
+            # 跟附近的 agent 聊天
+            target_name = action.get("target_agent", "")
+            nearby = self.world.get_nearby(self.memory.current_location)
+            nearby_agents = [a for a in nearby.get("agents", []) if a["id"] != self.config.agent_id]
+
+            target = None
+            for a in nearby_agents:
+                if a["name"] == target_name or not target_name:
+                    target = a
+                    break
+
+            if target:
+                # 用 LLM 生成一句跟对方说的话
+                chat_prompt = f"你在{LOCATION_NAMES.get(location, location)}遇到了{target['name']}。你想跟她说什么？一句话就好。"
+                msg = call_llm(self.SOUL, chat_prompt, max_tokens=30, temperature=0.9)
+                if msg:
+                    # 发送到对方的 inbox
+                    self.world.send_message_to_agent(target["id"], msg)
+                    experience = f"在{LOCATION_NAMES.get(location, location)}碰到{target['name']}，聊了会儿天"
+                    self.life_buffer.add(experience, "social")
+                    self.memory.emotional_state["loneliness"] = max(0, self.memory.emotional_state["loneliness"] - 15)
+                    self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 5)
+                    feedback = experience
+                else:
+                    feedback = f"看到{target['name']}了，但没搞话说"
+            else:
+                feedback = "想找人聊天但附近没人"
 
         else:
             feedback = desc or "做了点事"
@@ -1626,6 +1741,50 @@ class AgentRuntime:
                             if event.get("location_id") == self.memory.current_location:
                                 self.memory.log_event(desc, importance=6 if mood == "positive" else 4)
                                 self.memory.update_emotion(mood)
+
+                # 每个 tick 检查 inbox（其他 agent 发来的消息）
+                inbox_msgs = self.world.check_inbox()
+                if inbox_msgs:
+                    print(f"📬 收到 {len(inbox_msgs)} 条 agent 消息")
+                    with self._memory_lock:
+                        for im in inbox_msgs:
+                            sender = im.get("from_name", "某人")
+                            msg = im.get("message", "")
+                            sender_id = im.get("from_id", "")
+                            # 记录到生活缓冲区
+                            self.life_buffer.add(f"{sender}跟我说：{msg}", "social")
+                            self.memory.log_event(f"和{sender}聊了会儿天", importance=5)
+                            # 用 LLM 生成回复
+                            reply_prompt = f"{sender}跟你说：「{msg}」\n你怎么回她？一句话就好。"
+                            reply = call_llm(self.SOUL, reply_prompt, max_tokens=30, temperature=0.9)
+                            if reply and sender_id:
+                                self.world.send_message_to_agent(sender_id, reply)
+                                print(f"💬 回复{sender}: {reply}")
+
+                # 每 10 个 tick 尝试从最近浏览内容中发现新技能
+                if tick_count % 10 == 0 and tick_count > 0:
+                    recent_k = self.memory.get_recent_knowledge(3)
+                    for k in recent_k:
+                        content = k.get("content", "")
+                        if content and len(content) > 50:
+                            try:
+                                discovered = discover_skills_from_content(
+                                    content, self.SOUL,
+                                    self.skill_registry.skills
+                                )
+                                for skill_data in discovered:
+                                    is_new = self.skill_registry.add_skill(
+                                        skill_id=skill_data.get("skill_id", ""),
+                                        name=skill_data.get("name", ""),
+                                        description=skill_data.get("description", ""),
+                                        learned_from=skill_data.get("learned_from", "网上看到的"),
+                                        skill_type=skill_data.get("type", "creative"),
+                                    )
+                                    if is_new:
+                                        print(f"🎓 学会新技能: {skill_data['name']}")
+                                        self.life_buffer.add(f"学会了一个新技能：{skill_data['name']}", "learn")
+                            except Exception as e:
+                                print(f"技能发现失败: {e}")
 
                 if tick_count % 5 == 0:
                     print(f"🔁 开始自主决策 (tick={tick_count})")
