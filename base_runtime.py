@@ -25,6 +25,7 @@ from skills import (
 from style_rag import StyleRAG
 from memory_rag import MemoryRAG
 from agent_config import AgentConfig
+from sticker_manager import StickerManager, collect_sticker_set
 
 from telegram import Update
 from telegram.ext import Application, CommandHandler, MessageHandler, filters, ContextTypes
@@ -379,7 +380,7 @@ class WorldClient:
 def call_llm(system_prompt, user_prompt, max_tokens=500, temperature=0.9, model=None):
     try:
         response = client.chat.completions.create(
-            model=model or "gemini-2.5-flash",
+            model=model or "gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -397,7 +398,7 @@ def call_llm_multi(system_prompt, messages, max_tokens=300, temperature=0.9, mod
     try:
         full_messages = [{"role": "system", "content": system_prompt}] + messages
         response = client.chat.completions.create(
-            model=model or "gemini-2.5-flash",
+            model=model or "gpt-4.1-mini",
             messages=full_messages,
             max_tokens=max_tokens,
             temperature=temperature,
@@ -411,7 +412,7 @@ def call_llm_multi(system_prompt, messages, max_tokens=300, temperature=0.9, mod
 def call_llm_json(system_prompt, user_prompt, max_tokens=500, temperature=0.7, model=None):
     try:
         response = client.chat.completions.create(
-            model=model or "gemini-2.5-flash",
+            model=model or "gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -440,19 +441,26 @@ def call_llm_json(system_prompt, user_prompt, max_tokens=500, temperature=0.7, m
 # ============================================================
 
 async def tts_edge(text, output_dir=None, voice_name="zh-CN-XiaoyiNeural"):
+    """edge-tts 异步生成自然中文语音"""
     import edge_tts
     if output_dir is None:
         # BUG-I: 默认目录使用通用路径，实际使用时通过参数传入
         output_dir = "/tmp/chimera_voice"
     os.makedirs(output_dir, exist_ok=True)
-    timestamp = int(time.time())
-    filepath = os.path.join(output_dir, f"voice_{timestamp}.mp3")
+    ts = f"{int(time.time())}_{random.randint(1000,9999)}"
+    filepath = os.path.join(output_dir, f"voice_{ts}.mp3")
     try:
-        communicate = edge_tts.Communicate(text, voice_name)
+        # 清理 emoji 和特殊符号（TTS 不需要读出来）
+        clean = re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U0000FE00-\U0000FE0F\U0001F900-\U0001F9FF\U0001FA00-\U0001FA6F\U0001FA70-\U0001FAFF\U00002600-\U000026FF\U0000200D\U0000FE0F]', '', text).strip()
+        if not clean:
+            return {"success": False, "error": "文本清理后为空"}
+        communicate = edge_tts.Communicate(clean, voice_name)
         await communicate.save(filepath)
-        return {"success": True, "filepath": filepath}
+        if os.path.exists(filepath) and os.path.getsize(filepath) > 0:
+            return {"success": True, "filepath": filepath}
+        return {"success": False, "error": "音频文件为空"}
     except Exception as e:
-        print(f"TTS失败: {e}")
+        print(f"edge-tts失败: {e}")
         return {"success": False, "error": str(e)}
 
 
@@ -516,6 +524,12 @@ class AgentRuntime:
         import skills
         if config.reference_face_url:
             skills.REFERENCE_FACE_URL = config.reference_face_url
+
+        # 贴纸管理器
+        self.sticker_mgr = StickerManager(
+            db_path=os.path.join(config.base_dir, "sticker_library.json")
+        )
+        print(f"🎭 贴纸库: {self.sticker_mgr.count()} 张")
 
         # Telegram 相关
         self.authorized_chat_id = None
@@ -606,15 +620,26 @@ class AgentRuntime:
         feedback = ""
 
         if action_type == "message_user":
-            if self.authorized_chat_id and self.telegram_app:
+            # 主动消息冷却检查：至少15分钟不重复发
+            last_proactive = getattr(self, '_last_proactive_time', 0)
+            if time.time() - last_proactive < 900:  # 15分钟冷却
+                feedback = "刚发过消息，等会儿再说"
+            elif self.authorized_chat_id and self.telegram_app:
                 msg = self._generate_proactive_message(desc)
                 if msg:
-                    asyncio.run_coroutine_threadsafe(
-                        self._send_proactive_message(self.authorized_chat_id, msg), loop
-                    )
+                    # 去重检查：不要发和最近一样的内容
+                    recent_msgs = [m["content"] for m in self.memory.user_chat_history[-5:] if m["role"] == "assistant"]
+                    first_line = msg.split("\n")[0].strip()
+                    if first_line in recent_msgs:
+                        feedback = "想发但觉得重复了，算了"
+                    else:
+                        asyncio.run_coroutine_threadsafe(
+                            self._send_proactive_message(self.authorized_chat_id, msg), loop
+                        )
+                        self._last_proactive_time = time.time()
             self.memory.emotional_state["loneliness"] = max(0, self.memory.emotional_state["loneliness"] - 10)
             self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
-            feedback = "跟朋友聊了会儿天"
+            feedback = feedback or "跟朋友聊了会儿天"
 
         elif action_type == "take_selfie":
             ws = self.world.get_world_state()
@@ -747,25 +772,44 @@ class AgentRuntime:
             context_parts.append(f"最近：{'; '.join(recent[-2:])}")
         if recent_knowledge:
             k = recent_knowledge[0]
-            context_parts.append(f"刚看到：{k['topic']} - {k['summary'][:60]}")
+            context_parts.append(f"刚看到：{k['topic']}")
 
         context = "\n".join(context_parts)
 
         if reason:
-            prompt = f"""{context}\n\n想跟{user_name}说：{reason}\n写一条微信消息。"""
-        else:
-            prompt = f"""{context}\n\n想找{user_name}聊几句。写一条微信消息。"""
+            prompt = f"""{context}\n\n想跟{user_name}说：{reason}
 
-        msg = call_llm(self.SOUL + "\n\n" + self.STYLE, prompt, max_tokens=100, temperature=0.9)
+写微信消息，每条一行。参考这种感觉：
+在干嘛
+我好无聊"""
+        else:
+            prompt = f"""{context}\n\n想找{user_name}聊几句。
+
+写微信消息，每条一行。参考这种感觉：
+下雨了好烦
+你在干嘛"""
+
+        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=60, temperature=0.9, model=self.LLM_MODEL)
         return msg
 
     async def _send_proactive_message(self, chat_id, message):
+        """主动发送消息，自动拆分成多条短消息"""
         try:
-            await self.telegram_app.bot.send_chat_action(chat_id=chat_id, action="typing")
-            await asyncio.sleep(random.uniform(1.0, 3.0))
-            await self.telegram_app.bot.send_message(chat_id=chat_id, text=message)
-            print(f"📤 主动发送: {message}")
-            self.memory.user_chat_history.append({"role": "assistant", "content": message})
+            # 拆分成多条消息（按换行符）
+            lines = [l.strip() for l in message.split("\n") if l.strip()]
+            if not lines:
+                return
+
+            for i, line in enumerate(lines[:4]):  # 最多4条
+                await self.telegram_app.bot.send_chat_action(chat_id=chat_id, action="typing")
+                # 模拟打字时间：根据消息长度
+                typing_time = random.uniform(0.5, 1.0) + len(line) * 0.08
+                await asyncio.sleep(min(typing_time, 3.0))
+                await self.telegram_app.bot.send_message(chat_id=chat_id, text=line)
+                print(f"📤 主动发送: {line}")
+                self.memory.user_chat_history.append({"role": "assistant", "content": line})
+                if i < len(lines) - 1:
+                    await asyncio.sleep(random.uniform(0.3, 1.0))
         except Exception as e:
             print(f"主动发送失败: {e}")
 
@@ -866,12 +910,7 @@ class AgentRuntime:
             messages.append({"role": "user", "content": user_input})
 
         reply_instruction = """\n\n每条消息占一行。回几条看情况。不回就写[不回]。
-你可以发图片或语音，用以下格式：
-- [photo:描述] — 发一张照片，描述你想发的内容，比如 [photo:自拍] [photo:窗外的风景] [photo:我画的水彩]
-- [voice:内容] — 发一条语音，比如 [voice:晚安啊]
-可以混合使用，比如先发文字再发图：
-给你看看我今天拍的
-[photo:自拍]
+可用：[photo:描述] [voice:内容] [sticker:情绪]
 """
 
         full_system = system + reply_instruction
@@ -911,10 +950,13 @@ class AgentRuntime:
 
             photo_match = re.match(r'\[photo[:：](.+?)\]', cleaned)
             voice_match = re.match(r'\[voice[:：](.+?)\]', cleaned)
+            sticker_match = re.match(r'\[sticker[:：](.+?)\]', cleaned)
             if photo_match:
                 parts.append({"type": "photo", "content": photo_match.group(1).strip()})
             elif voice_match:
                 parts.append({"type": "voice", "content": voice_match.group(1).strip()})
+            elif sticker_match:
+                parts.append({"type": "sticker", "content": sticker_match.group(1).strip()})
             else:
                 for marker in ["（发送图片）", "（发图）", "（发照片）", "(发送图片)", "(发图)"]:
                     if marker in cleaned:
@@ -1130,6 +1172,19 @@ class AgentRuntime:
                         print(f"🎙️ 发送语音: {voice_text}")
                     except Exception as e:
                         print(f"发送语音失败: {e}")
+
+            elif part["type"] == "sticker":
+                sticker_emotion = part["content"]
+                sticker_id = self.sticker_mgr.get_sticker(sticker_emotion)
+                if sticker_id:
+                    try:
+                        await asyncio.sleep(random.uniform(0.3, 0.8))
+                        await context.bot.send_sticker(chat_id=chat_id, sticker=sticker_id)
+                        print(f"🎭 发送贴纸: {sticker_emotion}")
+                    except Exception as e:
+                        print(f"发送贴纸失败: {e}")
+                else:
+                    print(f"🎭 没有找到情绪“{sticker_emotion}”的贴纸")
 
         with self._memory_lock:
             if full_response:
@@ -1389,6 +1444,68 @@ class AgentRuntime:
 
         await update.message.reply_text(status)
 
+    async def _handle_sticker(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """接收用户发来的贴纸，自动收集到贴纸库"""
+        sticker = update.message.sticker
+        if not sticker:
+            return
+
+        file_id = sticker.file_id
+        emoji = sticker.emoji or ""
+        set_name = sticker.set_name or ""
+
+        added = self.sticker_mgr.add_sticker(file_id, emoji=emoji, set_name=set_name)
+        if added:
+            print(f"🎭 收集贴纸: {emoji} from {set_name} (file_id={file_id[:20]}...)")
+
+        # 如果贴纸包还没收集过，自动收集整个包
+        if set_name and set_name not in self.sticker_mgr.stickers.get("collected_sets", []):
+            try:
+                set_data = await collect_sticker_set(context.bot, set_name)
+                if set_data:
+                    count = self.sticker_mgr.add_sticker_set(set_name, set_data["stickers"])
+                    print(f"🎭 收集贴纸包 {set_data['title']}: {count} 张")
+            except Exception as e:
+                print(f"🎭 收集贴纸包失败: {e}")
+
+        # 把贴纸当作用户消息处理（用 emoji 代替）
+        sticker_desc = f"[发了个贴纸 {emoji}]"
+        with self._buffer_lock:
+            self.message_buffer.append({
+                "text": sticker_desc, "has_photo": False,
+                "image_path": None, "update": update,
+                "context": context, "chat_id": update.effective_chat.id,
+                "time": time.time(),
+            })
+
+        if self._pending_reply_task and not self._pending_reply_task.done():
+            self._pending_reply_task.cancel()
+        self._pending_reply_task = asyncio.create_task(self._delayed_reply())
+
+    async def _handle_collect_stickers(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
+        """命令 /collect_stickers <set_name> — 手动收集指定贴纸包"""
+        args = context.args
+        if not args:
+            stats = self.sticker_mgr.count_by_emotion()
+            total = self.sticker_mgr.count()
+            text = f"🎭 贴纸库: {total} 张\n"
+            for emo, cnt in sorted(stats.items(), key=lambda x: -x[1]):
+                text += f"  {emo}: {cnt}\n"
+            text += "\n用法: /collect_stickers <sticker_set_name>"
+            await update.message.reply_text(text)
+            return
+
+        set_name = args[0]
+        try:
+            set_data = await collect_sticker_set(context.bot, set_name)
+            if set_data:
+                count = self.sticker_mgr.add_sticker_set(set_name, set_data["stickers"])
+                await update.message.reply_text(f"✅ 收集了 {set_data['title']}: {count} 张新贴纸")
+            else:
+                await update.message.reply_text(f"❌ 找不到贴纸包: {set_name}")
+        except Exception as e:
+            await update.message.reply_text(f"❌ 收集失败: {e}")
+
     # ============================================================
     # 自主循环
     # ============================================================
@@ -1431,12 +1548,16 @@ class AgentRuntime:
         last_summary_date = None
         while True:
             try:
+                print(f"🔁 自主循环 tick={tick_count}")
                 ws = self.world.get_world_state()
                 if not ws:
+                    print("🔁 world state 为空，等待...")
                     time.sleep(5)
                     continue
 
                 events = self.world.get_events()
+                if events:
+                    print(f"🔁 收到 {len(events)} 个世界事件")
                 # BUG-A: 加锁保护 memory 读写
                 with self._memory_lock:
                     for event in events:
@@ -1448,11 +1569,15 @@ class AgentRuntime:
                                 self.memory.update_emotion(mood)
 
                 if tick_count % 5 == 0:
+                    print(f"🔁 开始自主决策 (tick={tick_count})")
                     # 轻量 ReAct：允许连续 2-3 步动作
                     with self._memory_lock:
                         for step in range(3):
                             action = self.autonomous_decide()
-                            if not action:
+                            if action:
+                                print(f"🔁 决策结果: {action}")
+                            else:
+                                print(f"🔁 决策返回 None（可能在休息或LLM调用失败）")
                                 break
                             self.execute_autonomous_action(action, loop)
 
@@ -1563,8 +1688,10 @@ class AgentRuntime:
 
         self.telegram_app.add_handler(CommandHandler("start", self._handle_start))
         self.telegram_app.add_handler(CommandHandler("status", self._handle_status))
+        self.telegram_app.add_handler(CommandHandler("collect_stickers", self._handle_collect_stickers))
         self.telegram_app.add_handler(MessageHandler(filters.TEXT & ~filters.COMMAND, self._handle_message))
         self.telegram_app.add_handler(MessageHandler(filters.PHOTO, self._handle_message))
+        self.telegram_app.add_handler(MessageHandler(filters.Sticker.ALL, self._handle_sticker))
 
         loop = asyncio.get_event_loop()
         auto_thread = threading.Thread(target=self.autonomous_loop, args=(loop,), daemon=True)

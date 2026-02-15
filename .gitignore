@@ -1,7 +1,58 @@
+# 临时/调试文件
+*_old.py
+debug_*.py
+test_*.py
+clean_*.py
+expand_*.py
+gen_*.py
+init_*.py
+decrypt_*.py
+skills_selfie_new.py
+
+# 日志和快照
+*.log
+*_notes.md
+*_notes.txt
+*_results.md
+*_results.txt
+bing_snapshot.md
+xhs_snapshot.md
+sohu_content.txt
+scene_urls.md
+scene_ref_*.md
+code_review_notes.md
+douban_*.txt
+douban_*.md
+nano_banana_*.md
+skill_audit.md
+xhs_*.md
+xhs_*.txt
+CHANGELOG_v3.md
+
+# 数据库和缓存
+*.sqlite3
 __pycache__/
 *.pyc
-agent_output.log
-voice/
-*.jpg
-*.png
-*.mp3
+chroma.sqlite3
+
+# 备份
+*.bak
+
+# 浏览器数据
+browser_cookies.json
+
+# 运行时数据（不推送）
+memory_state.json
+memory/
+memory_rag_db/
+style_rag_db/
+knowledge/
+tangtang/memory_state.json
+tangtang/memory/
+tangtang/memory_rag_db/
+tangtang/style_rag_db/
+tangtang/knowledge/
+tangtang/tangtang.log
+expanded_few_shot.md
+final_few_shot_backup.md
+final_few_shot_clean.md

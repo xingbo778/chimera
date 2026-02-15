@@ -848,25 +848,73 @@ def skill_read_link(url):
 # Skill 4: 语音（TTS）
 # ============================================================
 
-def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="nova"):
-    """用 OpenAI TTS 生成语音，voice=nova（年轻女性）"""
+def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="zh-CN-XiaoxiaoNeural"):
+    """用 edge-tts 生成自然中文语音。
+    
+    可选 voice:
+    - zh-CN-XiaoxiaoNeural: 温暖自然的年轻女声（默认）
+    - zh-CN-XiaoyiNeural: 活泼的年轻女声
+    - zh-CN-YunxiNeural: 年轻男声
+    """
+    import asyncio
+    import edge_tts
+
     os.makedirs(output_dir, exist_ok=True)
     timestamp = int(time.time())
-    filename = f"voice_{timestamp}.ogg"
+    # edge-tts 输出 mp3，Telegram 可以直接发送
+    filename = f"voice_{timestamp}.mp3"
     filepath = os.path.join(output_dir, filename)
 
     try:
-        response = client.audio.speech.create(
-            model="tts-1",
-            voice=voice,
-            input=text,
-            response_format="opus",
-        )
-        response.stream_to_file(filepath)
-        return {"success": True, "filepath": filepath}
+        # 清理文本中的 emoji 和特殊符号（TTS 不需要读出来）
+        import re as _re
+        clean_text = _re.sub(r'[\U0001F600-\U0001F64F\U0001F300-\U0001F5FF\U0001F680-\U0001F6FF\U0001F1E0-\U0001F1FF\U00002702-\U000027B0\U0000FE00-\U0000FE0F\U0001F900-\U0001F9FF\U0001FA00-\U0001FA6F\U0001FA70-\U0001FAFF\U00002600-\U000026FF]', '', text)
+        clean_text = clean_text.strip()
+        if not clean_text:
+            return {"success": False, "error": "文本清理后为空"}
+
+        async def _generate():
+            communicate = edge_tts.Communicate(clean_text, voice)
+            await communicate.save(filepath)
+
+        # 兼容已有事件循环的情况
+        try:
+            loop = asyncio.get_running_loop()
+            import concurrent.futures
+            with concurrent.futures.ThreadPoolExecutor() as pool:
+                loop.run_in_executor(pool, lambda: asyncio.run(_generate()))
+                # 同步等待
+                import threading
+                done = threading.Event()
+                async def _run_and_signal():
+                    await _generate()
+                    done.set()
+                asyncio.ensure_future(_run_and_signal())
+                done.wait(timeout=30)
+        except RuntimeError:
+            # 没有事件循环，直接 run
+            asyncio.run(_generate())
+
+        if os.path.exists(filepath) and os.path.getsize(filepath) > 0:
+            return {"success": True, "filepath": filepath}
+        else:
+            return {"success": False, "error": "生成的音频文件为空"}
     except Exception as e:
         print(f"TTS失败: {e}")
-        return {"success": False, "error": str(e)}
+        # 降级到 OpenAI TTS
+        try:
+            ogg_path = filepath.replace('.mp3', '.ogg')
+            response = client.audio.speech.create(
+                model="tts-1",
+                voice="nova",
+                input=text,
+                response_format="opus",
+            )
+            response.stream_to_file(ogg_path)
+            return {"success": True, "filepath": ogg_path}
+        except Exception as e2:
+            print(f"TTS降级也失败: {e2}")
+            return {"success": False, "error": str(e)}
 
 
 # ============================================================
