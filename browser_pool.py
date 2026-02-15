@@ -1,255 +1,320 @@
 """
-browser_pool.py - 管理 Playwright 浏览器实例和 cookie
-提供一个全局的浏览器上下文，复用 Chromium 的登录状态
+browser_pool.py - 基于 CDP 的浏览器管理器
+==========================================
+通过 Chrome DevTools Protocol 连接真实的 Chromium 浏览器实例，
+支持持久化 cookie、多标签页管理、截图、JS 执行等。
+
+架构：
+  1. 外部 Chromium 进程（通过 start_browser.sh 启动，带 --remote-debugging-port）
+  2. 本模块通过 CDP WebSocket 连接浏览器
+  3. 使用 Playwright 的 cdp 连接模式（比原始 websocket 更易用）
+  4. cookie 自动持久化到 user-data-dir
+
+依赖：playwright（通过 cdp_url 连接，不自己启动浏览器）
 """
 
 import json
 import os
-import sqlite3
+import subprocess
 import time
 import logging
 import threading
+from typing import Optional
 
 logger = logging.getLogger(__name__)
 
-# 延迟导入 playwright
+# ============================================================
+# 配置常量
+# ============================================================
+
+CDP_HOST = os.environ.get("CDP_HOST", "127.0.0.1")
+CDP_PORT = int(os.environ.get("CDP_PORT", "9222"))
+CDP_URL = f"http://{CDP_HOST}:{CDP_PORT}"
+
+BROWSER_DATA_DIR = os.path.expanduser(
+    os.environ.get("BROWSER_DATA_DIR", "~/.browser_data_dir")
+)
+BROWSER_WINDOW_WIDTH = 1280
+BROWSER_WINDOW_HEIGHT = 960
+
+# Xvfb 虚拟显示配置
+XVFB_DISPLAY = ":99"
+XVFB_RESOLUTION = "1280x960x24"
+
+# ============================================================
+# 全局状态
+# ============================================================
+
 _playwright = None
-_browser = None
-_context = None
+_browser = None       # Playwright Browser (CDP 连接)
+_context = None       # BrowserContext
 _lock = threading.Lock()
+_browser_process = None  # 外部 Chromium 进程
+_xvfb_process = None     # Xvfb 进程
 
-COOKIE_DB = os.path.expanduser("~/.browser_data_dir/Default/Cookies")
-COOKIE_CACHE = os.path.expanduser("~/chimera/browser_cookies.json")
 
+# ============================================================
+# 浏览器生命周期管理
+# ============================================================
 
-def _decrypt_chromium_cookies(domains):
-    """从 Chromium cookie 数据库解密 cookie"""
+def _is_cdp_ready() -> bool:
+    """检查 CDP 端口是否就绪"""
+    import urllib.request
     try:
-        from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-        from cryptography.hazmat.primitives.kdf.pbkdf2 import PBKDF2HMAC
-        from cryptography.hazmat.primitives import hashes
-    except ImportError:
-        logger.warning("cryptography 未安装，尝试用缓存的 cookie")
-        return _load_cached_cookies()
+        resp = urllib.request.urlopen(f"{CDP_URL}/json/version", timeout=3)
+        data = json.loads(resp.read())
+        logger.info("CDP 已就绪: %s", data.get("Browser", "unknown"))
+        return True
+    except Exception:
+        return False
 
-    if not os.path.exists(COOKIE_DB):
-        logger.warning("Chromium cookie 数据库不存在")
-        return _load_cached_cookies()
 
-    # Linux Chromium 默认密钥
-    kdf = PBKDF2HMAC(
-        algorithm=hashes.SHA1(),
-        length=16,
-        salt=b'saltysalt',
-        iterations=1,
+def _ensure_xvfb():
+    """确保 Xvfb 虚拟显示在运行（无头服务器需要）"""
+    global _xvfb_process
+
+    # 检查是否已有 DISPLAY
+    if os.environ.get("DISPLAY"):
+        return
+
+    # 检查 Xvfb 是否已在运行
+    try:
+        result = subprocess.run(
+            ["pgrep", "-f", f"Xvfb {XVFB_DISPLAY}"],
+            capture_output=True, text=True
+        )
+        if result.returncode == 0:
+            os.environ["DISPLAY"] = XVFB_DISPLAY
+            logger.info("Xvfb 已在运行 (%s)", XVFB_DISPLAY)
+            return
+    except Exception:
+        pass
+
+    # 安装 Xvfb（如果需要）
+    try:
+        subprocess.run(["which", "Xvfb"], capture_output=True, check=True)
+    except subprocess.CalledProcessError:
+        logger.info("安装 Xvfb...")
+        subprocess.run(
+            ["sudo", "apt-get", "update", "-qq"],
+            capture_output=True
+        )
+        subprocess.run(
+            ["sudo", "apt-get", "install", "-y", "-qq", "xvfb"],
+            capture_output=True
+        )
+
+    # 启动 Xvfb
+    logger.info("启动 Xvfb (%s, %s)...", XVFB_DISPLAY, XVFB_RESOLUTION)
+    _xvfb_process = subprocess.Popen(
+        [
+            "Xvfb", XVFB_DISPLAY,
+            "-screen", "0", XVFB_RESOLUTION,
+            "-ac", "+extension", "GLX", "+render", "-noreset"
+        ],
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
     )
-    key = kdf.derive(b'peanuts')
-
-    conn = sqlite3.connect(COOKIE_DB)
-    c = conn.cursor()
-
-    # 使用参数化查询避免 SQL 注入
-    placeholders = " OR ".join(["host_key LIKE ?" for _ in domains])
-    params = [f"%{d}%" for d in domains]
-    c.execute(f"""
-        SELECT host_key, name, encrypted_value, value, path,
-               expires_utc, is_secure, is_httponly, samesite
-        FROM cookies WHERE {placeholders}
-    """, params)
-
-    cookies = []
-    for row in c.fetchall():
-        host, name, enc_val, plain_val, path, expires, secure, httponly, samesite = row
-
-        if plain_val:
-            value = plain_val
-        elif enc_val:
-            value = _decrypt_v10(enc_val, key)
-            if value is None:
-                continue
-        else:
-            continue
-
-        cookie = {
-            "name": name,
-            "value": value,
-            "domain": host,
-            "path": path or "/",
-            "secure": bool(secure),
-            "httpOnly": bool(httponly),
-        }
-
-        samesite_map = {-1: "None", 0: "None", 1: "Lax", 2: "Strict"}
-        cookie["sameSite"] = samesite_map.get(samesite, "None")
-
-        if expires and expires > 0:
-            cookie["expires"] = (expires / 1000000) - 11644473600
-        else:
-            cookie["expires"] = -1
-
-        cookies.append(cookie)
-
-    conn.close()
-
-    # 缓存到文件
-    with open(COOKIE_CACHE, 'w') as f:
-        json.dump(cookies, f)
-
-    logger.info("从 Chromium 导出了 %d 个 cookie", len(cookies))
-    return cookies
+    time.sleep(1)
+    os.environ["DISPLAY"] = XVFB_DISPLAY
+    logger.info("Xvfb 已启动 (PID: %d)", _xvfb_process.pid)
 
 
-def _decrypt_v10(encrypted_value, key):
-    """解密 v10 前缀的 cookie"""
-    if encrypted_value[:3] != b'v10':
+def _find_chrome_binary() -> Optional[str]:
+    """查找 Chrome/Chromium 可执行文件"""
+    candidates = [
+        "chromium-browser", "chromium",
+        "google-chrome", "google-chrome-stable",
+    ]
+    for name in candidates:
         try:
-            return encrypted_value.decode('utf-8', errors='replace')
-        except UnicodeDecodeError:
-            return None
-
-    try:
-        from cryptography.hazmat.primitives.ciphers import Cipher, algorithms, modes
-        iv = b' ' * 16
-        cipher = Cipher(algorithms.AES(key), modes.CBC(iv))
-        decryptor = cipher.decryptor()
-        data = encrypted_value[3:]
-        decrypted = decryptor.update(data) + decryptor.finalize()
-        pad_len = decrypted[-1]
-        if pad_len > 16:
-            return None
-        return decrypted[:-pad_len].decode('utf-8')
-    except Exception:
-        pass
-
-    try:
-        from cryptography.hazmat.primitives.ciphers.aead import AESGCM
-        nonce = encrypted_value[3:15]
-        ciphertext_with_tag = encrypted_value[15:]
-        aesgcm = AESGCM(key)
-        plaintext = aesgcm.decrypt(nonce, ciphertext_with_tag, None)
-        return plaintext.decode('utf-8')
-    except Exception:
-        pass
-
+            result = subprocess.run(
+                ["which", name], capture_output=True, text=True
+            )
+            if result.returncode == 0:
+                return result.stdout.strip()
+        except Exception:
+            continue
     return None
 
 
-def _load_cached_cookies():
-    """从缓存文件加载 cookie"""
-    if os.path.exists(COOKIE_CACHE):
-        with open(COOKIE_CACHE) as f:
-            cookies = json.load(f)
-        logger.info("从缓存加载了 %d 个 cookie", len(cookies))
-        return cookies
-    return []
+def start_browser() -> bool:
+    """
+    启动外部 Chromium 浏览器进程（带 CDP 远程调试端口）。
+    如果已经在运行则跳过。
+    返回是否成功。
+    """
+    global _browser_process
 
+    if _is_cdp_ready():
+        logger.info("Chromium 已在运行，跳过启动")
+        return True
+
+    _ensure_xvfb()
+
+    chrome_bin = _find_chrome_binary()
+    if not chrome_bin:
+        logger.error("未找到 Chrome/Chromium，请先安装")
+        return False
+
+    os.makedirs(BROWSER_DATA_DIR, exist_ok=True)
+
+    cmd = [
+        chrome_bin,
+        f"--remote-debugging-port={CDP_PORT}",
+        f"--user-data-dir={BROWSER_DATA_DIR}",
+        f"--window-size={BROWSER_WINDOW_WIDTH},{BROWSER_WINDOW_HEIGHT}",
+        "--window-position=0,0",
+        "--no-first-run",
+        "--no-default-browser-check",
+        "--disable-dev-shm-usage",
+        "--disable-background-networking",
+        "--disable-background-timer-throttling",
+        "--disable-backgrounding-occluded-windows",
+        "--disable-sync",
+        "--no-sandbox",
+        "--disable-gpu-sandbox",
+        "--noerrdialogs",
+        "--lang=zh-CN",
+    ]
+
+    logger.info("启动 Chromium: %s (CDP port: %d)", chrome_bin, CDP_PORT)
+    _browser_process = subprocess.Popen(
+        cmd,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.DEVNULL,
+        env={**os.environ, "DISPLAY": os.environ.get("DISPLAY", XVFB_DISPLAY)},
+    )
+
+    # 等待 CDP 就绪
+    for i in range(30):
+        if _is_cdp_ready():
+            logger.info("Chromium 已就绪 (PID: %d)", _browser_process.pid)
+            return True
+        time.sleep(1)
+
+    logger.error("Chromium 启动超时")
+    return False
+
+
+def stop_browser():
+    """停止外部 Chromium 进程"""
+    global _browser_process, _xvfb_process
+    if _browser_process:
+        try:
+            _browser_process.terminate()
+            _browser_process.wait(timeout=5)
+        except Exception:
+            try:
+                _browser_process.kill()
+            except Exception:
+                pass
+        _browser_process = None
+        logger.info("Chromium 已停止")
+
+    if _xvfb_process:
+        try:
+            _xvfb_process.terminate()
+        except Exception:
+            pass
+        _xvfb_process = None
+
+
+# ============================================================
+# Playwright CDP 连接
+# ============================================================
 
 def get_context():
-    """获取或创建浏览器上下文（带 cookie）"""
+    """
+    获取 Playwright BrowserContext（通过 CDP 连接到外部 Chromium）。
+    自动启动浏览器（如果未运行）。
+    Cookie 由 Chromium 自身的 user-data-dir 持久化，无需手动管理。
+    """
     global _playwright, _browser, _context
 
     with _lock:
+        # 检查现有连接是否还活着
         if _context is not None:
             try:
-                # 检查上下文是否还活着
-                _context.pages
+                _context.pages  # 测试连接
                 return _context
             except Exception:
-                _context = None
-                _browser = None
-                _playwright = None
+                logger.warning("CDP 连接已断开，重新连接...")
+                _cleanup_playwright()
+
+        # 确保浏览器在运行
+        if not start_browser():
+            raise RuntimeError("无法启动 Chromium 浏览器")
 
         from playwright.sync_api import sync_playwright
 
-        # 尝试加载 stealth 反检测插件
-        stealth_obj = None
-        try:
-            from playwright_stealth import Stealth
-            stealth_obj = Stealth(
-                navigator_languages_override=('zh-CN', 'zh', 'en-US', 'en'),
-                navigator_platform_override='Linux x86_64',
-                navigator_vendor_override='Google Inc.',
-            )
-            logger.info("playwright-stealth 已加载")
-        except ImportError:
-            logger.info("playwright-stealth 未安装，用普通模式")
-
         _playwright = sync_playwright().start()
 
-        # stealth hook: 在 launch 之前注入反检测脚本
-        if stealth_obj:
-            stealth_obj.hook_playwright_context(_playwright)
+        # 通过 CDP 连接到已运行的 Chromium
+        _browser = _playwright.chromium.connect_over_cdp(CDP_URL)
+        logger.info("Playwright 已通过 CDP 连接到 Chromium")
 
-        _browser = _playwright.chromium.launch(
-            headless=True,
-            args=[
-                '--no-sandbox',
-                '--disable-dev-shm-usage',
-                '--disable-blink-features=AutomationControlled',
-            ]
-        )
-        _context = _browser.new_context(
-            user_agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36",
-            viewport={"width": 1280, "height": 800},
-            locale="zh-CN",
-        )
-
-        # 对 context 应用 stealth
-        if stealth_obj:
-            stealth_obj.apply_stealth_sync(_context)
-
-        # 加载 cookie
-        domains = ["xiaohongshu", "douban", "weibo"]
-        cookies = _decrypt_chromium_cookies(domains)
-        if cookies:
-            # playwright 的 add_cookies 需要特定格式
-            valid_cookies = []
-            for c in cookies:
-                try:
-                    cookie = {
-                        "name": c["name"],
-                        "value": c["value"],
-                        "domain": c["domain"],
-                        "path": c["path"],
-                    }
-                    if c.get("expires") and c["expires"] > 0:
-                        cookie["expires"] = c["expires"]
-                    if c.get("secure"):
-                        cookie["secure"] = True
-                    if c.get("httpOnly"):
-                        cookie["httpOnly"] = True
-                    if c.get("sameSite") in ("Strict", "Lax", "None"):
-                        cookie["sameSite"] = c["sameSite"]
-                    valid_cookies.append(cookie)
-                except Exception as e:
-                    pass
-
-            try:
-                _context.add_cookies(valid_cookies)
-                logger.info("已加载 %d 个 cookie 到浏览器上下文", len(valid_cookies))
-            except Exception as e:
-                logger.warning("加载 cookie 失败: %s", e)
+        # 获取默认上下文（包含 Chromium 自身的 cookie）
+        contexts = _browser.contexts
+        if contexts:
+            _context = contexts[0]
+            logger.info("使用已有的浏览器上下文 (pages: %d)", len(_context.pages))
+        else:
+            _context = _browser.new_context(
+                viewport={"width": BROWSER_WINDOW_WIDTH, "height": BROWSER_WINDOW_HEIGHT},
+                locale="zh-CN",
+            )
+            logger.info("创建了新的浏览器上下文")
 
         return _context
 
 
-def fetch_page(url, wait_seconds=2, extract_js=None, max_chars=3000):
+def _cleanup_playwright():
+    """清理 Playwright 连接（不停止外部浏览器）"""
+    global _playwright, _browser, _context
+    try:
+        if _browser:
+            _browser.close()
+    except Exception:
+        pass
+    try:
+        if _playwright:
+            _playwright.stop()
+    except Exception:
+        pass
+    _context = None
+    _browser = None
+    _playwright = None
+
+
+# ============================================================
+# 页面操作 API
+# ============================================================
+
+def new_page(url: Optional[str] = None, wait_seconds: float = 2.0):
     """
-    通用页面抓取：导航到 URL，等待加载，提取文本
-    extract_js: 可选的自定义 JS 提取函数
+    在浏览器中打开新标签页。
+    返回 Playwright Page 对象。
     """
     ctx = get_context()
     page = ctx.new_page()
+    if url:
+        page.goto(url, timeout=20000, wait_until="domcontentloaded")
+        page.wait_for_timeout(int(wait_seconds * 1000))
+    return page
 
+
+def fetch_page(url: str, wait_seconds: float = 2.0,
+               extract_js: Optional[str] = None, max_chars: int = 3000):
+    """
+    通用页面抓取：导航到 URL，等待加载，提取文本。
+    extract_js: 可选的自定义 JS 提取函数。
+    """
+    page = new_page(url, wait_seconds)
     try:
-        page.goto(url, timeout=15000, wait_until="domcontentloaded")
-        page.wait_for_timeout(wait_seconds * 1000)
-
         if extract_js:
-            result = page.evaluate(extract_js)
-            return result
+            return page.evaluate(extract_js)
         else:
-            # 默认提取 body 文本
             text = page.evaluate(f"""
                 () => {{
                     const el = document.querySelector('article')
@@ -270,19 +335,105 @@ def fetch_page(url, wait_seconds=2, extract_js=None, max_chars=3000):
             pass
 
 
-def close():
-    """关闭浏览器"""
-    global _playwright, _browser, _context
-    with _lock:
+def screenshot(page=None, path: Optional[str] = None, full_page: bool = False) -> Optional[bytes]:
+    """
+    对页面截图。
+    如果不传 page，则对当前活动页面截图。
+    返回 PNG 字节数据。
+    """
+    if page is None:
+        ctx = get_context()
+        pages = ctx.pages
+        if not pages:
+            return None
+        page = pages[-1]
+
+    data = page.screenshot(full_page=full_page)
+    if path:
+        os.makedirs(os.path.dirname(path), exist_ok=True)
+        with open(path, "wb") as f:
+            f.write(data)
+    return data
+
+
+def get_login_status() -> dict:
+    """
+    检查各平台的登录状态。
+    通过访问需要登录的页面，检查是否被重定向到登录页。
+    """
+    status = {}
+    platforms = {
+        "xiaohongshu": {
+            "check_url": "https://www.xiaohongshu.com/user/profile/self",
+            "login_indicator": "login",  # URL 中包含 login 表示未登录
+        },
+        "weibo": {
+            "check_url": "https://weibo.com/ajax/profile/info",
+            "login_indicator": "passport",
+        },
+        "douban": {
+            "check_url": "https://www.douban.com/mine/",
+            "login_indicator": "accounts.douban.com",
+        },
+    }
+
+    for name, config in platforms.items():
         try:
-            if _context:
-                _context.close()
-            if _browser:
-                _browser.close()
-            if _playwright:
-                _playwright.stop()
-        except Exception:
-            pass
-        _context = None
-        _browser = None
-        _playwright = None
+            page = new_page(config["check_url"], wait_seconds=3)
+            current_url = page.url
+            is_logged_in = config["login_indicator"] not in current_url.lower()
+            status[name] = {
+                "logged_in": is_logged_in,
+                "url": current_url,
+            }
+            page.close()
+        except Exception as e:
+            status[name] = {"logged_in": False, "error": str(e)}
+
+    return status
+
+
+# ============================================================
+# CDP 原始操作（用于远程控制和验证码处理）
+# ============================================================
+
+def get_cdp_ws_url() -> Optional[str]:
+    """获取 CDP WebSocket URL"""
+    import urllib.request
+    try:
+        resp = urllib.request.urlopen(f"{CDP_URL}/json")
+        pages = json.loads(resp.read())
+        for page in pages:
+            if page.get("type") == "page":
+                return page["webSocketDebuggerUrl"]
+    except Exception:
+        pass
+    return None
+
+
+def get_cdp_info() -> Optional[dict]:
+    """获取 CDP 浏览器信息"""
+    import urllib.request
+    try:
+        resp = urllib.request.urlopen(f"{CDP_URL}/json/version", timeout=3)
+        return json.loads(resp.read())
+    except Exception:
+        return None
+
+
+# ============================================================
+# 清理
+# ============================================================
+
+def close():
+    """关闭 Playwright 连接（不停止外部浏览器）"""
+    with _lock:
+        _cleanup_playwright()
+    logger.info("Playwright 连接已关闭")
+
+
+def close_all():
+    """关闭一切：Playwright 连接 + 外部浏览器 + Xvfb"""
+    close()
+    stop_browser()
+    logger.info("所有浏览器资源已释放")

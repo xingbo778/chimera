@@ -1007,13 +1007,24 @@ def skill_generate_video(prompt, image_path=None, output_dir="/home/ubuntu/chime
 
 # ============================================================
 # Skill 7: 多平台浏览（小红书/豆瓣/微博）
-# 用 browser_pool 管理 Playwright 浏览器实例，复用 Chromium cookie
+# 通过 CDP 连接真实 Chromium 浏览器，cookie 由 user-data-dir 持久化
 # ============================================================
 
 try:
     from browser_pool import get_context as _get_browser_context
+    from browser_pool import new_page as _new_page
+    from browser_pool import start_browser as _start_browser
 except ImportError:
     _get_browser_context = None
+    _new_page = None
+    _start_browser = None
+
+try:
+    from browser_login import get_login_status as _get_login_status
+    from browser_login import is_waiting_for_input as _is_waiting_for_input
+except ImportError:
+    _get_login_status = None
+    _is_waiting_for_input = None
 
 # 小红书话题库：女生日常、生活、情感类
 XHS_TOPICS = [
@@ -1325,8 +1336,16 @@ def skill_weibo_browse(keyword=None):
         page = ctx.new_page()
 
         # 用微博热搜页面（不需要登录，内容丰富）
-        page.goto('https://weibo.com/hot/search', timeout=15000, wait_until='domcontentloaded')
-        page.wait_for_timeout(4000)
+        # 微博会重定向，需要等待更长时间
+        try:
+            page.goto('https://weibo.com/hot/search', timeout=20000, wait_until='networkidle')
+        except Exception:
+            # networkidle 可能超时，降级到 domcontentloaded
+            try:
+                page.goto('https://weibo.com/hot/search', timeout=15000, wait_until='domcontentloaded')
+            except Exception:
+                pass
+        page.wait_for_timeout(5000)
 
         # 提取微博内容：热搜页面的微博内容
         posts = page.evaluate("""
@@ -1479,5 +1498,15 @@ def execute_skill(skill_params, image_path=None, world_context=None):
         return skill_generate_video(skill_params.get("prompt", ""))
     elif skill == "weather":
         return skill_get_weather(skill_params.get("city", "深圳"))
+    elif skill == "browse_xhs":
+        return skill_xhs_browse(skill_params.get("keyword"))
+    elif skill == "browse_douban":
+        return skill_douban_browse(skill_params.get("group_id"))
+    elif skill == "browse_weibo":
+        return skill_weibo_browse(skill_params.get("keyword"))
+    elif skill == "check_login":
+        if _get_login_status:
+            return {"success": True, "status": _get_login_status()}
+        return {"success": False, "error": "登录模块未加载"}
 
     return {"skill": "none"}

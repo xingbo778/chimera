@@ -2034,6 +2034,29 @@ class AgentRuntime:
             self.authorized_chat_id = self.memory.authorized_chat_id
             print(f"📞 恢复 chat_id: {self.authorized_chat_id}")
         print("📚 记忆加载完成")
+
+        # 启动真实浏览器（CDP 模式）
+        try:
+            from browser_pool import start_browser
+            if start_browser():
+                print("🌐 Chromium 浏览器已启动 (CDP 模式)")
+            else:
+                print("⚠️ Chromium 启动失败，浏览技能将降级")
+        except Exception as e:
+            logger.warning("浏览器启动异常: %s", e)
+
+        # 启动远程控制服务器（后台线程）
+        try:
+            from remote_control import start_server as start_remote_control
+            rc_thread = threading.Thread(
+                target=start_remote_control,
+                kwargs={"host": "0.0.0.0", "port": 8899},
+                daemon=True
+            )
+            rc_thread.start()
+            print("🔮 远程控制服务器已启动 (port: 8899)")
+        except Exception as e:
+            logger.warning("远程控制服务器启动失败: %s", e)
         print(f"📝 SOUL: {len(self.SOUL)} chars")
         print(f"📝 STYLE: {len(self.STYLE)} chars")
         print(f"📚 知识库: {len(os.listdir(self.memory.knowledge_dir))} 条")
