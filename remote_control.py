@@ -76,16 +76,47 @@ async def get_status():
 
 @app.get("/api/screenshot")
 async def take_screenshot():
-    """获取浏览器当前截图"""
+    """获取浏览器当前截图（通过 CDP 原始协议，避免 sync/async 冲突）"""
     try:
-        from browser_pool import screenshot
-        data = screenshot()
+        data = await _cdp_screenshot()
         if data:
-            b64 = base64.b64encode(data).decode()
-            return {"success": True, "image": f"data:image/png;base64,{b64}"}
-        return {"success": False, "error": "截图失败"}
+            return {"success": True, "image": f"data:image/png;base64,{data}"}
+        return {"success": False, "error": "截图失败：无活动页面"}
     except Exception as e:
         return {"success": False, "error": str(e)}
+
+
+async def _cdp_screenshot() -> Optional[str]:
+    """通过 CDP WebSocket 直接截图，返回 base64 字符串"""
+    import websockets
+    # 获取当前活动页面的 WS URL
+    try:
+        import requests as _req
+        resp = _req.get("http://127.0.0.1:9222/json", timeout=3)
+        pages = resp.json()
+        if not pages:
+            return None
+        # 取第一个 page 类型的目标
+        ws_url = None
+        for p in pages:
+            if p.get("type") == "page":
+                ws_url = p.get("webSocketDebuggerUrl")
+                break
+        if not ws_url:
+            ws_url = pages[0].get("webSocketDebuggerUrl")
+        if not ws_url:
+            return None
+    except Exception:
+        return None
+
+    async with websockets.connect(ws_url, max_size=50 * 1024 * 1024) as ws:
+        await ws.send(json.dumps({
+            "id": 1,
+            "method": "Page.captureScreenshot",
+            "params": {"format": "png"}
+        }))
+        result = json.loads(await asyncio.wait_for(ws.recv(), timeout=10))
+        return result.get("result", {}).get("data")
 
 
 @app.post("/api/submit_code")
@@ -190,10 +221,8 @@ async def websocket_screen(websocket: WebSocket):
     try:
         while True:
             try:
-                from browser_pool import screenshot
-                data = screenshot()
-                if data:
-                    b64 = base64.b64encode(data).decode()
+                b64 = await _cdp_screenshot()
+                if b64:
                     await websocket.send_json({
                         "type": "screenshot",
                         "image": f"data:image/png;base64,{b64}",
