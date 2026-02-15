@@ -574,6 +574,9 @@ class AgentRuntime:
         # 常量
         self.TICK_INTERVAL = 60
 
+        # 已处理过的知识内容hash，避免重复触发技能发现
+        self._processed_knowledge_hashes = set()
+
     # ============================================================
     # 自主决策
     # ============================================================
@@ -613,6 +616,10 @@ class AgentRuntime:
                 result_emoji = "✅" if ah.get('success', True) else "❌"
                 history_lines.append(f"  {result_emoji} {ah['type']}: {ah.get('feedback', '')[:40]}")
             context_parts.append("最近的行动结果：\n" + "\n".join(history_lines))
+            # 提示避免重复
+            recent_types = [ah['type'] for ah in action_history[-3:]]
+            if len(set(recent_types)) <= 1 and len(recent_types) >= 2:
+                context_parts.append(f"注意：你已经连续做了{recent_types[0]}好几次了，换点别的事情做做吧！")
 
         if recent_knowledge:
             k = recent_knowledge[0]
@@ -673,6 +680,7 @@ class AgentRuntime:
 你现在想做什么？从以下选一个：
 {actions_str}
 
+尽量不要重复最近做过的事情，生活要有变化。
 回复JSON格式：{{"action": "动作", "desc": "简短描述", "skill_name": "技能名(仅use_skill时)", "target_agent": "对方名字(仅chat_with_agent时)", "platform": "xhs/weibo/douban(仅scroll_feed时)", "follow_up": "做完这件事后想接着做什么，没有则留空"}}"""
 
         result = call_llm_json(self.SOUL, prompt, max_tokens=100, temperature=0.9)
@@ -1762,29 +1770,35 @@ class AgentRuntime:
                                 print(f"💬 回复{sender}: {reply}")
 
                 # 每 10 个 tick 尝试从最近浏览内容中发现新技能
-                if tick_count % 10 == 0 and tick_count > 0:
+                if tick_count > 0 and tick_count % 10 == 0:
                     recent_k = self.memory.get_recent_knowledge(3)
                     for k in recent_k:
-                        content = k.get("content", "")
-                        if content and len(content) > 50:
-                            try:
-                                discovered = discover_skills_from_content(
-                                    content, self.SOUL,
-                                    self.skill_registry.skills
+                        content = k.get("summary", k.get("content", ""))
+                        if not content or len(content) <= 50:
+                            continue
+                        # 跳过已处理过的知识
+                        content_hash = hash(content[:200])
+                        if content_hash in self._processed_knowledge_hashes:
+                            continue
+                        self._processed_knowledge_hashes.add(content_hash)
+                        try:
+                            discovered = discover_skills_from_content(
+                                content, self.SOUL,
+                                self.skill_registry.skills
+                            )
+                            for skill_data in discovered:
+                                is_new = self.skill_registry.add_skill(
+                                    skill_id=skill_data.get("skill_id", ""),
+                                    name=skill_data.get("name", ""),
+                                    description=skill_data.get("description", ""),
+                                    learned_from=skill_data.get("learned_from", "网上看到的"),
+                                    skill_type=skill_data.get("type", "creative"),
                                 )
-                                for skill_data in discovered:
-                                    is_new = self.skill_registry.add_skill(
-                                        skill_id=skill_data.get("skill_id", ""),
-                                        name=skill_data.get("name", ""),
-                                        description=skill_data.get("description", ""),
-                                        learned_from=skill_data.get("learned_from", "网上看到的"),
-                                        skill_type=skill_data.get("type", "creative"),
-                                    )
-                                    if is_new:
-                                        print(f"🎓 学会新技能: {skill_data['name']}")
-                                        self.life_buffer.add(f"学会了一个新技能：{skill_data['name']}", "learn")
-                            except Exception as e:
-                                print(f"技能发现失败: {e}")
+                                if is_new:
+                                    print(f"🎓 学会新技能: {skill_data['name']}")
+                                    self.life_buffer.add(f"学会了一个新技能：{skill_data['name']}", "learn")
+                        except Exception as e:
+                            print(f"技能发现失败: {e}")
 
                 if tick_count % 5 == 0:
                     print(f"🔁 开始自主决策 (tick={tick_count})")

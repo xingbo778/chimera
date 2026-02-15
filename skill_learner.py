@@ -48,6 +48,11 @@ class SkillRegistry:
             self._save()
             return False  # 不是新技能
 
+        # 按名称去重：如果已有同名技能，视为重复
+        existing_names = {s["name"] for s in self.skills.values()}
+        if name in existing_names:
+            return False  # 同名技能已存在
+
         self.skills[skill_id] = {
             "skill_id": skill_id,
             "name": name,
