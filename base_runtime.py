@@ -183,11 +183,13 @@ class Memory:
         if mood == "positive":
             self.emotional_state["happiness"] = min(100, self.emotional_state["happiness"] + 5)
             self.emotional_state["stress"] = max(0, self.emotional_state["stress"] - 3)
+            self.emotional_state["loneliness"] = max(0, self.emotional_state["loneliness"] - 2)  # 积极事件减少孤独
         elif mood == "negative":
             self.emotional_state["happiness"] = max(0, self.emotional_state["happiness"] - 5)
             self.emotional_state["stress"] = min(100, self.emotional_state["stress"] + 5)
+            self.emotional_state["loneliness"] = min(100, self.emotional_state["loneliness"] + 1)  # 消极事件增加孤独
+        # neutral 不改变 loneliness
         self.emotional_state["energy"] = max(0, self.emotional_state["energy"] - 1)
-        self.emotional_state["loneliness"] = min(100, self.emotional_state["loneliness"] + 1)
 
     def get_emotion_tag(self):
         h, e, s, l = (self.emotional_state[k] for k in ("happiness", "energy", "stress", "loneliness"))
@@ -327,13 +329,33 @@ class WorldClient:
     def get_events(self):
         try:
             r = requests.get(f"{self.base_url}/v1/events/all",
-                           params={"since_tick": self.last_event_tick})
+                           params={"since_tick": self.last_event_tick, "agent_id": self.agent_id})
             events = r.json()
             if events:
-                self.last_event_tick = max(e.get("tick", 0) for e in events)
+                max_tick = max(e.get("tick", 0) for e in events)
+                self.last_event_tick = max_tick
+                # BUG-B: ACK 已消费的事件
+                self._ack_events(max_tick)
             return events
         except:
             return []
+
+    def _ack_events(self, tick):
+        """BUG-B: 确认已消费事件到指定 tick"""
+        try:
+            requests.post(f"{self.base_url}/v1/events/ack", json={
+                "agent_id": self.agent_id, "ack_tick": tick,
+            }, timeout=3)
+        except:
+            pass
+
+    def get_nearby(self, location_id):
+        """BUG-K: 获取某个地点附近的其他 Agent 和 NPC"""
+        try:
+            r = requests.get(f"{self.base_url}/v1/locations/{location_id}/nearby", timeout=3)
+            return r.json()
+        except:
+            return {"agents": [], "npcs": []}
 
     def start_world(self):
         try:
@@ -420,7 +442,8 @@ def call_llm_json(system_prompt, user_prompt, max_tokens=500, temperature=0.7, m
 async def tts_edge(text, output_dir=None, voice_name="zh-CN-XiaoyiNeural"):
     import edge_tts
     if output_dir is None:
-        output_dir = "/home/ubuntu/chimera/voice"
+        # BUG-I: 默认目录使用通用路径，实际使用时通过参数传入
+        output_dir = "/tmp/chimera_voice"
     os.makedirs(output_dir, exist_ok=True)
     timestamp = int(time.time())
     filepath = os.path.join(output_dir, f"voice_{timestamp}.mp3")
@@ -500,6 +523,10 @@ class AgentRuntime:
         self.message_buffer = []
         self._buffer_lock = threading.Lock()
         self._pending_reply_task = None
+        self._reply_generation = 0  # BUG-F: delayed_reply 竞态保护
+
+        # BUG-A: memory 线程安全锁（autonomous_loop 和 handle_message 共享 memory）
+        self._memory_lock = threading.Lock()
 
         # 常量
         self.TICK_INTERVAL = 60
@@ -642,9 +669,15 @@ class AgentRuntime:
             available = [loc for loc in ALL_LOCATIONS if loc != current]
             if available:
                 new_loc = random.choice(available)
-                self.memory.current_location = new_loc
-                loc_name = LOCATION_NAMES.get(new_loc, new_loc)
-                feedback = f"去了{loc_name}"
+                # BUG-E: 先通知 World Engine，成功后再更新本地
+                move_result = self.world.act({"tool": "move", "target_location_id": new_loc})
+                if move_result and move_result.get("success"):
+                    self.memory.current_location = new_loc
+                    loc_name = LOCATION_NAMES.get(new_loc, new_loc)
+                    feedback = f"去了{loc_name}"
+                else:
+                    loc_name = LOCATION_NAMES.get(new_loc, new_loc)
+                    feedback = f"想去{loc_name}但没去成"
             else:
                 feedback = "在附近逛了逛"
 
@@ -936,10 +969,15 @@ class AgentRuntime:
         if self._pending_reply_task and not self._pending_reply_task.done():
             self._pending_reply_task.cancel()
 
-        self._pending_reply_task = asyncio.create_task(self._delayed_reply())
+        # BUG-F: generation counter 防止竞态
+        self._reply_generation += 1
+        self._pending_reply_task = asyncio.create_task(self._delayed_reply(self._reply_generation))
 
-    async def _delayed_reply(self):
+    async def _delayed_reply(self, generation=0):
         await asyncio.sleep(2.5)
+        # BUG-F: 检查 generation 是否过期
+        if generation != self._reply_generation:
+            return
         print(f"⏰ _delayed_reply 触发，buffer大小: {len(self.message_buffer)}")
 
         with self._buffer_lock:
@@ -1010,9 +1048,11 @@ class AgentRuntime:
 
         print(f"📝 准备回复 {len(replies)} 条: {replies}")
 
-        self.memory.user_chat_history.append({"role": "user", "content": user_input})
-        self.memory.emotional_state["loneliness"] = max(0, self.memory.emotional_state["loneliness"] - 20)
-        self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 2)
+        # BUG-A: 加锁保护 memory 读写
+        with self._memory_lock:
+            self.memory.user_chat_history.append({"role": "user", "content": user_input})
+            self.memory.emotional_state["loneliness"] = max(0, self.memory.emotional_state["loneliness"] - 20)
+            self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 2)
 
         text_parts = [p["content"] for p in replies if p["type"] == "text"]
         full_response = "\n".join(text_parts) if text_parts else ""
@@ -1091,9 +1131,10 @@ class AgentRuntime:
                     except Exception as e:
                         print(f"发送语音失败: {e}")
 
-        if full_response:
-            self.memory.user_chat_history.append({"role": "assistant", "content": full_response})
-        self.memory.log_event(f"跟{self.memory.user_name or '朋友'}聊天", importance=4)
+        with self._memory_lock:
+            if full_response:
+                self.memory.user_chat_history.append({"role": "assistant", "content": full_response})
+            self.memory.log_event(f"跟{self.memory.user_name or '朋友'}聊天", importance=4)
 
         # fallback: 用户请求了skill但LLM没生成对应标签
         has_photo_reply = any(p["type"] == "photo" for p in replies)
@@ -1117,15 +1158,19 @@ class AgentRuntime:
                     print(f"发送语音失败: {e}")
 
         # 记住用户名字
-        if self.memory.user_name is None and any(kw in combined_text for kw in ["我叫", "我是", "叫我"]):
-            for kw in ["我叫", "我是", "叫我"]:
-                if kw in combined_text:
-                    idx = combined_text.index(kw) + len(kw)
-                    name = combined_text[idx:idx+10].strip().split()[0] if idx < len(combined_text) else None
-                    if name and len(name) <= 5:
-                        self.memory.user_name = name
-                        self.memory.update_long_term("关于用户", f"名字叫{name}。")
-                        break
+        # BUG-H: 限制用户名长度 1-4 字符，去除尾部标点
+        with self._memory_lock:
+            if self.memory.user_name is None and any(kw in combined_text for kw in ["我叫", "我是", "叫我"]):
+                for kw in ["我叫", "我是", "叫我"]:
+                    if kw in combined_text:
+                        idx = combined_text.index(kw) + len(kw)
+                        name = combined_text[idx:idx+10].strip().split()[0] if idx < len(combined_text) else None
+                        if name:
+                            name = name.rstrip("，。！？,.!?~\u3001")
+                            if 1 <= len(name) <= 4:
+                                self.memory.user_name = name
+                                self.memory.update_long_term("关于用户", f"名字叫{name}。")
+                                break
 
         # 关键词触发即时提取
         _FACT_KEYWORDS = [
@@ -1142,10 +1187,11 @@ class AgentRuntime:
             self._extract_immediate_info(user_input, full_response)
 
         # 每5轮深度提取
-        if len(self.memory.user_chat_history) % 5 == 0:
-            self._extract_user_info_async(self.memory.user_chat_history[-10:])
+        with self._memory_lock:
+            if len(self.memory.user_chat_history) % 5 == 0:
+                self._extract_user_info_async(self.memory.user_chat_history[-10:])
 
-        self.memory.save()
+            self.memory.save()
 
     # ============================================================
     # 记忆提取
@@ -1203,18 +1249,17 @@ class AgentRuntime:
     def _try_learn_style_from_content(self, content):
         few_shot_path = self.config.few_shot_path
 
+        # BUG-G: 移除通用语气词，提高阈值到 3
         dialogue_markers = [
             "男：", "女：", "男生：", "女生：", "我：", "他：", "她：",
             "聊天记录", "对话", "聊天截图", "微信聊天",
-            "\u201c", "\u201d", "\u300c", "\u300d",
-            "哈哈哈", "嘿嘿嘿", "喔喔", "啊啊",
-            "回复", "聊天技巧", "聊天示例", "聊天话术",
+            "哈哈哈", "嘿嘿嘿",
+            "聊天技巧", "聊天示例", "聊天话术",
             "她说", "他说", "我说", "你说",
             "开场白", "套路",
-            "呢", "啦", "嘛", "啊", "呀",
         ]
         marker_count = sum(1 for m in dialogue_markers if m in content)
-        if marker_count < 2:
+        if marker_count < 3:
             return
 
         print("🎓 检测到对话内容，尝试提取风格示例...")
@@ -1392,33 +1437,40 @@ class AgentRuntime:
                     continue
 
                 events = self.world.get_events()
-                for event in events:
-                    if event.get("event_type") == "random_event":
-                        desc = event.get("description", "")
-                        mood = event.get("mood", "neutral")
-                        if event.get("location_id") == self.memory.current_location:
-                            self.memory.log_event(desc, importance=6 if mood == "positive" else 4)
-                            self.memory.update_emotion(mood)
+                # BUG-A: 加锁保护 memory 读写
+                with self._memory_lock:
+                    for event in events:
+                        if event.get("event_type") == "random_event":
+                            desc = event.get("description", "")
+                            mood = event.get("mood", "neutral")
+                            if event.get("location_id") == self.memory.current_location:
+                                self.memory.log_event(desc, importance=6 if mood == "positive" else 4)
+                                self.memory.update_emotion(mood)
 
                 if tick_count % 5 == 0:
                     # 轻量 ReAct：允许连续 2-3 步动作
-                    for step in range(3):
-                        action = self.autonomous_decide()
-                        if not action:
-                            break
-                        self.execute_autonomous_action(action, loop)
+                    with self._memory_lock:
+                        for step in range(3):
+                            action = self.autonomous_decide()
+                            if not action:
+                                break
+                            self.execute_autonomous_action(action, loop)
 
-                        # 检查是否需要后续动作（只有特定动作类型可以触发后续）
-                        action_type = action.get("action", "")
-                        follow_up = action.get("follow_up", "")
-                        if not follow_up and action_type not in ("scroll_feed", "learn"):
-                            break  # 没有后续意图，停止
-                        if step < 2:
-                            print(f"🔄 ReAct step {step+1} → 继续决策...")
-                    self.memory.save()
+                            # 检查是否需要后续动作（只有特定动作类型可以触发后续）
+                            action_type = action.get("action", "")
+                            follow_up = action.get("follow_up", "")
+                            if not follow_up and action_type not in ("scroll_feed", "learn"):
+                                break  # 没有后续意图，停止
+                            if step < 2:
+                                print(f"🔄 ReAct step {step+1} → 继续决策...")
+                        self.memory.save()
 
                 if tick_count % 10 == 0:
                     self.memory.save()
+
+                # BUG-J: 每 100 tick（约 1.5 小时）清理一次过期文件
+                if tick_count % 100 == 0 and tick_count > 0:
+                    self._cleanup_old_files()
 
                 # 每日总结：凌晨1点触发（每天只触发一次）
                 hour = beijing_now().hour
@@ -1426,9 +1478,25 @@ class AgentRuntime:
                 if hour == 1 and last_summary_date != today:
                     self._daily_summary()
                     last_summary_date = today
+                # BUG-D: 自然情绪节律（替代固定衰减）
+                import math
                 if 7 <= hour < 23:
-                    self.memory.emotional_state["energy"] = max(0, self.memory.emotional_state["energy"] - 0.5)
-                    self.memory.emotional_state["loneliness"] = min(100, self.memory.emotional_state["loneliness"] + 0.3)
+                    # 精力曲线：早上充沛，午后犯困，傍晚回升，深夜疑惫
+                    energy_curve = {
+                        7: 0.0, 8: 0.0, 9: -0.1, 10: -0.15, 11: -0.2,
+                        12: -0.3, 13: -0.4, 14: -0.35, 15: -0.25,
+                        16: -0.15, 17: -0.1, 18: -0.05, 19: -0.1,
+                        20: -0.2, 21: -0.3, 22: -0.4,
+                    }
+                    energy_delta = energy_curve.get(hour, -0.2)
+                    self.memory.emotional_state["energy"] = max(0, self.memory.emotional_state["energy"] + energy_delta)
+                    # 孤独感：只在没有聊天的情况下缓慢增长
+                    loneliness_delta = 0.1 if self.memory.emotional_state["loneliness"] < 60 else 0.15
+                    self.memory.emotional_state["loneliness"] = min(100, self.memory.emotional_state["loneliness"] + loneliness_delta)
+                elif 6 <= hour < 7:
+                    # 早晨起床恢复
+                    self.memory.emotional_state["energy"] = min(100, self.memory.emotional_state["energy"] + 2)
+                    self.memory.emotional_state["stress"] = max(0, self.memory.emotional_state["stress"] - 1)
 
                 tick_count += 1
                 time.sleep(self.TICK_INTERVAL)
@@ -1438,6 +1506,34 @@ class AgentRuntime:
                 import traceback
                 traceback.print_exc()
                 time.sleep(5)
+
+    # ============================================================
+    # 文件清理
+    # ============================================================
+
+    def _cleanup_old_files(self):
+        """BUG-J: 清理超过 3 天的语音和自拍文件"""
+        import glob
+        cutoff = time.time() - 3 * 86400
+        cleanup_dirs = [
+            os.path.join(self.config.base_dir, "voice"),
+            os.path.join(self.config.base_dir, "selfies"),
+            "/tmp/chimera_voice",
+        ]
+        total_cleaned = 0
+        for d in cleanup_dirs:
+            if not os.path.exists(d):
+                continue
+            for f in os.listdir(d):
+                fp = os.path.join(d, f)
+                try:
+                    if os.path.isfile(fp) and os.path.getmtime(fp) < cutoff:
+                        os.remove(fp)
+                        total_cleaned += 1
+                except:
+                    pass
+        if total_cleaned > 0:
+            print(f"🧹 清理了 {total_cleaned} 个过期文件")
 
     # ============================================================
     # 主入口
