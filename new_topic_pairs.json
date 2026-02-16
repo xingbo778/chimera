@@ -1,0 +1,2842 @@
+[
+  {
+    "user_msg": null,
+    "assistant_msg": "王总\n我的辞职信放您桌子上了",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "14f1ad2bbcc4.webp"
+  },
+  {
+    "user_msg": "已经批了",
+    "assistant_msg": "好的小王",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "14f1ad2bbcc4.webp"
+  },
+  {
+    "user_msg": "你叫我什么?",
+    "assistant_msg": "离别之际,我给你表演个才艺吧",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "14f1ad2bbcc4.webp"
+  },
+  {
+    "user_msg": "什么才艺",
+    "assistant_msg": "[表情]\n蓝脸的窦尔顿 盗你妈\n[表情]\n红脸的关公 战你爸",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "14f1ad2bbcc4.webp"
+  },
+  {
+    "user_msg": "???",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "14f1ad2bbcc4.webp"
+  },
+  {
+    "user_msg": "用手机改一下遮挡一下就可以完成的工作\n就是不做\n你和谁较劲呢?\n这工作 你爱做就做不做走人 没人惯着你!\n之前就说太在乎你的感受了 结果现在蹬鼻子上脸\n今天如果不把你周五该完成的修改的工作弄完 没问题 路都是自己走的,后果也是要自己承担。和我较劲,吃亏的绝对不是我。明天开始每天三个视频,我全天等着你,出一个我看一个,如果需要修改我第一时间和你讲,我就看你什么时候给我。",
+    "assistant_msg": "您说的是重新做一个节日相关的,我已经发群里了",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "1550e01aa4b0.webp"
+  },
+  {
+    "user_msg": "收到",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "218fa5b4413a.webp"
+  },
+  {
+    "user_msg": "快下班了刚刚没看到你工作的重我\n不喜欢带回家 就在这说了[表情]\n早上我起得早你一说话难听 我就会\n急但是意思还是那样我做到谁的错\n的有疑问的肯定还是要报上来给你\n们小警察问既然涉及考核了两边意\n见不一样肯定还是要再问其他意见\n像昨天后面几条有疑问的你明白说\n就做进去那那些判定我就没有再问\n了要是因为被找到有疑问还是不合\n格就说什么阴阳怪气那也随便你后\n面还做到有疑问的情况我肯定还是\n要问一下怎么判定不可能听你说什\n么不用问你",
+    "assistant_msg": "工作上的摩擦偶尔会有的,我们把\n这个事情揭过吧,互相尊重,以后\n有什么问题再继续好好沟通吧,好\n好退场了不在下班时间浪费大家情\n绪了哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "218fa5b4413a.webp"
+  },
+  {
+    "user_msg": "我还要再加一会,咋了",
+    "assistant_msg": "你还没下班吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "247d8be1dbc1.webp"
+  },
+  {
+    "user_msg": "啊?我没看见你啊",
+    "assistant_msg": "你转头",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "247d8be1dbc1.webp"
+  },
+  {
+    "user_msg": "我360度都转了,你在哪呢",
+    "assistant_msg": "不是这边,是另一边\n[表情]\n我在家",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "247d8be1dbc1.webp"
+  },
+  {
+    "user_msg": "老板,我今天得请个假,上午可能\n去不了公司了\n眼睛出了点问题",
+    "assistant_msg": "眼睛怎么了?严不严重?\n看完医生第一时间告诉我结果",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "3d8dcfdfe54d.webp"
+  },
+  {
+    "user_msg": "没事了\n现在能睁开了",
+    "assistant_msg": "???\n睡醒了???",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "3d8dcfdfe54d.webp"
+  },
+  {
+    "user_msg": "明天要跟哪几个部门开会?",
+    "assistant_msg": "人事还有财务，约了一楼会议室",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "4289967821cf.webp"
+  },
+  {
+    "user_msg": "几点开始?",
+    "assistant_msg": "下午四点半",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "4289967821cf.webp"
+  },
+  {
+    "user_msg": "好的，我不去\n[表情]",
+    "assistant_msg": "做梦",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "4289967821cf.webp"
+  },
+  {
+    "user_msg": "莫烦躁",
+    "assistant_msg": "好烦呢\n上班又搞小团体",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "42e18e588ae6.webp"
+  },
+  {
+    "user_msg": "呜呜~~[表情]",
+    "assistant_msg": "欺负我\n杀掉他们吧",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "42e18e588ae6.webp"
+  },
+  {
+    "user_msg": "咱们不干,凭啥他的活咱们干\n就拖着,干不完也是找她的事跟你没关系,毕竟这不是你的活",
+    "assistant_msg": "来帮[禁止]杀个人",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "42e18e588ae6.webp"
+  },
+  {
+    "user_msg": "李总,机械姬 pro推广会议下午两点开ok吗\n[表情]",
+    "assistant_msg": "李总,待会儿两点的会哦",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "4e53aea2e73a.webp"
+  },
+  {
+    "user_msg": "我不是说三点吗?",
+    "assistant_msg": "你说ok啊",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "4e53aea2e73a.webp"
+  },
+  {
+    "user_msg": "我这是三点的意思[表情]",
+    "assistant_msg": "[图片]",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "4e53aea2e73a.webp"
+  },
+  {
+    "user_msg": "?\n我有那么过分吗",
+    "assistant_msg": "陈姐，非常抱歉[表情]给您带来了这样的困扰。\n今天下午说我没有管理好自己的情绪，做出了非常不恰当的行为。\n这些吐槽不是我平时对您应有的态度，也完全不代表我对您的真实看法。我在当时的情绪下说了那些话，但这并不是借口。我深刻反省了自己的行为，并意识到这样做是多么地不专业、不尊重人。作为实习生，其实已经步入职场了，但是我还是抱着学生思维来看待问题。我为自己不当言行表示深深的歉意，希望您可以给我一个改正的机会。[表情]\n真是抱歉",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "5730dce45624.webp"
+  },
+  {
+    "user_msg": "店长,今天店里怎么有点冷清啊\n[表情]",
+    "assistant_msg": "下雨天顾客少很正常啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "88896e28ff37.webp"
+  },
+  {
+    "user_msg": "你急什么\n又没怪你",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "88896e28ff37.webp"
+  },
+  {
+    "user_msg": "刘总,我在老家,没有电脑没办法跟进。",
+    "assistant_msg": "找其他同事协助一下\n想想办法",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "934840301fd9.webp"
+  },
+  {
+    "user_msg": "我刚才问了其他同事,都没空\n我也没办法",
+    "assistant_msg": "怎么搞的 交待点工作就都没时间 对你们这种工作作风提出严肃批评!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "934840301fd9.webp"
+  },
+  {
+    "user_msg": "宝子我这边问了一下仓库哈这个衣服厂家那边不生产了哈",
+    "assistant_msg": "为啥呀",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "9b045a5d9432.webp"
+  },
+  {
+    "user_msg": "厂家那边不生产了",
+    "assistant_msg": "没明白",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "工作",
+    "source": "9b045a5d9432.webp"
+  },
+  {
+    "user_msg": "收到",
+    "assistant_msg": "收到",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "a6daf02258a8.webp"
+  },
+  {
+    "user_msg": "我踏马烦死了,什么傻B老板,\n天天屁事真多,我都快累噶了!",
+    "assistant_msg": null,
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "a6daf02258a8.webp"
+  },
+  {
+    "user_msg": "[表情]辛苦",
+    "assistant_msg": "这是我在朋友圈看到有人发的吐槽,不解决问题反而天天埋怨,\n带着情绪工作是职场的大忌,做\n为反面教材,和大家分享一下。",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "a6daf02258a8.webp"
+  },
+  {
+    "user_msg": "说的不错",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "a6daf02258a8.webp"
+  },
+  {
+    "user_msg": "@所有人,还不到21:00点了,TM人都走了吗??不想干了是不是??TM不想干,直接滚蛋,我这里不养闲人,想干的,立刻马上滚回来,不想干的到人事部办理离职,立刻马上回复!!",
+    "assistant_msg": "你跟谁tm的?我是打工的,不是卖给你了,一个月给我4500准时下班怎么了,你有必要把话说这么难听吗?你tm要是一个月给我50000,我天天加班,留下来天天给你守灵\n同意\n同意\n同意!\n+1",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "bddc96effcd0.webp"
+  },
+  {
+    "user_msg": "问倩倩怎么开发票不愿意教，我自己百度分分钟搞定",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "cb64e1ebace8.webp"
+  },
+  {
+    "user_msg": "这人也太",
+    "assistant_msg": "[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "cb64e1ebace8.webp"
+  },
+  {
+    "user_msg": null,
+    "assistant_msg": "[图片]\n[图片]",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "工作",
+    "source": "cb64e1ebace8.webp"
+  },
+  {
+    "user_msg": "小李，你来公司多久了？",
+    "assistant_msg": "两年？",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "e158f9899cd1.webp"
+  },
+  {
+    "user_msg": "我觉得你变化挺大的",
+    "assistant_msg": "这是在夸我吗？",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "e158f9899cd1.webp"
+  },
+  {
+    "user_msg": "你刚进公司，说话做事都小心翼翼\n现在的你有点肆无忌惮，目中无人",
+    "assistant_msg": "我眼睛里面看的见你呀",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "e158f9899cd1.webp"
+  },
+  {
+    "user_msg": "不是这个意思，是尊重",
+    "assistant_msg": "我很尊重你呀，我都叫你王主管",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "工作",
+    "source": "e158f9899cd1.webp"
+  },
+  {
+    "user_msg": "[图片]\n这个上衣多少钱?",
+    "assistant_msg": "羊毛的 套装180",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "穿搭",
+    "source": "245e8e6ec730.webp"
+  },
+  {
+    "user_msg": "[图片]\n这个多少钱",
+    "assistant_msg": "一套预售价 290",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "穿搭",
+    "source": "245e8e6ec730.webp"
+  },
+  {
+    "user_msg": "宝宝\n你能接受我出门穿短裙吗",
+    "assistant_msg": "你穿短裙真的很好看\n但是尽量少穿",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "26d25f591317.webp"
+  },
+  {
+    "user_msg": "为什么呀",
+    "assistant_msg": "当我嫌弃你穿短裙出门的时候\n是真的非常爱你",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "26d25f591317.webp"
+  },
+  {
+    "user_msg": "那我的小裙子还有机会能穿上嘛[表情]",
+    "assistant_msg": "当然有啊",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "26d25f591317.webp"
+  },
+  {
+    "user_msg": "不让我穿小裙子\n讨厌 不理你了\n[表情]",
+    "assistant_msg": "敢不理我",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "26d25f591317.webp"
+  },
+  {
+    "user_msg": "你朋友圈发的什么啊\n哪个邻居啊?\n昨天厦门才10度,你穿个袜子就出门了啊?\n你可以爱上其他人,但是我想告诉你,相爱不会让一个人在冬天穿裙子想要把自己扮的很漂亮才出门\n相爱是两个人穿着棉服和拖鞋可以随时出门。",
+    "assistant_msg": "好的好的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "31c67c8adad0.webp"
+  },
+  {
+    "user_msg": "爱人先爱己",
+    "assistant_msg": "好的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "31c67c8adad0.webp"
+  },
+  {
+    "user_msg": "哇塞\n宝宝\n你这也太太太太漂亮了吧\n[表情][表情][表情][表情][表情][表情]\n宝宝你好美\n美到我了宝宝[表情][表情][表情][表情]\n好像公主呀\n这么好看\n我真是找了个天底下最好看的美女了",
+    "assistant_msg": "好看吗宝宝我新买的小裙子",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "391b9e0dfcd6.webp"
+  },
+  {
+    "user_msg": "哥哥我想买件衣服",
+    "assistant_msg": "嗯买吧",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "4811451787f1.webp"
+  },
+  {
+    "user_msg": "你瞅瞅好不好看",
+    "assistant_msg": "我给买吧\n你的钱留着把你养胖",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "4811451787f1.webp"
+  },
+  {
+    "user_msg": "[图片]",
+    "assistant_msg": "[表情]",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "4811451787f1.webp"
+  },
+  {
+    "user_msg": "小宝，这个裙子好看么",
+    "assistant_msg": "好看！老婆身材好穿什么都好看\n虽然小宝确实穿深色系比较性感，但是也不要总买黑色嘛，夏天浅色也不错啊",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "57e156fa6b8a.webp"
+  },
+  {
+    "user_msg": "是吗",
+    "assistant_msg": "是啊，老公去给你选选，你先把这个买下来，再去挑挑喜欢的首饰和美美的高跟鞋，防晒还有吗，小裙子最怕晒了",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "57e156fa6b8a.webp"
+  },
+  {
+    "user_msg": "啊?今天怎么这么突然\n[表情：八嘎压鹿]",
+    "assistant_msg": "宝,想不想看今日份性感穿搭\n因为今天买了新衣服呀[表情]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "5852732e2bbd.webp"
+  },
+  {
+    "user_msg": "哈哈哈,我在上班,回去再看?",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "5852732e2bbd.webp"
+  },
+  {
+    "user_msg": "23\"",
+    "assistant_msg": "11\"\n4\"",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "972957504ac0.webp"
+  },
+  {
+    "user_msg": "24\"\n20\"\n16\"",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "972957504ac0.webp"
+  },
+  {
+    "user_msg": "799+899 1698 1650包邮 裤子卖1099的\n因为你之前在我这买过直接给的品牌折扣价格",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "972957504ac0.webp"
+  },
+  {
+    "user_msg": "嗯。",
+    "assistant_msg": "[视频链接]\n是你吗\n你什么时候开始干这行了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "ac42a1eddcf7.webp"
+  },
+  {
+    "user_msg": "分手之后开始的。\n右下角的红心怎么不点。",
+    "assistant_msg": "你的意思是\n前任穿我买的衣服我买的胸链擦边\n我还要点赞是吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "ac42a1eddcf7.webp"
+  },
+  {
+    "user_msg": "你睡前刷视频不是每个都赞吗。\n我从玻璃倒影上看到的。",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "ac42a1eddcf7.webp"
+  },
+  {
+    "user_msg": "这件什么时候买的\n这不会是你的吧",
+    "assistant_msg": "哈哈哈哈",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "c0891baebf5d.webp"
+  },
+  {
+    "user_msg": "怎么我都能穿",
+    "assistant_msg": "真的是\n给你穿",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "c0891baebf5d.webp"
+  },
+  {
+    "user_msg": "真是你的啊",
+    "assistant_msg": "俺也不喜欢",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "c0891baebf5d.webp"
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "等雨停",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "d587b90486d4.webp"
+  },
+  {
+    "user_msg": "[图片]",
+    "assistant_msg": "上班不敢穿黑丝\n哈哈哈哈\n不然搭黑丝最好看",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "d587b90486d4.webp"
+  },
+  {
+    "user_msg": "[图片]\n宝宝今晚穿这套可以嘛",
+    "assistant_msg": "还行我在种草莓呢",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "db9e36902fec.webp"
+  },
+  {
+    "user_msg": "哦哦 那你先种着吧\n不对!!\n你说你在干嘛?\n混蛋!你再说一遍",
+    "assistant_msg": "我在种草莓呀这玩意太难种了",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "db9e36902fec.webp"
+  },
+  {
+    "user_msg": "你转一圈,看,正面,侧面,背面,才知道。",
+    "assistant_msg": "哦哦,谢谢泥宝宝[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "f35beb847caa.webp"
+  },
+  {
+    "user_msg": "可以转一圈吗",
+    "assistant_msg": "啊?\n宝宝你要干嘛[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "f35beb847caa.webp"
+  },
+  {
+    "user_msg": "内八,外八,O型,鸭掌,等等,",
+    "assistant_msg": "你想帮我测嘛?",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "f35beb847caa.webp"
+  },
+  {
+    "user_msg": "[图片]\n这个上衣多少钱?",
+    "assistant_msg": "羊毛的\n套装180",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "穿搭",
+    "source": "fashion_000.webp"
+  },
+  {
+    "user_msg": "[图片]\n这个多少钱",
+    "assistant_msg": "一套预售价 290",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "穿搭",
+    "source": "fashion_000.webp"
+  },
+  {
+    "user_msg": "啊？今天怎么这么突然\n[表情：八嘎压鹿]",
+    "assistant_msg": "宝，想不想看今日份性感穿搭\n因为今天买了新衣服呀[表情]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_001.webp"
+  },
+  {
+    "user_msg": "哈哈哈，我在上班，回去再看？",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_001.webp"
+  },
+  {
+    "user_msg": "[图片]\n这是你吗?",
+    "assistant_msg": "肯定是我啊不然是谁",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_002.webp"
+  },
+  {
+    "user_msg": "你觉得这种照片能发朋友圈?\n你想让谁看呢?\n你干脆别穿好了",
+    "assistant_msg": "[图片]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_002.webp"
+  },
+  {
+    "user_msg": "23\"",
+    "assistant_msg": "11\"\n4\"",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_004.webp"
+  },
+  {
+    "user_msg": "24\"\n20\"\n16\"",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_004.webp"
+  },
+  {
+    "user_msg": "799+899 1698 1650包邮 裤子卖1099的\n因为你之前在我这买过直接给的品牌折扣价格",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_004.webp"
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "等雨停",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_006.webp"
+  },
+  {
+    "user_msg": "[图片]",
+    "assistant_msg": "上班不敢穿黑丝\n哈哈哈哈\n不然搭黑丝最好看",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_006.webp"
+  },
+  {
+    "user_msg": "小宝，这个裙子好看么",
+    "assistant_msg": "好看！老婆身材好穿什么都好看\n虽然小宝确实穿深色系比较性感，但是也不要总买黑色嘛，夏天浅色也不错啊",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_008.webp"
+  },
+  {
+    "user_msg": "是吗",
+    "assistant_msg": "是啊，老公去给你选选，你先把这个买下来，再去挑挑喜欢的首饰和美美的高跟鞋，防晒还有吗，小裙子最怕晒了",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_008.webp"
+  },
+  {
+    "user_msg": "哥哥我想买件衣服",
+    "assistant_msg": "嗯买吧",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_009.webp"
+  },
+  {
+    "user_msg": "你瞅瞅好不好看",
+    "assistant_msg": "我给买吧\n你的钱留着把你养胖",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_009.webp"
+  },
+  {
+    "user_msg": "[图片]",
+    "assistant_msg": "[表情]",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_009.webp"
+  },
+  {
+    "user_msg": "你转一圈,看,正面,侧面,背面,才知道。",
+    "assistant_msg": "哦哦,谢谢泥宝宝[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_010.webp"
+  },
+  {
+    "user_msg": "可以转一圈吗",
+    "assistant_msg": "啊?\n宝宝你要干嘛[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_010.webp"
+  },
+  {
+    "user_msg": "内八,外八,O型,鸭掌,等等,",
+    "assistant_msg": "你想帮我测嘛?",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_010.webp"
+  },
+  {
+    "user_msg": "我这里只有一个字,那就是:买",
+    "assistant_msg": "我又看中了一套衣服\n你觉得怎么样",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_011.webp"
+  },
+  {
+    "user_msg": "这件什么时候买的\n这不会是你的吧",
+    "assistant_msg": "哈哈哈哈",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_012.webp"
+  },
+  {
+    "user_msg": "怎么我都能穿",
+    "assistant_msg": "真的是\n给你穿",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_012.webp"
+  },
+  {
+    "user_msg": "真是你的啊",
+    "assistant_msg": "俺也不喜欢",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_012.webp"
+  },
+  {
+    "user_msg": "老公这套衣服好看吗",
+    "assistant_msg": "我拍了拍\"[爱心]\"的男神",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_013.webp"
+  },
+  {
+    "user_msg": "你喜欢\n[表情][表情][表情]",
+    "assistant_msg": "喜欢\n不好看吗\n[表情][表情][表情]\n很韩呀",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_013.webp"
+  },
+  {
+    "user_msg": "哇塞\n宝宝\n你这也太太太太漂亮了吧\n[表情][表情][表情][表情][表情][表情]\n宝宝你好美\n美到我了宝宝[表情][表情][表情][表情]\n好像公主呀\n这么好看\n我真是找了个天底下最好看的美女了",
+    "assistant_msg": "好看吗宝宝我新买的小裙子",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_014.webp"
+  },
+  {
+    "user_msg": "我靠我靠我靠我靠我靠\n宝宝我不行了宝宝\n真的迷死我了宝宝[表情][表情]好好看啊啊\n啊啊啊啊啊\n我已经迫不及待的想回家见你了\n我已经等不及了宝宝\n我的心在你那里了\n怎么那么好看!!!!!",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_015.webp"
+  },
+  {
+    "user_msg": "暴露吗",
+    "assistant_msg": "买了一套好好看的衣胡\n哈哈哈哈哈哈\n开心",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_016.webp"
+  },
+  {
+    "user_msg": "like this\n不行太像道长了",
+    "assistant_msg": "yep\n很好看",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_018.webp"
+  },
+  {
+    "user_msg": "上半身到下半身从香榭丽舍走向普陀山的感觉\n你觉得灰色是不是不行hh",
+    "assistant_msg": "与之相反，我觉得这件衬衫真的非常适合你啊！灰色很百搭，",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_018.webp"
+  },
+  {
+    "user_msg": "[图片]\n宝宝今晚穿这套可以嘛",
+    "assistant_msg": "还行我在种草莓呢",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_019.webp"
+  },
+  {
+    "user_msg": "哦哦 那你先种着吧\n不对!!\n你说你在干嘛?\n混蛋!你再说一遍",
+    "assistant_msg": "我在种草莓呀这玩意太难种了",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "fashion_019.webp"
+  },
+  {
+    "user_msg": "宝宝\n你能接受我出门穿短裙吗",
+    "assistant_msg": "你穿短裙真的很好看\n但是尽量少穿",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_020.webp"
+  },
+  {
+    "user_msg": "为什么呀",
+    "assistant_msg": "当我嫌弃你穿短裙出门的时候\n是真的非常爱你",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "fashion_020.webp"
+  },
+  {
+    "user_msg": "那我的小裙子还有机会能穿上嘛[表情]",
+    "assistant_msg": "当然有啊",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_020.webp"
+  },
+  {
+    "user_msg": "不让我穿小裙子\n讨厌 不理你了\n[表情]",
+    "assistant_msg": "敢不理我",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "fashion_020.webp"
+  },
+  {
+    "user_msg": "黑丝黑丝!",
+    "assistant_msg": "这种吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "穿搭",
+    "source": "fashion_021.webp"
+  },
+  {
+    "user_msg": "[表情][表情][表情]\n我...\n你...\n哎呀我[被屏蔽]了\n这我还还哪有心思干活了",
+    "assistant_msg": "哈哈哈哈哈哈哈,好好干活\n听话[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_021.webp"
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "宝宝你好有耐心",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "fashion_022.webp"
+  },
+  {
+    "user_msg": "嘿嘿\n你喜欢就好\n主要是看你换衣服不同风格\n我也蛮喜欢\n毕竟以后是我看多一点\n[图片]",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_022.webp"
+  },
+  {
+    "user_msg": "寒潮将至",
+    "assistant_msg": "我已经感受到冷了\n现在",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_023.webp"
+  },
+  {
+    "user_msg": "穿暖点\n别冻着了",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_023.webp"
+  },
+  {
+    "user_msg": "嗯。",
+    "assistant_msg": "[视频链接]\n是你吗\n你什么时候开始干这行了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_024.webp"
+  },
+  {
+    "user_msg": "分手之后开始的。\n右下角的红心怎么不点。",
+    "assistant_msg": "你的意思是\n前任穿我买的衣服我买的胸链擦边\n我还要点赞是吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "fashion_024.webp"
+  },
+  {
+    "user_msg": "你睡前刷视频不是每个都赞吗。\n我从玻璃倒影上看到的。",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_024.webp"
+  },
+  {
+    "user_msg": "你朋友圈发的什么啊\n哪个邻居啊?\n昨天厦门才10度,你穿个袜子就出门了啊?\n你可以爱上其他人,但是我想告诉你,相爱不会让一个人在冬天穿裙子想要把自己扮的很漂亮才出门\n相爱是两个人穿着棉服和拖鞋可以随时出门。",
+    "assistant_msg": "好的好的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "fashion_025.webp"
+  },
+  {
+    "user_msg": "爱人先爱己",
+    "assistant_msg": "好的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "fashion_025.webp"
+  },
+  {
+    "user_msg": "哈哈哈哈 那就jk加黑丝啊",
+    "assistant_msg": "没穿过哈哈",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_026.webp"
+  },
+  {
+    "user_msg": "有黑丝推荐吗\n[图片]\n我买的这身也很适合穿黑丝",
+    "assistant_msg": "短嘛",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_026.webp"
+  },
+  {
+    "user_msg": "短\n[表情]\n这个问题真是一针见血",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_026.webp"
+  },
+  {
+    "user_msg": "我是伊",
+    "assistant_msg": "以上是打招呼的内容",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_027.webp"
+  },
+  {
+    "user_msg": "这款多少钱",
+    "assistant_msg": "520",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_027.webp"
+  },
+  {
+    "user_msg": "棉服吗",
+    "assistant_msg": "不\n俺家不卖棉服",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_027.webp"
+  },
+  {
+    "user_msg": "嗯\n可以拍一下吊牌不",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_027.webp"
+  },
+  {
+    "user_msg": "刚刚打了个喷嚏\n要是想我了就直说\n在姐面前不用那么矜持\n不用非得等我来找你",
+    "assistant_msg": "[图片]\n一起吗",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_028.webp"
+  },
+  {
+    "user_msg": "[表情包：我投降 你赢了]",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_028.webp"
+  },
+  {
+    "user_msg": "宝贝 这条连衣裙好看嘛",
+    "assistant_msg": "看不出来,下次带你逛街去买衣服\n顺便练练砍价",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_029.webp"
+  },
+  {
+    "user_msg": "是不是觉得不太好看",
+    "assistant_msg": "好的呀[表情]",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_029.webp"
+  },
+  {
+    "user_msg": "看着还行不知道穿上咋样",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_029.webp"
+  },
+  {
+    "user_msg": "到家啦",
+    "assistant_msg": "好勒\n[表情]贴贴[表情]\n想老公了",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "fashion_030.webp"
+  },
+  {
+    "user_msg": "叫你上来又不上",
+    "assistant_msg": "下次嘛\n等我的装备到了先嘛[表情]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_030.webp"
+  },
+  {
+    "user_msg": "你买了什么",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_030.webp"
+  },
+  {
+    "user_msg": "小姐姐这套衣服怎么卖",
+    "assistant_msg": "59+99",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_031.webp"
+  },
+  {
+    "user_msg": "裤子99吗",
+    "assistant_msg": "对",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_031.webp"
+  },
+  {
+    "user_msg": "57公斤裤子拍L码吗\n衣服是均码是吧",
+    "assistant_msg": "M",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_031.webp"
+  },
+  {
+    "user_msg": "才开完会\n必须试试新战袍",
+    "assistant_msg": "哈哈哈哈哈\n我头疼",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_032.webp"
+  },
+  {
+    "user_msg": "咋又头疼了呢\n是不是冻感冒了",
+    "assistant_msg": "刚刚买了酚咖片，换了新包装，而且听COOL了，原来这个版本是65毫克了",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_032.webp"
+  },
+  {
+    "user_msg": "宝宝\n你觉得我今天穿的这一身衣服怎么样",
+    "assistant_msg": "漂亮\n和你一样\n尤其是上衣\n裤子不太合适\n你换一个吧\n这垃圾网络信息发不出去\n恶心死我了\n我要吐了\n滚啊",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "穿搭",
+    "source": "fashion_033.webp"
+  },
+  {
+    "user_msg": "一直扯我内衣",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fashion_034.webp"
+  },
+  {
+    "user_msg": "宝贝\n刚刚在试衣服",
+    "assistant_msg": null,
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "穿搭",
+    "source": "fashion_035.webp"
+  },
+  {
+    "user_msg": "切又想骗我¯(ツ)_/¯我不信",
+    "assistant_msg": "我昨晚拍了女仆装\n你要看看吗",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "穿搭",
+    "source": "fashion_036.webp"
+  },
+  {
+    "user_msg": "我就算饿死,也不会再吃你一口饭 [表情]",
+    "assistant_msg": "爱看不看",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_036.webp"
+  },
+  {
+    "user_msg": "咳咳,饭太香除外",
+    "assistant_msg": "这可是你说的哦\n不许反悔",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_036.webp"
+  },
+  {
+    "user_msg": "宝宝\n现在开始不能喝豆浆啦",
+    "assistant_msg": "为啥",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_037.webp"
+  },
+  {
+    "user_msg": "等姨妈期过了再喝",
+    "assistant_msg": "?\n宝宝醒了吗",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_037.webp"
+  },
+  {
+    "user_msg": "醒啦",
+    "assistant_msg": "我哪里来姨妈了\n[表情]",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_037.webp"
+  },
+  {
+    "user_msg": "现在宝宝应该是黄体期吧",
+    "assistant_msg": "什么黄土期\n噢噢噢不知道诶",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fashion_037.webp"
+  },
+  {
+    "user_msg": "?? 不是\n你又在发什么癫？",
+    "assistant_msg": "教练\n都怪我没做好措施\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "1ef3e7460114.webp"
+  },
+  {
+    "user_msg": "!",
+    "assistant_msg": "锻炼\n锻炼不\n你锻炼不\n你去锻炼不\n你今天锻炼不\n你今天去锻炼不\n你今晚上去锻炼不\n你今天晚上去锻炼不\n你今天晚上和我锻炼不\n你今天晚上和我去锻炼不\n你今天晚上和我一起锻炼不\n你今天晚上和我一起去锻炼不",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "2970cb9333ca.webp"
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "好痛啊\n看来昨天练到位了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "2b5e4cf53242.webp"
+  },
+  {
+    "user_msg": "[表情]\n哈哈哈哈\n昨天没划水",
+    "assistant_msg": "我感觉我疼的地方不对啊\n我昨天练的胸\n但是我胸往手臂那一块更疼",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "2b5e4cf53242.webp"
+  },
+  {
+    "user_msg": "煮啵煮啵，我也有，能不能帮忙鉴定一下[表情][表情]",
+    "assistant_msg": "看看",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "2d38cd2d93a5.webp"
+  },
+  {
+    "user_msg": "[图片]\n这种像练了多久的\n他说练了五年",
+    "assistant_msg": "这个练得还不错的如果是本人的话",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "2d38cd2d93a5.webp"
+  },
+  {
+    "user_msg": "[图片]\n我发错了",
+    "assistant_msg": "没事\n没看见",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "30759c77a959.webp"
+  },
+  {
+    "user_msg": "没看见吗\n那就好",
+    "assistant_msg": "没看见哦",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "30759c77a959.webp"
+  },
+  {
+    "user_msg": "你朋友圈为什么不给我点赞啊",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "30759c77a959.webp"
+  },
+  {
+    "user_msg": ", 我想跟你说件事\n[表情]",
+    "assistant_msg": "怎么啦?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "4234042af4f2.webp"
+  },
+  {
+    "user_msg": "我之前不是跟你说过我跟健身教练的事吗?\n我越来越上头了\n[表情]",
+    "assistant_msg": "?\n你?\n不是吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "4234042af4f2.webp"
+  },
+  {
+    "user_msg": "老婆我今天练胸卧推哦",
+    "assistant_msg": "胸\n别太大\n我自卑",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "42bfb2d5bf9f.webp"
+  },
+  {
+    "user_msg": "对哦\n那我练屁股",
+    "assistant_msg": "算了，练胸吧，屁股我更自卑",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "42bfb2d5bf9f.webp"
+  },
+  {
+    "user_msg": "[图片]",
+    "assistant_msg": "怎么会，我不信，给我看看",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "42bfb2d5bf9f.webp"
+  },
+  {
+    "user_msg": "老婆老婆\n我给你说\n我根本停不下来\n太想你了\n我把想你的感觉化作动力 嗷嗷在\n健身房跑步 练胸",
+    "assistant_msg": "别练了别练了,比我还大了\n真别练了",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "52fbafb6ff1e.webp"
+  },
+  {
+    "user_msg": "那我练深蹲 [表情]",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "52fbafb6ff1e.webp"
+  },
+  {
+    "user_msg": "在健身哈哈哈",
+    "assistant_msg": "好自律[表情][表情][表情]\n好想给你发",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "869f69a020a6.webp"
+  },
+  {
+    "user_msg": "自律就是自由\n康德的观点哈哈哈",
+    "assistant_msg": "“看看腹肌”[表情][表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "869f69a020a6.webp"
+  },
+  {
+    "user_msg": "[表情]\n还是线下看比较好(",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "869f69a020a6.webp"
+  },
+  {
+    "user_msg": "下午来练背?",
+    "assistant_msg": "不去了 浑身疼",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "8b4244115047.webp"
+  },
+  {
+    "user_msg": "[图片]\n在健身",
+    "assistant_msg": "一般 因为我没摸到",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "8e1dc2e9754e.webp"
+  },
+  {
+    "user_msg": "刚刚锻炼\n没有看\n累了",
+    "assistant_msg": "你健身的动力是什么呀",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "9d44833de79f.webp"
+  },
+  {
+    "user_msg": "身材编号啊\n变好",
+    "assistant_msg": "这么巧,我正在学习\n[图片：如何骗肌肉男回家]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "9d44833de79f.webp"
+  },
+  {
+    "user_msg": "宝宝\n宝宝\n想你啊",
+    "assistant_msg": "崽崽",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "a7ebb00b036a.webp"
+  },
+  {
+    "user_msg": null,
+    "assistant_msg": "在你[表情]蹭来蹭去\n哈哈哈",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "a7ebb00b036a.webp"
+  },
+  {
+    "user_msg": "快疯了",
+    "assistant_msg": "抱着你，像啄木鸟一样亲\n都快得相思病了哈哈哈\n然后体重没见瘦\n吃的反而更多了",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "a7ebb00b036a.webp"
+  },
+  {
+    "user_msg": "你说健身的话\n那里可不可以多几厘米",
+    "assistant_msg": "什么玩意\n你健身就健身\n为什么要锻炼你的鼻毛\n对路人不太礼貌吧哥\n[表情]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "c0659db6c4e8.webp"
+  },
+  {
+    "user_msg": "你不懂我",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "c0659db6c4e8.webp"
+  },
+  {
+    "user_msg": "今天回家还是要拉伸一下哦 [表情]",
+    "assistant_msg": "啊\n我不想拉伸了 [表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "c7fe3dbbb3ac.webp"
+  },
+  {
+    "user_msg": "不行\n今天拉伸到一半你就跑了\n拉伸不够这几天会腿酸的",
+    "assistant_msg": "能不能不练腿了\n我家电梯这两天检修\n练了腿还要爬10楼好痛苦",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "c7fe3dbbb3ac.webp"
+  },
+  {
+    "user_msg": "算加练了 [表情]",
+    "assistant_msg": "那下次练腿你能不能不摸我屁股......",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "c7fe3dbbb3ac.webp"
+  },
+  {
+    "user_msg": "家里都有哪些锻炼工具",
+    "assistant_msg": "目前比较舒服的方式是消耗500左右,早饭两个鸡蛋半个红薯,午餐正常吃,晚餐蛋白质蔬菜",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "ebad0d46e8b8.webp"
+  },
+  {
+    "user_msg": "饮食是自己做对吧",
+    "assistant_msg": "没有锻炼工具,只有筋膜枪泡沫轴瑜伽垫\n也有出去吃的时候\n基本出去吃都是午餐",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "ebad0d46e8b8.webp"
+  },
+  {
+    "user_msg": "[语音] 8\"",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "ebad0d46e8b8.webp"
+  },
+  {
+    "user_msg": "问个比较冒昧的问题,摸摸肌肉给你钱可以么?合适我到时候买12节先",
+    "assistant_msg": "摸摸肌肉?啥意思?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_000.webp"
+  },
+  {
+    "user_msg": "就是见面摸摸你的肌肉给你钱。然后合适的话第二天我去你们健身房你带我上课,合适到时候我买12节\n可以?\n就,全身\n可以?合适我后面可以给2000",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_000.webp"
+  },
+  {
+    "user_msg": "老婆老婆\n我给你说\n我根本停不下来\n太想你了\n我把想你的感觉化作动力 嗷嗷在\n健身房跑步 练胸",
+    "assistant_msg": "别练了别练了,比我还大了\n真别练了",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_001.webp"
+  },
+  {
+    "user_msg": "那我练深蹲 [表情]",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_001.webp"
+  },
+  {
+    "user_msg": "[图片]\n在健身",
+    "assistant_msg": "一般 因为我没摸到",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_002.webp"
+  },
+  {
+    "user_msg": "老婆我今天练胸卧推哦",
+    "assistant_msg": "胸\n别太大\n我自卑",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_003.webp"
+  },
+  {
+    "user_msg": "对哦\n那我练屁股",
+    "assistant_msg": "算了，练胸吧，屁股我更自卑",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_003.webp"
+  },
+  {
+    "user_msg": "[图片]",
+    "assistant_msg": "怎么会，我不信，给我看看",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fitness_003.webp"
+  },
+  {
+    "user_msg": "今天回家还是要拉伸一下哦 [表情]",
+    "assistant_msg": "啊\n我不想拉伸了 [表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_004.webp"
+  },
+  {
+    "user_msg": "不行\n今天拉伸到一半你就跑了\n拉伸不够这几天会腿酸的",
+    "assistant_msg": "能不能不练腿了\n我家电梯这两天检修\n练了腿还要爬10楼好痛苦",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_004.webp"
+  },
+  {
+    "user_msg": "算加练了 [表情]",
+    "assistant_msg": "那下次练腿你能不能不摸我屁股......",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_004.webp"
+  },
+  {
+    "user_msg": "?? 不是\n你又在发什么癫？",
+    "assistant_msg": "教练\n都怪我没做好措施\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "fitness_005.webp"
+  },
+  {
+    "user_msg": "刚刚锻炼\n没有看\n累了",
+    "assistant_msg": "你健身的动力是什么呀",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_006.webp"
+  },
+  {
+    "user_msg": "身材编号啊\n变好",
+    "assistant_msg": "这么巧,我正在学习\n[图片：如何骗肌肉男回家]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_006.webp"
+  },
+  {
+    "user_msg": "煮啵煮啵，我也有，能不能帮忙鉴定一下[表情][表情]",
+    "assistant_msg": "看看",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_007.webp"
+  },
+  {
+    "user_msg": "[图片]\n这种像练了多久的\n他说练了五年",
+    "assistant_msg": "这个练得还不错的如果是本人的话",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_007.webp"
+  },
+  {
+    "user_msg": ", 我想跟你说件事\n[表情]",
+    "assistant_msg": "怎么啦?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fitness_008.webp"
+  },
+  {
+    "user_msg": "我之前不是跟你说过我跟健身教练的事吗?\n我越来越上头了\n[表情]",
+    "assistant_msg": "?\n你?\n不是吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_008.webp"
+  },
+  {
+    "user_msg": "在健身哈哈哈",
+    "assistant_msg": "好自律[表情][表情][表情]\n好想给你发",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_010.webp"
+  },
+  {
+    "user_msg": "自律就是自由\n康德的观点哈哈哈",
+    "assistant_msg": "“看看腹肌”[表情][表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_010.webp"
+  },
+  {
+    "user_msg": "[表情]\n还是线下看比较好(",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_010.webp"
+  },
+  {
+    "user_msg": "你说健身的话\n那里可不可以多几厘米",
+    "assistant_msg": "什么玩意\n你健身就健身\n为什么要锻炼你的鼻毛\n对路人不太礼貌吧哥\n[表情]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_011.webp"
+  },
+  {
+    "user_msg": "你不懂我",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_011.webp"
+  },
+  {
+    "user_msg": "[图片]\n我发错了",
+    "assistant_msg": "没事\n没看见",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fitness_012.webp"
+  },
+  {
+    "user_msg": "没看见吗\n那就好",
+    "assistant_msg": "没看见哦",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fitness_012.webp"
+  },
+  {
+    "user_msg": "你朋友圈为什么不给我点赞啊",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "fitness_012.webp"
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "好痛啊\n看来昨天练到位了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_013.webp"
+  },
+  {
+    "user_msg": "[表情]\n哈哈哈哈\n昨天没划水",
+    "assistant_msg": "我感觉我疼的地方不对啊\n我昨天练的胸\n但是我胸往手臂那一块更疼",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_013.webp"
+  },
+  {
+    "user_msg": "!",
+    "assistant_msg": "锻炼\n锻炼不\n你锻炼不\n你去锻炼不\n你今天锻炼不\n你今天去锻炼不\n你今晚上去锻炼不\n你今天晚上去锻炼不\n你今天晚上和我锻炼不\n你今天晚上和我去锻炼不\n你今天晚上和我一起锻炼不\n你今天晚上和我一起去锻炼不",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_014.webp"
+  },
+  {
+    "user_msg": "家里都有哪些锻炼工具",
+    "assistant_msg": "目前比较舒服的方式是消耗500左右,早饭两个鸡蛋半个红薯,午餐正常吃,晚餐蛋白质蔬菜",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_015.webp"
+  },
+  {
+    "user_msg": "饮食是自己做对吧",
+    "assistant_msg": "没有锻炼工具,只有筋膜枪泡沫轴瑜伽垫\n也有出去吃的时候\n基本出去吃都是午餐",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_015.webp"
+  },
+  {
+    "user_msg": "[语音] 8\"",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "健身",
+    "source": "fitness_015.webp"
+  },
+  {
+    "user_msg": "下午来练背?",
+    "assistant_msg": "不去了 浑身疼",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "健身",
+    "source": "fitness_016.webp"
+  },
+  {
+    "user_msg": "宝宝\n宝宝\n想你啊",
+    "assistant_msg": "崽崽",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "fitness_017.webp"
+  },
+  {
+    "user_msg": null,
+    "assistant_msg": "在你[表情]蹭来蹭去\n哈哈哈",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "fitness_017.webp"
+  },
+  {
+    "user_msg": "快疯了",
+    "assistant_msg": "抱着你，像啄木鸟一样亲\n都快得相思病了哈哈哈\n然后体重没见瘦\n吃的反而更多了",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "fitness_017.webp"
+  },
+  {
+    "user_msg": "说来听听",
+    "assistant_msg": "刘总,我有一个好项目\n我们想开一家情侣密室逃脱室\n规定必须情侣分开解密\n男的那边直接通向网吧\n女的那边就是正儿八经的密室逃脱项目,没个5个小时以上出不来的那种",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "travel_001.webp"
+  },
+  {
+    "user_msg": "我觉得男的那边也可以通向足浴店!\n女的那边也可以通向美容院!\n这样我们可以赚三份钱",
+    "assistant_msg": "还是你啊,刘总! [表情]",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "travel_001.webp"
+  },
+  {
+    "user_msg": "走,西藏去不去?\n走,西藏去不去?\n走,西藏去不去?\n走,西藏去不去?",
+    "assistant_msg": "去,什么时候出发",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_002.webp"
+  },
+  {
+    "user_msg": "明天一早就去!!",
+    "assistant_msg": "OK,来一场说走就走的旅行[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_002.webp"
+  },
+  {
+    "user_msg": "快,收拾行李[表情]",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_002.webp"
+  },
+  {
+    "user_msg": "我现在订机票",
+    "assistant_msg": "[表情]快快快。我现在就有点迫不及待了",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_002.webp"
+  },
+  {
+    "user_msg": "你有多少钱?",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_002.webp"
+  },
+  {
+    "user_msg": "阿妈阿爸,我到哈尔滨啦!给你们发了圣索菲亚教堂的照片,可好看啦!",
+    "assistant_msg": "宝宝你和谁去啊",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_004.webp"
+  },
+  {
+    "user_msg": "阿妈,我和好朋友小花一起呢,我们要在哈尔滨好好玩!",
+    "assistant_msg": "我怎么不知道你有女朋友了",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_004.webp"
+  },
+  {
+    "user_msg": "去哪?\n啥时候?",
+    "assistant_msg": "泰山\n山东泰安市",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_006.webp"
+  },
+  {
+    "user_msg": "去多久?",
+    "assistant_msg": "我周一,周二休息\n爬完就回来\n[表情]",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_006.webp"
+  },
+  {
+    "user_msg": "后天?[表情]\n爬完你还能上班不?",
+    "assistant_msg": "[表情]不知道",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "旅行",
+    "source": "travel_006.webp"
+  },
+  {
+    "user_msg": "又不回信息了\n哥把你揣兜里\n你把哥踹沟里\n随便吧\n反正哥这颗心生来就要碎的",
+    "assistant_msg": "春晚没你我是不看\n[震惊]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "travel_007.webp"
+  },
+  {
+    "user_msg": "原来我是你可有可无的网友\n是马路上被雨淋湿的小狗\n是选择题里的选项E\n是不被选择的 Plan B",
+    "assistant_msg": "这么会说话?",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "travel_007.webp"
+  },
+  {
+    "user_msg": "你喜欢头发长的还是短的？",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "travel_008.webp"
+  },
+  {
+    "user_msg": "我身高一米六多点，体重130",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "travel_008.webp"
+  },
+  {
+    "user_msg": "看你没见过世面的样子\n云海日出",
+    "assistant_msg": "你见过世面\n你是云海它爹",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "旅行",
+    "source": "travel_009.webp"
+  },
+  {
+    "user_msg": "以前我就是经常住山上看云海的",
+    "assistant_msg": "你是山头一枝花\n你与世隔绝你开枝散叶",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "旅行",
+    "source": "travel_009.webp"
+  },
+  {
+    "user_msg": "嘿[表情]\n有去云南玩的攻略嘛[表情][表情][表情]",
+    "assistant_msg": "4\" ((\n你要去哪里玩呀?我只去了昆明\n和大理。",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_010.webp"
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_010.webp"
+  },
+  {
+    "user_msg": "床睡着好软[表情]\n[图片]",
+    "assistant_msg": "腿这么细？",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "travel_011.webp"
+  },
+  {
+    "user_msg": "[图片]\n这是肚子[表情]",
+    "assistant_msg": "......",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "travel_011.webp"
+  },
+  {
+    "user_msg": "你说话啊\n不是开玩笑吗\n你怎么今天开房去了\n你到底和谁一块的",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "情感",
+    "source": "travel_012.webp"
+  },
+  {
+    "user_msg": "我们还不确定,先问问",
+    "assistant_msg": "好的,需要退给我提前说,定金转你,我要把酒店取消",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "旅行",
+    "source": "travel_013.webp"
+  },
+  {
+    "user_msg": "你好,给我们退订金吧,我们取消行程",
+    "assistant_msg": "收到",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "旅行",
+    "source": "travel_013.webp"
+  },
+  {
+    "user_msg": "好的,谢谢",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "旅行",
+    "source": "travel_013.webp"
+  },
+  {
+    "user_msg": "说吧!明天什么安排!我要约!",
+    "assistant_msg": "行不行,一句痛快话\n我没问题!!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_014.webp"
+  },
+  {
+    "user_msg": "内心抗拒,好远的路程[表情]",
+    "assistant_msg": "挺你的\n听\n唱会儿歌就到了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_014.webp"
+  },
+  {
+    "user_msg": "你啥时候带我去北京看松鼠",
+    "assistant_msg": "现在\n出发",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_017.webp"
+  },
+  {
+    "user_msg": "没睡醒?",
+    "assistant_msg": "走啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_017.webp"
+  },
+  {
+    "user_msg": "走",
+    "assistant_msg": "上车",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_017.webp"
+  },
+  {
+    "user_msg": "大概12号左右吧\n郑州出发，落地昆明\n大概6~8天",
+    "assistant_msg": "您们计划几号出发，我给您介绍一下\n12号出发，那时间比较近了，这个季节来的话，昆明大理 丽江 香格里拉泸沽湖这些地都比较适合游玩。\n气温，景色都很好",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_018.webp"
+  },
+  {
+    "user_msg": "有个55岁\n俩人我和我妈",
+    "assistant_msg": "您们有没有老年游客和小朋友一起呢",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_018.webp"
+  },
+  {
+    "user_msg": "1和2可以看下行程嘛\n还有报价",
+    "assistant_msg": "6-8天时间，这个季节来的话有好几个方案可以选择\n1、昆明大理丽江往返六天\n2、昆明大理丽江 香格里拉往返八天\n3、昆明大理丽江泸沽湖往返八天\n这些都很推荐、气温16-25度左右，气温舒适，自然风光多\n能安排往返八天，那就往返八天，这个季节去香格里拉非常推荐，刚好也是香格里拉最美的季节\n香格里拉没有高楼大厦，没有工业，空气环境都比较好，有草原，有湖泊，有峡谷，有原始森林，景色多样化。最美的季节就是这个季节了",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_018.webp"
+  },
+  {
+    "user_msg": null,
+    "assistant_msg": "现在新疆去哪玩比较好呀?\n走南疆还是北疆?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_019.webp"
+  },
+  {
+    "user_msg": "北疆\n毫无疑问",
+    "assistant_msg": "有啥推荐的嘛\n必去的景点之类的~",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_019.webp"
+  },
+  {
+    "user_msg": ")) 48\"",
+    "assistant_msg": null,
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "旅行",
+    "source": "travel_019.webp"
+  },
+  {
+    "user_msg": "哥你怎么到店这么久了还没取货呀",
+    "assistant_msg": "还没出餐\n[表情][表情][表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_000.webp"
+  },
+  {
+    "user_msg": "我好饿啊\n你催催他",
+    "assistant_msg": "都在这里",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_000.webp"
+  },
+  {
+    "user_msg": "叔,我要一份番茄炒蛋和糖醋排骨!做好麻烦帮我送过来",
+    "assistant_msg": "【转账: 25】",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_001.webp"
+  },
+  {
+    "user_msg": "很着急吃吗?",
+    "assistant_msg": "挺急的\n我现在饿得能吃人",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_001.webp"
+  },
+  {
+    "user_msg": "好吧\n那我现在给你做",
+    "assistant_msg": "[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_001.webp"
+  },
+  {
+    "user_msg": "[图片]\n啊~[蛋糕表情]",
+    "assistant_msg": "《可爱型》\n新来的吧[蛋糕表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_002.webp"
+  },
+  {
+    "user_msg": "干嘛[猫咪表情]",
+    "assistant_msg": "不知道第一口粉丝先吃吗[蛋糕表情]\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_002.webp"
+  },
+  {
+    "user_msg": "微信转账\n¥482670.00\n请收款",
+    "assistant_msg": "???\n宝宝你要买下我整个店吗",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_003.webp"
+  },
+  {
+    "user_msg": "啊啊啊啊对不起妈咪 输成密码了\n可以退我吗 我等会还要吃谷[表情]",
+    "assistant_msg": "你们吃谷人都这么有实力吗?",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_003.webp"
+  },
+  {
+    "user_msg": "我滴天奶哥你快速给我送我多扫十块给你",
+    "assistant_msg": "第一个给你送，其他的给我飞走\n我不是为了这十块钱\n纯纯是为了好哥们",
+    "user_gender": "unknown",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "food_004.webp"
+  },
+  {
+    "user_msg": "中滴哥还有我是姐们 给你扫十五",
+    "assistant_msg": "妈妈。\n好妈妈我马上到。",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "日常",
+    "source": "food_004.webp"
+  },
+  {
+    "user_msg": "你睡了吗\n那你要早点睡别熬夜",
+    "assistant_msg": "还没!\n好的!收到!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "food_005.webp"
+  },
+  {
+    "user_msg": "说话为什么要加感叹号?\n。幼稚\n晚安!早点睡!",
+    "assistant_msg": "因为这样子很可爱!\n你也可以陪我一起加感叹号吗!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "food_005.webp"
+  },
+  {
+    "user_msg": "今晚吃火锅不叫你",
+    "assistant_msg": "不叫就不叫呗\n好像我愿意和你吃一样\n我今天本来就不想吃火锅\n你以为我稀罕和你吃吗\n搞笑\n你求我去我都不去",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_006.webp"
+  },
+  {
+    "user_msg": "姐妹，我想吃这个火锅!!!\n[图片]\n[图片]\n听说很好吃！还很便宜！",
+    "assistant_msg": "我跟你说，我看到一个八卦\n[表情]\n[表情]",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_007.webp"
+  },
+  {
+    "user_msg": "老板,我要这个\n地址明天给你,我要睡你了",
+    "assistant_msg": "[表情]\n不好意思,我只卖蛋糕不卖身",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_008.webp"
+  },
+  {
+    "user_msg": "啊,打错了[表情]\n我说我要睡觉了",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_008.webp"
+  },
+  {
+    "user_msg": "我想你了\n不好意思发错人了",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "food_009.webp"
+  },
+  {
+    "user_msg": "我想你了\n我真的想你了\n你想我了吗\n分手那么久\n我还是放不下你",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "food_009.webp"
+  },
+  {
+    "user_msg": "听说你找了个新女朋友\n是为了气我吗",
+    "assistant_msg": "?",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "food_009.webp"
+  },
+  {
+    "user_msg": "我就知道你会秒回我\n你也放不下我对不对\n[玫瑰]",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "food_009.webp"
+  },
+  {
+    "user_msg": "你在干嘛呢[表情]",
+    "assistant_msg": "吃饭",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_010.webp"
+  },
+  {
+    "user_msg": "哦哦",
+    "assistant_msg": "嗯嗯",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_010.webp"
+  },
+  {
+    "user_msg": "吃的什么饭呀",
+    "assistant_msg": "蛋炒饭",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_010.webp"
+  },
+  {
+    "user_msg": "加鸡蛋了吗",
+    "assistant_msg": "蛋炒饭你说呢[表情]",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_010.webp"
+  },
+  {
+    "user_msg": "哦哦\n加了几个呀?",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_010.webp"
+  },
+  {
+    "user_msg": "收到啦\n[图片]\n很好吃，份量很足",
+    "assistant_msg": "宝宝，试吃蛋糕收到了吗\n记得给返图哦\n宝宝，这是你的。。。返图?",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_011.webp"
+  },
+  {
+    "user_msg": "对啊\n不好看吗?",
+    "assistant_msg": "",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_011.webp"
+  },
+  {
+    "user_msg": "准备开吃",
+    "assistant_msg": "偷偷又走一块豆花\n我也尝尝味[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_012.webp"
+  },
+  {
+    "user_msg": "哈哈哈哈哈好吃吗",
+    "assistant_msg": "《捧场型》\n哥哥严选\n震撼美味!!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "美食",
+    "source": "food_012.webp"
+  },
+  {
+    "user_msg": "这个多少钱我买来哄女朋友",
+    "assistant_msg": "79.9两罐 109三罐",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_013.webp"
+  },
+  {
+    "user_msg": "那么贵啊 我哄自己算了\n玛德 来六罐",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_013.webp"
+  },
+  {
+    "user_msg": "真的生气了 哄不好\n美女快点发货 救救我[表情]",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_013.webp"
+  },
+  {
+    "user_msg": "姐姐姐姐\n可以帮我个忙吗\n我下回一定在你这里买蛋糕",
+    "assistant_msg": "什么忙呀",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_014.webp"
+  },
+  {
+    "user_msg": "帮我买单可以吗\n[图片]",
+    "assistant_msg": "???",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_014.webp"
+  },
+  {
+    "user_msg": "我给你点了吃的嗷",
+    "assistant_msg": "啊 不要点啦",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_015.webp"
+  },
+  {
+    "user_msg": "快要到了\n[表情]",
+    "assistant_msg": "我们要吃饭的嘛\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_015.webp"
+  },
+  {
+    "user_msg": "正在吃",
+    "assistant_msg": "吃了吗\n拍个照片看看",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_016.webp"
+  },
+  {
+    "user_msg": "好吃\n下次也带你来吃",
+    "assistant_msg": "镜头反转\n我也看看我的菜[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "美食",
+    "source": "food_016.webp"
+  },
+  {
+    "user_msg": "他们说对待男朋友不能太上心\n欲擒故纵 才能保持长久神秘感\n忽冷忽热才能狠狠拿捏男人\n兵者,诡道也\n以后周中随机选两天删除\n周末随机拉黑 栓Q",
+    "assistant_msg": "王妮妮 别逼我扇你\n[图片：两只猫打架的表情包，配文“掐洗你!!”]",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "food_017.webp"
+  },
+  {
+    "user_msg": "晚上的饭局啊",
+    "assistant_msg": "嗯",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_018.webp"
+  },
+  {
+    "user_msg": "好吧\n这一天天全都是饭局了\n别喝酒\n早点回来",
+    "assistant_msg": "嗯嗯\n两场",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_018.webp"
+  },
+  {
+    "user_msg": "[表情][表情][表情]",
+    "assistant_msg": "好",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "food_018.webp"
+  },
+  {
+    "user_msg": "想你",
+    "assistant_msg": "回去给你打电话",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "food_018.webp"
+  },
+  {
+    "user_msg": "嗯呐",
+    "assistant_msg": "",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "情感",
+    "source": "food_018.webp"
+  },
+  {
+    "user_msg": "又发什么神经?",
+    "assistant_msg": "🎉💡出摊了哈 烧烤摊\n--🦐🦐🦐烤虾仁一串5元\n--🥟🥟🥟烤水饺一串3元\n--🥓🥓🥓烤肉片一串8元\n--🥬🥬🥬烤青菜一串1元\n--🍆🍆🍆烤茄子一串2元\n--🥖🥖🥖烧香肠一串5元\n--🌽🌽🌽烤玉米一串6元\n--🐸🐸🐸烤田鸡一串5元\n--🐙🐙🐙烤章鱼一串10元\n--🥩🥩🥩烤肉排一串10元\n--🍢🍢🍢烤串一串1元\n--🥔🥔🥔烤土豆一串2元\n--🍠🍠🍠烤地瓜一串7元\n--🐟🐟🐟烤鱼一串5元\n--🦪🦪🦪烤生蚝一串6元\n哥 整点不? 绝对好吃",
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "美食",
+    "source": "food_019.webp"
+  },
+  {
+    "user_msg": "一样来一份,这里吃,谢谢",
+    "assistant_msg": null,
+    "user_gender": "male",
+    "assistant_gender": "male",
+    "topic": "美食",
+    "source": "food_019.webp"
+  },
+  {
+    "user_msg": "12点准时\n睡觉",
+    "assistant_msg": "睡觉不",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "study_000.webp"
+  },
+  {
+    "user_msg": "明天\n6点!",
+    "assistant_msg": "这么早!\n我6点半",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "日常",
+    "source": "study_000.webp"
+  },
+  {
+    "user_msg": "冲刺8天\n我要考双一流",
+    "assistant_msg": "冲刺8天\n我要考985!\n[表情]\n艾玛我可太牛了\n姐也是冲刺985的人了",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_000.webp"
+  },
+  {
+    "user_msg": "[表情]\n想",
+    "assistant_msg": "我有数学周测的答案\n你想对吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_001.webp"
+  },
+  {
+    "user_msg": "答案错了",
+    "assistant_msg": "1-8: CABBDCAA\n9、BD 10、AD 11、ABC\n你先对一下这个选择题的答案",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_001.webp"
+  },
+  {
+    "user_msg": "感谢老师费心教导，孩子这次的月考成绩出来了，成绩提升的很快[点赞]",
+    "assistant_msg": "您客气了 还是他自己努力了也很聪明\n这次月考提了多少分",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_002.webp"
+  },
+  {
+    "user_msg": "比上次高了十几分呢",
+    "assistant_msg": "很大的进步 下次上课我看一下他的错题情况 针对性的再补一补",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_002.webp"
+  },
+  {
+    "user_msg": "行，您多费心，怎么补您看着来就行",
+    "assistant_msg": "好的好的 感谢您的信任",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_002.webp"
+  },
+  {
+    "user_msg": "1.本卷为关于女友的考试试卷,不得擅自涂抹修改,不得交白卷。\n2、答题者须遵守考试纪律,尊重考试精神,不得舞弊。\n[表情]\n考试违纪者,视情节严重,处以不吃零食、打游戏等一个月的惩罚,情节严重者给于取消男友资格。\n3.本次答案解释权在答题人女友手中,对成绩不满者可以咨询。\n4、出卷目的在于培养两人之间的情感,具有娱乐性,切勿上纲上线。\n考试说明:本课程为闭卷考试,共4页,只可携带考试规定的必需品。",
+    "assistant_msg": "[表情]\n知道么",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "study_003.webp"
+  },
+  {
+    "user_msg": "成绩出来了\n你想知道吗",
+    "assistant_msg": "在哪呀，我没有看到",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_004.webp"
+  },
+  {
+    "user_msg": "班主任发了我的\n我顺势问了几个人\n里面有你",
+    "assistant_msg": "[表情]\n我不要知道",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_004.webp"
+  },
+  {
+    "user_msg": "考研学习已经很苦啦就不要加心里的苦了\n你要坚信! 坚信!",
+    "assistant_msg": "嗯呐[表情][表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_005.webp"
+  },
+  {
+    "user_msg": "你很棒! 你很优秀! 你一定会会上岸!\n是会不是能\n会就是这个东西是你的 你过去拿它你在路上\n能是你不知道是不是你的你得过去看了争取了才可能是你的\n所以你是会上岸\n要坚定这个想法",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_005.webp"
+  },
+  {
+    "user_msg": "老师你好\n请问我的成绩出来了吗?\n出来的话麻烦发给我一下,谢谢",
+    "assistant_msg": "13 9 18 21 29 16",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_006.webp"
+  },
+  {
+    "user_msg": "好的,谢谢老师,是要打这个电话吗问是吗?",
+    "assistant_msg": "不是\n这是你六科的成绩",
+    "user_gender": "male",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_006.webp"
+  },
+  {
+    "user_msg": "OK\n教练[表情][表情]",
+    "assistant_msg": "咋了\n100分?\n那么激动",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_007.webp"
+  },
+  {
+    "user_msg": "你怎么知道,还说给你一个惊喜\n感谢教练",
+    "assistant_msg": "你报名那天,我就知道你是考一百分的人",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_007.webp"
+  },
+  {
+    "user_msg": "真心感谢",
+    "assistant_msg": "你命相好",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_007.webp"
+  },
+  {
+    "user_msg": "哈哈哈[表情]",
+    "assistant_msg": "收你学费,服务你,应该滴",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_007.webp"
+  },
+  {
+    "user_msg": "陈老师陈老师!!!!\n孩子月考成绩出来了!\n物理直接干了一个翻身仗啊\n直接从c到了A",
+    "assistant_msg": "哇喔!!!\n太好啦\n刚下课就看见了您的消息!",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_008.webp"
+  },
+  {
+    "user_msg": "超级感谢陈老师\n孩子现在学物理都有劲头多了\n她昨天回家了和我说、这次物理进",
+    "assistant_msg": "妹妹本来学习态度就很端正\n也一直都知道自己想要的是什么",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_008.webp"
+  },
+  {
+    "user_msg": "肯定可以啊\n你不管考什么\n都要有一种逢考必过的自信",
+    "assistant_msg": "嗯!\n我一定可以!",
+    "user_gender": "unknown",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_009.webp"
+  },
+  {
+    "user_msg": "要查成绩了有点不敢...",
+    "assistant_msg": "你对我说一句我肯定能行",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_010.webp"
+  },
+  {
+    "user_msg": "我再查\n真的好紧张[表情]",
+    "assistant_msg": "忍不住 我去查了!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_010.webp"
+  },
+  {
+    "user_msg": "查了?",
+    "assistant_msg": "还没\n...",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_010.webp"
+  },
+  {
+    "user_msg": "不敢查我可以帮你看看\n不紧张宝宝",
+    "assistant_msg": "还没",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_010.webp"
+  },
+  {
+    "user_msg": "4/15\n答对题目数\n16分28秒\n总用时\n我不学了我要回家\n[表情]\n他妈的16分钟做15道题，错了\n11 道\n你怎么不安慰我",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_011.webp"
+  },
+  {
+    "user_msg": "收到\n数学\n88\n数学排名\n18\n有点进步了\n进步了20分\n上学期 68\n[表情]\n[表情]",
+    "assistant_msg": "太棒啦，看来这次考试很细心哦，下学期就六年级了咱们也要继续加油哦[表情]",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_012.webp"
+  },
+  {
+    "user_msg": "寇老师，这次月考成绩出来了",
+    "assistant_msg": "考得怎么样呢？",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_013.webp"
+  },
+  {
+    "user_msg": "多亏了寇老师啊，这次进步了12名\n数学考了117\n现在在学校也开始喜欢上数学课了，还会在课间去办公室问老师题了",
+    "assistant_msg": "不错啊\n进步了这么多\n我记得刚开始学的时候考70多分是吧？",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_013.webp"
+  },
+  {
+    "user_msg": "是啊",
+    "assistant_msg": "有没有试卷，发给我分析一下",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_013.webp"
+  },
+  {
+    "user_msg": "自己都说没想过他数学还能及格",
+    "assistant_msg": null,
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_013.webp"
+  },
+  {
+    "user_msg": null,
+    "assistant_msg": "再过10天咱去年那个时候哈哈哈哈哈\n在八楼嗷嗷哭\n[表情]",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_014.webp"
+  },
+  {
+    "user_msg": "我一天哭了五次",
+    "assistant_msg": "见证了人性的险恶",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_014.webp"
+  },
+  {
+    "user_msg": "哈哈哈[表情]要不是没保上考不了那么高\n结果出来我第二天就六点起来去图书馆了",
+    "assistant_msg": "穿个洞洞鞋 拿俩包子 妆也不画 直奔南书院\n[表情]",
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_014.webp"
+  },
+  {
+    "user_msg": "然后你就给我抢上了专座\n难吃死了天天吃包子吃了一学期\n土豆牛肉饭吃了半学期",
+    "assistant_msg": null,
+    "user_gender": "female",
+    "assistant_gender": "female",
+    "topic": "学习",
+    "source": "study_014.webp"
+  },
+  {
+    "user_msg": "我的情况和文案一样应届生文科生零基础数学差碰到我这种同学你会怎么带呢",
+    "assistant_msg": "也是贵州的吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_015.webp"
+  },
+  {
+    "user_msg": "制定学习计划,按我的规定每天学什么,做什么题\n课是我找网课给你看",
+    "assistant_msg": "你是省考还是国考上岸的呀",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_015.webp"
+  },
+  {
+    "user_msg": "省考",
+    "assistant_msg": "可以问一下你现在的岗位吗\n贵州吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_015.webp"
+  },
+  {
+    "user_msg": "省考行测才有150满分嘛\n嗯嗯\n先不告诉你,太招摇了哈哈\n你放心不至于骗你几百块钱",
+    "assistant_msg": "哈哈哈 不是骗\n什么太招摇了 岗位吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_015.webp"
+  },
+  {
+    "user_msg": "我意思是我发这个贴太招摇了\n避免别人知道我本人[表情]\n还是留一点隐私",
+    "assistant_msg": "",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "study_015.webp"
+  },
+  {
+    "user_msg": "我现在什么都不会 还什么都学不进去怎么办[表情]",
+    "assistant_msg": "放松放松，咱先不学了啊[表情][表情]",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_016.webp"
+  },
+  {
+    "user_msg": "但是他们都在学 我又学不进去那种感觉超级不好",
+    "assistant_msg": "宝贝儿，我能为你做点什么[表情][表情]",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_016.webp"
+  },
+  {
+    "user_msg": null,
+    "assistant_msg": "希望你能一直爱我",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "情感",
+    "source": "study_016.webp"
+  },
+  {
+    "user_msg": "你是不是快考试啦",
+    "assistant_msg": "是的[玫瑰]",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_017.webp"
+  },
+  {
+    "user_msg": "加油!\n黎明前的黑暗",
+    "assistant_msg": "最近精神状态不是很好哈哈哈哈\n哈哈哈哈哈哈哈好",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_017.webp"
+  },
+  {
+    "user_msg": "马上就要迎接曙光啦",
+    "assistant_msg": "我还以为你找我有啥事哈哈哈",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_017.webp"
+  },
+  {
+    "user_msg": "等你考完我们出来玩儿呀",
+    "assistant_msg": "我努力吧[流泪][流泪]\n好的哈哈哈哈哈",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_017.webp"
+  },
+  {
+    "user_msg": "加油加油",
+    "assistant_msg": "明年估计得",
+    "user_gender": "female",
+    "assistant_gender": "male",
+    "topic": "学习",
+    "source": "study_017.webp"
+  },
+  {
+    "user_msg": "别有压力就行，平常心对待\n不对，我说的都是事实呀\n我都不扯虚的\n我也不虚",
+    "assistant_msg": "你最近给我的精神零食不少啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "日常",
+    "source": "study_019.webp"
+  },
+  {
+    "user_msg": "我对你的期待只有活得开心，不内耗\n我觉得考公务员这件事只是我们人生中的一次尝试而已，人生中还有很多其他的事情我们也需要去尝试\n这件事情不管结果如何，都不影响我们尝试其他事物",
+    "assistant_msg": "其实我就是担心考不上，然后还浪费你的时间和期待",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "topic": "学习",
+    "source": "study_019.webp"
+  }
+]

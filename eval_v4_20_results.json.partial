@@ -1,0 +1,1402 @@
+[
+  {
+    "id": 0,
+    "topic": "穿搭",
+    "user_msg": "你觉得这件衣服好看吗",
+    "reply_v4": "说实话，有点平平无奇咋整[表情]不过要是你穿肯定能辣眼睛级别惊艳全场[偷笑]",
+    "reply_distilled_old": "你这是问我还是自己不知道？不过说实话，有点一般诶，别骗我了，别想着我会哄你！😂",
+    "reply_baseline": "发我看看呗，不然怎么说好不好看嘛～",
+    "rag_examples_v4": [
+      {
+        "user": "你喜欢\n[表情][表情][表情]",
+        "assistant": "喜欢\n不好看吗\n[表情][表情][表情]\n很韩呀",
+        "gender": "male",
+        "topic": "穿搭",
+        "score": 15.31147289276123
+      },
+      {
+        "user": "那我的小裙子还有机会能穿上嘛[表情]",
+        "assistant": "当然有啊",
+        "gender": "male",
+        "topic": "穿搭",
+        "score": 14.814888000488281
+      },
+      {
+        "user": "[图片]\n宝宝今晚穿这套可以嘛",
+        "assistant": "还行我在种草莓呢",
+        "gender": "male",
+        "topic": "穿搭",
+        "score": 14.747528314590454
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "你觉得我这衣服好看吗",
+        "assistant": "好看",
+        "gender": "male"
+      },
+      {
+        "user": "[表情]\n我穿成这样去找你?",
+        "assistant": "不行么",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 8,
+      "engagement": 6,
+      "brief_reason": "回复口语化且带调侃，但缺少反问或引导继续聊天。",
+      "weighted_total": 7.55
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 9,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且带有调侃，但互动引导稍弱，整体符合年轻女生风格。",
+      "weighted_total": 7.9
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 9,
+      "vibe": 7,
+      "persona": 6,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带点撒娇，但人设和氛围感稍显普通，整体较自然且有互动性。",
+      "weighted_total": 7.75
+    }
+  },
+  {
+    "id": 1,
+    "topic": "穿搭",
+    "user_msg": "今天穿什么出门好",
+    "reply_v4": "出门还纠结？你这是想把衣柜翻个底朝天吗？反正你明天又得换，随便来呗，别想太多，穿得舒服就行，别像选总裁秘书似的！[笑哭]",
+    "reply_distilled_old": "还问我？麻烦你别每天都让我当时尚顾问好吗😂 随便穿，别丢我面子就行了！不过要真想听建议，告诉我你今天想低调还是想炸街？",
+    "reply_baseline": "穿舒适点吧，别太累自己了。外面热吗？热就穿短袖短裤，凉快点。要是还冷，薄外套随手带着，别冻着自己哈。最重要你自己舒服就行。",
+    "rag_examples_v4": [
+      {
+        "user": "你喜欢\n[表情][表情][表情]",
+        "assistant": "喜欢\n不好看吗\n[表情][表情][表情]\n很韩呀",
+        "gender": "male",
+        "topic": "穿搭",
+        "score": 15.343933343887329
+      },
+      {
+        "user": "那我的小裙子还有机会能穿上嘛[表情]",
+        "assistant": "当然有啊",
+        "gender": "male",
+        "topic": "穿搭",
+        "score": 14.752968192100525
+      },
+      {
+        "user": "[图片]\n宝宝今晚穿这套可以嘛",
+        "assistant": "还行我在种草莓呢",
+        "gender": "male",
+        "topic": "穿搭",
+        "score": 14.647273778915405
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "你觉得我这衣服好看吗",
+        "assistant": "好看",
+        "gender": "male"
+      },
+      {
+        "user": "[表情]\n我穿成这样去找你?",
+        "assistant": "不行么",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 5,
+      "brief_reason": "回复口语化且有趣，但缺少互动引导，整体符合年轻女生风格。",
+      "weighted_total": 7.3
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 9,
+      "vibe": 9,
+      "persona": 9,
+      "engagement": 9,
+      "brief_reason": "回复口语化且带有调侃，符合年轻女生风格，互动性强。",
+      "weighted_total": 9.0
+    },
+    "scores_baseline": {
+      "realness": 7,
+      "anti_ai": 7,
+      "vibe": 6,
+      "persona": 5,
+      "engagement": 5,
+      "brief_reason": "回复较口语化但缺少个性和互动，整体较普通且不够生动。",
+      "weighted_total": 6.3
+    }
+  },
+  {
+    "id": 2,
+    "topic": "美食",
+    "user_msg": "晚上吃什么好纠结",
+    "reply_v4": "纠结啥，翻冰箱看都能吵架了吧😂说不定你那啥都有尴尬剩菜，硬着头皮上？",
+    "reply_distilled_old": "纠结啥啊，随便煮点面条，泡面也行啊，人都要活着呢，不至于纠结吃啥吧😂你这是吃饭还是选妃呢？",
+    "reply_baseline": "哈哈，纠结啥呢？想吃啥就吃啥啊，不用想那么多。想吃烧烤就烧烤，想吃火锅就火锅，反正我觉得吃饭别太纠结，饿了就最香。你说呢？要不要我帮你想想，给你几个选项？",
+    "rag_examples_v4": [
+      {
+        "user": "准备开吃",
+        "assistant": "偷偷又走一块豆花\n我也尝尝味[表情]",
+        "gender": "unknown",
+        "topic": "美食",
+        "score": 15.795908212661743
+      },
+      {
+        "user": "好吃\n下次也带你来吃",
+        "assistant": "镜头反转\n我也看看我的菜[表情]",
+        "gender": "female",
+        "topic": "美食",
+        "score": 15.683676481246948
+      },
+      {
+        "user": "咱们今天一起去吃呀!...那咱们AB制去吃吧!不然我吃的不安心[表情]",
+        "assistant": "好啊好啊",
+        "gender": "unknown",
+        "topic": "美食",
+        "score": 14.776058316230774
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "晚上吃什么",
+        "assistant": "我就不吃了，减肥",
+        "gender": "unknown"
+      },
+      {
+        "user": "不聊了哈，我要过夜生活去了",
+        "assistant": "?\n这么晚了\n你要去哪",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 7,
+      "brief_reason": "回复口语化且带吐槽，符合年轻女生风格，互动性较好但略显普通。",
+      "weighted_total": 7.5
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且幽默，但互动性稍弱，缺少反问或留悬念。",
+      "weighted_total": 7.4
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 8,
+      "brief_reason": "回复口语化且轻松，但缺少明显年轻女生的个性和网感，互动性较好。",
+      "weighted_total": 7.45
+    }
+  },
+  {
+    "id": 3,
+    "topic": "美食",
+    "user_msg": "你会做饭吗",
+    "reply_v4": "会！会！会！能做泡面那都算厨神了[偷笑] 你想让我出个家常菜大作战？",
+    "reply_distilled_old": "会啊，别看我平时吃货一个，关键时候还能救急  \n不过你要是想吃啥高级大餐，得了，别逗我，外卖稳稳的~",
+    "reply_baseline": "会一点点啦，基本就是炒个菜啥的，别指望我拿得出手的饭菜。偶尔懒得做就叫外卖，省事儿。你呢，会做饭不？",
+    "rag_examples_v4": [
+      {
+        "user": "准备开吃",
+        "assistant": "偷偷又走一块豆花\n我也尝尝味[表情]",
+        "gender": "unknown",
+        "topic": "美食",
+        "score": 15.670246005058289
+      },
+      {
+        "user": "姐妹，我想吃这个火锅!!!\n[图片]\n[图片]\n听说很好吃！还很便宜！",
+        "assistant": "我跟你说，我看到一个八卦\n[表情]\n[表情]",
+        "gender": "female",
+        "topic": "美食",
+        "score": 15.620892882347107
+      },
+      {
+        "user": "好吃\n下次也带你来吃",
+        "assistant": "镜头反转\n我也看看我的菜[表情]",
+        "gender": "female",
+        "topic": "美食",
+        "score": 15.584787249565125
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "火锅",
+        "assistant": "猜错了",
+        "gender": "male"
+      },
+      {
+        "user": "你想什么呐\n我是说想吃楼下的烧烤\n让它搞大我的肚子",
+        "assistant": "就知道吃[表情][表情][表情]\n等着我去给你买\n[表情]",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 9,
+      "anti_ai": 9,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 9,
+      "brief_reason": "回复口语化且幽默，符合年轻女生风格，互动性强，整体自然生动。",
+      "weighted_total": 8.85
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且轻松，但缺少明显的年轻女生小脾气和互动引导。",
+      "weighted_total": 7.65
+    },
+    "scores_baseline": {
+      "realness": 9,
+      "anti_ai": 9,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 9,
+      "brief_reason": "回复口语化且带有轻松吐槽，符合年轻女生风格，且有效引导继续聊天。",
+      "weighted_total": 8.5
+    }
+  },
+  {
+    "id": 4,
+    "topic": "工作",
+    "user_msg": "今天上班好累啊",
+    "reply_v4": "累成排骨精了吧？快去给自己加点糖，不然别怪我喊你变干尸！",
+    "reply_distilled_old": "哎呀，你这是上班还是炼狱现场啊？这么累还不上演个“我还能撑”大戏？乖，别装坚强，早点溜回家抱抱自己。别忘了，劳累是暂时的，吃货的快乐才是永恒的！🍕🍰",
+    "reply_baseline": "哎呀，谁不累呢你说是吧？上班这事儿，就是个耗子尾巴，得坚持。要不下班去吃点好吃的？给自己减压！",
+    "rag_examples_v4": [
+      {
+        "user": "老板,我要这个\n地址明天给你,我要睡你了",
+        "assistant": "[表情]\n不好意思,我只卖蛋糕不卖身",
+        "gender": "female",
+        "topic": "工作",
+        "score": 15.772220134735107
+      },
+      {
+        "user": "莫烦躁",
+        "assistant": "好烦呢\n上班又搞小团体",
+        "gender": "female",
+        "topic": "工作",
+        "score": 15.4263277053833
+      },
+      {
+        "user": "???今晚不加班了!",
+        "assistant": "哈哈哈哈哈哈哈哈",
+        "gender": "female",
+        "topic": "工作",
+        "score": 14.943666100502014
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "好累啊好累啊\n感觉要被掏空了",
+        "assistant": "叮!你的专属美少女按摩师已送达\n请给五星好评~[表情]",
+        "gender": "unknown"
+      },
+      {
+        "user": "我最近加班太忙了",
+        "assistant": "我也知道每天总是忍不住去胡思乱想咱俩也许是真的不适合",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且幽默，有年轻女生的调侃感，但缺少互动引导。",
+      "weighted_total": 7.4
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且幽默，但略显刻意，互动性一般。",
+      "weighted_total": 7.4
+    },
+    "scores_baseline": {
+      "realness": 7,
+      "anti_ai": 6,
+      "vibe": 7,
+      "persona": 5,
+      "engagement": 6,
+      "brief_reason": "回复口语化且轻松，但缺少明显的年轻女生个性和更强互动性。",
+      "weighted_total": 6.35
+    }
+  },
+  {
+    "id": 5,
+    "topic": "工作",
+    "user_msg": "老板又让我加班了",
+    "reply_v4": "哎呦喂，老板是不是想把你变成夜猫子了？你也别太乖，装作有重要事，能躲就躲呗！要不连睡觉都得加班了？😤",
+    "reply_distilled_old": "老板又来作妖啊？这不是明显想吃人血馒头吗😂你跟他说，人家小悦是有底线的，别当咱软柿子捏！",
+    "reply_baseline": "真是够呛的，老板是不是觉得你是机器啊？加班加到我都想把电脑砸了！你今晚还能撑得住吗？",
+    "rag_examples_v4": [
+      {
+        "user": "老板,我要这个\n地址明天给你,我要睡你了",
+        "assistant": "[表情]\n不好意思,我只卖蛋糕不卖身",
+        "gender": "female",
+        "topic": "工作",
+        "score": 15.665135025978088
+      },
+      {
+        "user": "???今晚不加班了!",
+        "assistant": "哈哈哈哈哈哈哈哈",
+        "gender": "female",
+        "topic": "工作",
+        "score": 14.6382337808609
+      },
+      {
+        "user": "老板,我今天得请个假,上午可能\n去不了公司了\n眼睛出了点问题",
+        "assistant": "眼睛怎么了?严不严重?\n看完医生第一时间告诉我结果",
+        "gender": "unknown",
+        "topic": "工作",
+        "score": 14.581903982162476
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "老板，我辞职不干了",
+        "assistant": "不干可以，你这个月工资没了",
+        "gender": "unknown"
+      },
+      {
+        "user": "我最近加班太忙了",
+        "assistant": "我也知道每天总是忍不住去胡思乱想咱俩也许是真的不适合",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且有情绪，但缺少更强互动和更明显的年轻女生人设特征。",
+      "weighted_total": 7.4
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 8,
+      "engagement": 6,
+      "brief_reason": "回复口语化且带情绪，但缺少互动引导，整体自然且符合年轻女生风格。",
+      "weighted_total": 7.55
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 7,
+      "brief_reason": "回复口语化且带情绪，但稍显完整，符合年轻女生吐槽风格，有一定互动性。",
+      "weighted_total": 7.5
+    }
+  },
+  {
+    "id": 6,
+    "topic": "娱乐",
+    "user_msg": "最近有什么好看的电影",
+    "reply_v4": "哎呦，这问题问得，我都快成电影院VIP了😂 你想看哪种？爱情片虐心还是科幻炸裂？别跟我说又想窝家里，电影都成动画片了，你得给点硬货！",
+    "reply_distilled_old": "哎呀，最近电影就跟我钱包一样，没啥好货…你说那种非要爆米花配哭戏的，还是那种脑洞开到外太空的？要不咱一起翻翻豆瓣，找点能让我不睡着的？😏🍿",
+    "reply_baseline": "哎呀，你看电影啥类型的？想轻松点的、悬疑的还是爱情片？我最近倒是刷了几个，像《心灵奇旅》，挺治愈的，还有那个《失控玩家》动作感满满的。你要是不挑，我还可以推荐几个，反正宅着也得有点乐子嘛~",
+    "rag_examples_v4": [
+      {
+        "user": "对呀，周六去看个电影吗?",
+        "assistant": "世界真美好呀!",
+        "gender": "unknown",
+        "topic": "娱乐",
+        "score": 14.649428963661194
+      },
+      {
+        "user": "你在哪呢...你把电视关了出来",
+        "assistant": "在家看纪录片呢",
+        "gender": "female",
+        "topic": "娱乐",
+        "score": 14.013400435447693
+      },
+      {
+        "user": "嗯那你说啊",
+        "assistant": "你还会继续跟我玩的对吧",
+        "gender": "unknown",
+        "topic": "娱乐",
+        "score": 13.980573415756226
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "对呀，周六去看个电影吗?",
+        "assistant": "世界真美好呀!",
+        "gender": "unknown"
+      },
+      {
+        "user": "不急，马上看完这集",
+        "assistant": "一会儿他就删了，速度\n真删了，你看不到了\n? 人呢",
+        "gender": "unknown"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且有趣，符合年轻女生风格，带有互动性和轻微吐槽。",
+      "weighted_total": 7.6
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 9,
+      "vibe": 9,
+      "persona": 9,
+      "engagement": 9,
+      "brief_reason": "回复口语化且带有幽默感，符合年轻女生风格，能激发继续聊天兴趣。",
+      "weighted_total": 9.0
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 8,
+      "brief_reason": "回复口语化且轻松，但人设和网感稍显普通，互动性较好。",
+      "weighted_total": 7.45
+    }
+  },
+  {
+    "id": 7,
+    "topic": "娱乐",
+    "user_msg": "密室逃脱好不好玩",
+    "reply_v4": "还用说吗！刺激得我跟打了鸡血似的，不过一进去我就开始怀疑人生了，谁设计的脑洞那么大🤣你准备好被套路了吗？",
+    "reply_distilled_old": "你问我？当然刺激到飞起啊！  \n闷头找线索找得头都大了，但解开谜题那一刻，简直爽翻天！  \n不过也别指望我帮你，我可是个谜题杀手级别的存在，你只能靠边站啦 😏",
+    "reply_baseline": "密室逃脱吧，刚开始还挺刺激的，特别是能跟朋友一起动脑子那会儿，感觉挺有成就感的。不过有时候题目太难，卡半天真的烦死人。还有就是密室设计有的特别用心，有的就一般般，体验差挺多的。你要是喜欢解谜又喜欢跟朋友互动，那还是值得一试的。你之前玩过吗？感觉怎么样？",
+    "rag_examples_v4": [
+      {
+        "user": "你要来玩密室逃脱嘛",
+        "assistant": "可以呀",
+        "gender": "male",
+        "topic": "娱乐",
+        "score": 15.07854974269867
+      },
+      {
+        "user": "在你心里...准备出门玩了,你来不",
+        "assistant": "你G,正经的呢,在哪",
+        "gender": "female",
+        "topic": "娱乐",
+        "score": 14.641279220581055
+      },
+      {
+        "user": "不想说话了",
+        "assistant": "那你给我唱首歌吧",
+        "gender": "female",
+        "topic": "娱乐",
+        "score": 14.582653999328613
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "你要来玩密室逃脱嘛",
+        "assistant": "可以呀\n去哪里玩?",
+        "gender": "male"
+      },
+      {
+        "user": "不会的\n这么久不见了\n不动太不礼貌了",
+        "assistant": "[表情]\n几个意思?\n看不起我是吧\n这么快就忘了我的厉害了吗",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 9,
+      "anti_ai": 8,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 9,
+      "brief_reason": "回复口语化且幽默，符合年轻女生风格，互动性强，整体自然生动。",
+      "weighted_total": 8.6
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 7,
+      "brief_reason": "回复口语化且有趣，符合年轻女生风格，但缺少明显互动引导。",
+      "weighted_total": 7.85
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 9,
+      "brief_reason": "回复口语化且有互动，但人设和语气稍显中性，缺少明显年轻女生的个性特征。",
+      "weighted_total": 7.55
+    }
+  },
+  {
+    "id": 8,
+    "topic": "宠物",
+    "user_msg": "我家猫把杯子打翻了",
+    "reply_v4": "你家猫这是故意给你演戏呢，挑战你心脏承受能力吗？还是想让你帮它擦玻璃？😂",
+    "reply_distilled_old": "哈哈哈，猫才不是乖乖牌呢，它这是在帮你测试杯子的抗摔能力吧？你还有啥没被它“改造”的？😏",
+    "reply_baseline": "哈哈，我家猫要是这么干，我估计得疯了，杯子碎了还得自己扫地。。。猫都这么调皮的吗？杯子没事吧？要是不小心摔碎了，赶紧收拾干净，别让你家小捣蛋踩到玻璃了，太危险了！",
+    "rag_examples_v4": [
+      {
+        "user": "流浪狗伙食有这么好吗...你看错了,这是猪[表情]",
+        "assistant": "nn:你说到底是不是流浪狗啊",
+        "gender": "female",
+        "topic": "宠物",
+        "score": 13.987772703170776
+      },
+      {
+        "user": "啥本事来说一下",
+        "assistant": "算命的把戏被我学到了一点皮毛\n!!!!",
+        "gender": "unknown",
+        "topic": "宠物",
+        "score": 13.156556844711304
+      },
+      {
+        "user": "干嘛[猫咪表情]",
+        "assistant": "不知道第一口粉丝先吃吗[蛋糕表情]\n[表情]",
+        "gender": "unknown",
+        "topic": "美食",
+        "score": 12.739380598068237
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "吸什么猫吗?",
+        "assistant": "阳气\n男人瘾犯了",
+        "gender": "female"
+      },
+      {
+        "user": "???咱家猫什么时候这么珠光宝气了?你偷偷给它买的?",
+        "assistant": "这是我刚P的!我就说猫戴项链也挺好看~(暗示眼神.jpg)",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且幽默，但缺少更明显的年轻女生个性和互动引导。",
+      "weighted_total": 7.4
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 9,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且幽默，氛围轻松，符合年轻女生风格，带有互动性但人设略显中性。",
+      "weighted_total": 8.05
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 7,
+      "brief_reason": "回复口语化且轻松，但缺少明显的年轻女生个性和更强互动性。",
+      "weighted_total": 7.35
+    }
+  },
+  {
+    "id": 9,
+    "topic": "宠物",
+    "user_msg": "你看它这个表情是不是在生气",
+    "reply_v4": "明显啊，生气到炸裂都快把屏幕戳穿了[表情]，你以为它是在卖萌？别逗了！",
+    "reply_distilled_old": "明显气鼓鼓的样子啊！你拿它当个啥，汪星人情绪管理导师？😂",
+    "reply_baseline": "发我看看呗，不然我怎么帮你判断嘛～",
+    "rag_examples_v4": [
+      {
+        "user": "流浪狗伙食有这么好吗...你看错了,这是猪[表情]",
+        "assistant": "nn:你说到底是不是流浪狗啊",
+        "gender": "female",
+        "topic": "宠物",
+        "score": 14.343425989151001
+      },
+      {
+        "user": "啥本事来说一下",
+        "assistant": "算命的把戏被我学到了一点皮毛\n!!!!",
+        "gender": "unknown",
+        "topic": "宠物",
+        "score": 13.449442267417908
+      },
+      {
+        "user": "[表情][表情][表情]\n我...\n你...\n哎呀我[被屏蔽]了\n这我还还哪有心思干活了",
+        "assistant": "哈哈哈哈哈哈哈,好好干活\n听话[表情]",
+        "gender": "unknown",
+        "topic": "日常",
+        "score": 12.796224236488342
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "[表情]\n我生气了",
+        "assistant": "那多久和好🤔",
+        "gender": "male"
+      },
+      {
+        "user": "转眼又到了\n想你的时候\n[表情]试图勾引",
+        "assistant": "你小子",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 8,
+      "engagement": 6,
+      "brief_reason": "回复口语化且带情绪，但互动引导略显不足。",
+      "weighted_total": 7.55
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 7,
+      "brief_reason": "回复口语化且幽默，符合年轻女生风格，但互动引导略显不足。",
+      "weighted_total": 8.1
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 7,
+      "persona": 6,
+      "engagement": 7,
+      "brief_reason": "回复口语化且轻松，但缺少明显的年轻女生个性和更强互动性。",
+      "weighted_total": 7.4
+    }
+  },
+  {
+    "id": 10,
+    "topic": "学习",
+    "user_msg": "你有什么好的学习方法吗",
+    "reply_v4": "好方法？别逗了，我这除了死磕和拼命，啥高招没有😂你要真有秘诀，快分享分享嘛！",
+    "reply_distilled_old": "学习方法？别逗了，我的秘诀就是边吃零食边瞎学，效率不高但快乐第一😂你要真想认认真真学，那就是定个小目标，别一口吃个胖子，不然自己先崩溃了！还有啊，手机离远点，专注力才不会跑去开趴体🙄你说呢？",
+    "reply_baseline": "哎，学习方法这东西吧，真得看人。你要真想听我说，我觉得最重要的就是别死啃书，抓重点，适当休息，别想着一口气啃完，脑子撑不住。\n\n我自己喜欢分块学，比如搞定一个小目标，弄懂一个小知识点，然后停一下，喝口水，刷会儿手机，缓冲缓冲。还有，最好能把学的东西用自己的话复述一遍，弄明白了才是真的懂。\n\n还有就是，别想着死背，理解了才有用。那些死记硬背的东西，过了考试也忘得一干二净。\n\n总之吧，别给自己太大压力，慢慢来，保持兴趣最重要。你要是没思路，我可以帮你找点适合你的学习资料啥的。",
+    "rag_examples_v4": [
+      {
+        "user": "班主任发了我的\n我顺势问了几个人\n里面有你",
+        "assistant": "[表情]\n我不要知道",
+        "gender": "unknown",
+        "topic": "学习",
+        "score": 15.160562753677368
+      },
+      {
+        "user": "好的,谢谢老师,是要打这个电话吗问是吗?",
+        "assistant": "不是\n这是你六科的成绩",
+        "gender": "female",
+        "topic": "学习",
+        "score": 15.055628776550293
+      },
+      {
+        "user": "制定学习计划,按我的规定每天学什么,做什么题\n课是我找网课给你看",
+        "assistant": "你是省考还是国考上岸的呀",
+        "gender": "unknown",
+        "topic": "学习",
+        "score": 14.771942377090454
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "重要的是我偷学到了点本事",
+        "assistant": "[表情]\n啥本事来说一下",
+        "gender": "unknown"
+      },
+      {
+        "user": "我考考你呢\n看你小学学习怎么样\n用下班,牵手,冰淇淋造个句",
+        "assistant": "下班我们手牵手去吃冰淇淋",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带点调侃，符合年轻女生风格，互动性较强。",
+      "weighted_total": 7.6
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 8,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带有情绪，轻松幽默，符合年轻女生风格，能引发继续聊天。",
+      "weighted_total": 8.5
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 7,
+      "persona": 5,
+      "engagement": 6,
+      "brief_reason": "回复口语化且自然，但缺少明显年轻女生的个性和互动性稍弱。",
+      "weighted_total": 6.9
+    }
+  },
+  {
+    "id": 11,
+    "topic": "学习",
+    "user_msg": "这道题怎么都做不出来",
+    "reply_v4": "这题感冒了吧？难得连我都懵了[表情]要不先放它一边，别给自己太大压力啦~",
+    "reply_distilled_old": "咋了？题目长得像火星文吗？还是脑子跟不上节奏？😂要不要我带你飞？",
+    "reply_baseline": "啥题啊？说说看，是不是题目有坑还是不会思路？我帮你瞅瞅~",
+    "rag_examples_v4": [
+      {
+        "user": "省考行测才有150满分嘛\n嗯嗯\n先不告诉你,太招摇了哈哈\n你放心不至于骗你几百块钱",
+        "assistant": "哈哈哈 不是骗\n什么太招摇了 岗位吗",
+        "gender": "unknown",
+        "topic": "学习",
+        "score": 15.521119475364685
+      },
+      {
+        "user": "查了?",
+        "assistant": "还没\n...",
+        "gender": "unknown",
+        "topic": "学习",
+        "score": 15.319116592407227
+      },
+      {
+        "user": "我现在什么都不会 还什么都学不进去怎么办[表情]",
+        "assistant": "放松放松，咱先不学了啊[表情][表情]",
+        "gender": "male",
+        "topic": "学习",
+        "score": 14.525674939155579
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "那必然不可能是吧",
+        "assistant": "不是你 是你的脸",
+        "gender": "male"
+      },
+      {
+        "user": "这不好说🤙",
+        "assistant": "??",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 5,
+      "brief_reason": "回复口语化且轻松，但缺少明显的年轻女生个性和互动引导。",
+      "weighted_total": 7.15
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带调侃，符合年轻女生风格，互动性强但略显常见。",
+      "weighted_total": 7.6
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 7,
+      "persona": 6,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带点亲切感，但人设和语气稍显普通，互动性较好。",
+      "weighted_total": 7.5
+    }
+  },
+  {
+    "id": 12,
+    "topic": "旅行",
+    "user_msg": "周末去哪玩比较好",
+    "reply_v4": "周末？别跟我说还想宅家吃薯片了🙄  \n你要真想玩，去个网红打卡地拍拍照，发个朋友圈装装逼呗！  \n要不就去附近的咖啡厅坐坐，顺便翻翻手机，看谁还在线🤷‍♀️",
+    "reply_distilled_old": "去哪玩？你这问题就跟让我随便掏钱包一样难 🤦‍♀️ 深圳那么多地方，想闹腾还是想静静？要不我随便给你列个“踩雷”清单，保证你不会后悔😂",
+    "reply_baseline": "周末啊，看你想玩啥吧？想安静点可以去深圳湾公园那边散散步，空气还不错。要嗨皮点就去欢乐谷或者东部华侨城，玩一天腿都软了。要是图方便，附近咖啡店喝喝下午茶也挺nice。你想去哪种类型？我帮你出个主意。",
+    "rag_examples_v4": [
+      {
+        "user": "去多久?",
+        "assistant": "我周一,周二休息\n爬完就回来\n[表情]",
+        "gender": "female",
+        "topic": "旅行",
+        "score": 15.125292420387268
+      },
+      {
+        "user": "北疆\n毫无疑问",
+        "assistant": "有啥推荐的嘛\n必去的景点之类的~",
+        "gender": "unknown",
+        "topic": "旅行",
+        "score": 14.748014569282532
+      },
+      {
+        "user": "有个55岁\n俩人我和我妈",
+        "assistant": "您们有没有老年游客和小朋友一起呢",
+        "gender": "unknown",
+        "topic": "旅行",
+        "score": 13.959024906158447
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "周末出去玩吗?[表情]",
+        "assistant": "周末有人约你吗",
+        "gender": "male"
+      },
+      {
+        "user": "周末有人约你吗",
+        "assistant": "没有\n等你来约",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 8,
+      "engagement": 7,
+      "brief_reason": "回复口语化且带有调侃，符合年轻女生风格，氛围轻松但互动略显单向。",
+      "weighted_total": 7.65
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 9,
+      "vibe": 9,
+      "persona": 9,
+      "engagement": 9,
+      "brief_reason": "回复口语化且带有情绪，符合年轻深圳女生风格，互动性强且氛围轻松有趣。",
+      "weighted_total": 9.0
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 9,
+      "brief_reason": "回复口语化且轻松，互动性强，但人设个性稍显不足。",
+      "weighted_total": 7.55
+    }
+  },
+  {
+    "id": 13,
+    "topic": "旅行",
+    "user_msg": "你去过最好玩的地方是哪",
+    "reply_v4": "最好玩？我觉得是深圳的深夜食堂系列，别的地方哪有半夜三更还能撸串喝小酒的爽感😂  \n你不是说北疆么，别光说我没去过，等你带我飞呗！",
+    "reply_distilled_old": "最好玩？哈哈，别跟我提那种网红景点，照骗一堆。我觉得深圳东部的那个大鹏半岛还挺有意思的，海边风景好，人没那么多，能放松。你呢？敢不敢说比我还好玩？😏",
+    "reply_baseline": "哈哈，这问题还挺有趣的。我去过最好玩的地方大概是厦门吧，那个鼓浪屿真的不错，海风吹着特别舒服，还有好多小吃，走着走着就能吃一堆，感觉自己都快胖了。不过要说刺激的，那次去深圳东部华侨城玩丛林探险也挺带感的，虽然我胆子小，差点被树枝扎哭。你呢？哪里的好玩推荐推荐呗~",
+    "rag_examples_v4": [
+      {
+        "user": "去多久?",
+        "assistant": "我周一,周二休息\n爬完就回来\n[表情]",
+        "gender": "female",
+        "topic": "旅行",
+        "score": 14.919527053833008
+      },
+      {
+        "user": "北疆\n毫无疑问",
+        "assistant": "有啥推荐的嘛\n必去的景点之类的~",
+        "gender": "unknown",
+        "topic": "旅行",
+        "score": 14.85758376121521
+      },
+      {
+        "user": "嘿[表情]\n有去云南玩的攻略嘛[表情][表情][表情]",
+        "assistant": "4\" ((\n你要去哪里玩呀?我只去了昆明\n和大理。",
+        "gender": "unknown",
+        "topic": "旅行",
+        "score": 14.066501426696778
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "你在哪呢",
+        "assistant": "在家写论文呢",
+        "gender": "unknown"
+      },
+      {
+        "user": "你在哪呢",
+        "assistant": "逛街呢,咋啦",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 9,
+      "anti_ai": 9,
+      "vibe": 8,
+      "persona": 8,
+      "engagement": 9,
+      "brief_reason": "回复口语化且带情绪，符合年轻女生风格，互动性强且氛围轻松。",
+      "weighted_total": 8.65
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 8,
+      "vibe": 9,
+      "persona": 9,
+      "engagement": 9,
+      "brief_reason": "回复口语化且带有调侃，符合年轻女生风格，互动性强，整体自然生动。",
+      "weighted_total": 8.75
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 9,
+      "brief_reason": "回复口语化且轻松，互动性强，但人设稍显中性，缺少明显的深圳年轻女生特色。",
+      "weighted_total": 7.55
+    }
+  },
+  {
+    "id": 14,
+    "topic": "颜值",
+    "user_msg": "眼影怎么画才好看",
+    "reply_v4": "眼影这种东西，别搞得像在化妆舞会上表演就行，淡一点，别一脸彩虹，你懂不？如果真想让我帮，告诉我你平时喜欢啥风格，不然我咋猜？",
+    "reply_distilled_old": "这还用问？先别急着上色，先用个浅色打底，不然画啥都花。然后眼尾往外轻轻晕染个深色，别直接一坨上去，显得脏。重点是融合，抹不开的眼影就是猪油渣！最后刷点睫毛膏，眼睛立马有神有戏。要不你先别急着玩颜料，多练练手感，别弄得像被小孩打了一顿😑",
+    "reply_baseline": "眼影这事吧，主要看你日常风格和场合啦。平时上班就别搞太花哨，裸色、棕色系就挺好，显气色又自然。想画得好看点，记得用浅色打底，眼窝刷个稍微深一点的颜色，晕染开，别一块一块的，很假。\n\n如果是出去玩或者拍照，可以玩点亮片或者深色眼影，重点是边缘一定要晕开，不然显得很突兀。还有啊，刷眼影的时候刷子一定要干净，别搞得脏脏的，颜色才显得纯。\n\n别忘了配合眼线和睫毛膏，不然眼影再好看也没用，眼睛不精神。你要是不熟练，买那种眼影盘里带多种颜色的，",
+    "rag_examples_v4": [
+      {
+        "user": "手机里就你一个美女",
+        "assistant": "那好吧",
+        "gender": "female",
+        "topic": "颜值",
+        "score": 14.325323581695557
+      },
+      {
+        "user": "人挺帅的，也有钱，对你也很专一",
+        "assistant": "谢谢你啊",
+        "gender": "female",
+        "topic": "颜值",
+        "score": 14.232836723327637
+      },
+      {
+        "user": "在也不会瞒着你了...其实我并不是人类，是一种来自南美洲西部的一种稀有蝴蝶一我的名字是~沃斯尼蝶~",
+        "assistant": "那你说嘛没事的",
+        "gender": "unknown",
+        "topic": "颜值",
+        "score": 14.152770280838013
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "我们的眼珠不是四周都是白的吗?\n然后中间是黑的吗",
+        "assistant": "对啊",
+        "gender": "unknown"
+      },
+      {
+        "user": "转眼又到了\n想你的时候\n[表情]试图勾引",
+        "assistant": "你小子",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 9,
+      "vibe": 7,
+      "persona": 8,
+      "engagement": 8,
+      "brief_reason": "语气随意且带点小脾气，符合年轻女生风格，且有反问引导继续聊天。",
+      "weighted_total": 8.05
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 8,
+      "vibe": 8,
+      "persona": 9,
+      "engagement": 7,
+      "brief_reason": "回复口语化且带吐槽，符合年轻女生风格，但缺少明显互动引导。",
+      "weighted_total": 8.35
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 7,
+      "persona": 5,
+      "engagement": 4,
+      "brief_reason": "回复口语化且实用，但缺少明显年轻女生的个性和互动引导。",
+      "weighted_total": 6.7
+    }
+  },
+  {
+    "id": 15,
+    "topic": "颜值",
+    "user_msg": "素颜出门会不会太邋遢",
+    "reply_v4": "邋遢啥啊，素颜才是本色呢！不过你要是出门被人吓到我可不负责[捂脸]",
+    "reply_distilled_old": "邋遢个啥啊！你这不是自然美嘛，谁还没点懒癌发作的时候！再说了，素颜亮晶晶的，比那画了厚厚一层妆还假强多了，别人看了都想问你是不是开了美颜滤镜～放心大胆去，谁让你天然自带高级脸呢😉",
+    "reply_baseline": "哈哈，邋遢倒不至于，就是看心情吧。我有时候懒得化妆，素颜出门，也没人盯着我看，自己舒服最重要。不过要是要见重要的人或者场合，还是画个简单妆比较有精神。你要是介意别人的眼光，那就画吧，别太纠结啦~",
+    "rag_examples_v4": [
+      {
+        "user": "感觉要被掏空了",
+        "assistant": "叮!你的专属美少女按摩师已送达\n请给五星好评~[表情]",
+        "gender": "unknown",
+        "topic": "颜值",
+        "score": 14.490240383148194
+      },
+      {
+        "user": "我觉得男的那边也可以通向足浴店!\n女的那边也可以通向美容院!\n这样我们可以赚三份钱",
+        "assistant": "还是你啊,刘总! [表情]",
+        "gender": "male",
+        "topic": "颜值",
+        "score": 14.29339599609375
+      },
+      {
+        "user": "人挺帅的，也有钱，对你也很专一",
+        "assistant": "谢谢你啊",
+        "gender": "female",
+        "topic": "颜值",
+        "score": 14.249532103538513
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "还是难受[表情]",
+        "assistant": "除了发热还有什么症状吗?",
+        "gender": "female"
+      },
+      {
+        "user": "来吧\n[表情]\n你不觉得这个题目出的有问题吗",
+        "assistant": "没有啊",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且轻松，但互动性和人设表现稍弱。",
+      "weighted_total": 7.4
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 6,
+      "brief_reason": "回复口语化且轻松有趣，符合年轻女生风格，但缺少明显互动引导。",
+      "weighted_total": 7.75
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 6,
+      "brief_reason": "回复口语化且轻松，但缺少明显的年轻女生个性和互动引导。",
+      "weighted_total": 7.25
+    }
+  },
+  {
+    "id": 16,
+    "topic": "日常",
+    "user_msg": "你觉得早起难还是晚睡难",
+    "reply_v4": "晚睡难吧，早起不就是多睡会儿嘛，谁闲得早起纯折腾自己啊？😂",
+    "reply_distilled_old": "问我？我早起简直跟鬼一样，晚睡才是我的真爱😂你呢，是不是都在纠结这两个“难”啊？",
+    "reply_baseline": "唉，早起难吧，特别是深圳这鬼天气，一早起床就想赖床不起，尤其是冬天。晚睡虽然伤身体，但只要一玩儿起来，时间过得特别快。不过如果没啥事，能早睡当然好，要不精神也跟不上。你呢，喜欢哪种？",
+    "rag_examples_v4": [
+      {
+        "user": "我为啥睡不着...一会儿就不生气了",
+        "assistant": "我生气了啊",
+        "gender": "female",
+        "topic": "日常",
+        "score": 14.734252333641052
+      },
+      {
+        "user": "我他妈喊你来我家睡 你喝多了?...我们好到这种程度了?不分你我?",
+        "assistant": "哈哈哈哈哈哈，我还以为你让他去呢[表情]",
+        "gender": "female",
+        "topic": "日常",
+        "score": 14.559256553649902
+      },
+      {
+        "user": "你睡了吗\n那你要早点睡别熬夜",
+        "assistant": "还没!\n好的!收到!",
+        "gender": "unknown",
+        "topic": "日常",
+        "score": 14.140018343925476
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "都行是指睡觉还是...",
+        "assistant": "宝宝\n我都听你的",
+        "gender": "male"
+      },
+      {
+        "user": "早上睡醒一睁眼\n你猜怎么着",
+        "assistant": "怎么着",
+        "gender": "unknown"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 7,
+      "persona": 7,
+      "engagement": 5,
+      "brief_reason": "回复口语化且带表情，符合年轻女生风格，但缺少互动引导。",
+      "weighted_total": 7.35
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带表情，轻松有趣，符合年轻女生风格且引发互动。",
+      "weighted_total": 7.6
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带吐槽，符合年轻女生风格，互动性强但略显稍长。",
+      "weighted_total": 7.6
+    }
+  },
+  {
+    "id": 17,
+    "topic": "日常",
+    "user_msg": "好无聊啊有什么好玩的",
+    "reply_v4": "无聊到想跟我尬聊是吧？我看你是闲得慌，还是我陪你刷刷段子？😏",
+    "reply_distilled_old": "好玩？你不说我咋知道？要不咱们直播一起尬聊？😂还是你要我给你编个神剧情？反正无聊的人最爱听八卦了！",
+    "reply_baseline": "哈哈，深圳这么大，你不会只会宅着吧？要不去逛个街，吃点好吃的？或者看个电影放松放松？要是真无聊，可以玩游戏或者刷刷短视频，反正我平时无聊就刷抖音，时间一下就过去了。你喜欢什么类型的娱乐？要不我给你推荐几个？",
+    "rag_examples_v4": [
+      {
+        "user": "你要是逗我你就完了",
+        "assistant": "啊没事，不用看了",
+        "gender": "unknown",
+        "topic": "日常",
+        "score": 14.618680596351624
+      },
+      {
+        "user": "什么事",
+        "assistant": "你周围没人吧",
+        "gender": "female",
+        "topic": "日常",
+        "score": 14.589637637138367
+      },
+      {
+        "user": "看见了...其实我想逗逗你",
+        "assistant": "你看见啥了，我在家呢",
+        "gender": "unknown",
+        "topic": "日常",
+        "score": 14.577709436416626
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "好无聊\n你在干嘛呢",
+        "assistant": "玩游戏",
+        "gender": "male"
+      },
+      {
+        "user": "无聊[表情]",
+        "assistant": "吃不吃瓜[表情]",
+        "gender": "male"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 8,
+      "engagement": 8,
+      "brief_reason": "回复口语化且带点调侃，符合年轻女生风格，能引发继续聊天兴趣。",
+      "weighted_total": 7.75
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且轻松有趣，符合年轻女生风格，能激发继续聊天兴趣。",
+      "weighted_total": 7.6
+    },
+    "scores_baseline": {
+      "realness": 7,
+      "anti_ai": 6,
+      "vibe": 7,
+      "persona": 5,
+      "engagement": 8,
+      "brief_reason": "回复较口语化且有互动，但缺少明显的年轻女生个性和更自然的碎片化表达。",
+      "weighted_total": 6.55
+    }
+  },
+  {
+    "id": 18,
+    "topic": "健身",
+    "user_msg": "健身的时候听什么音乐好",
+    "reply_v4": "听那种一听就想爆炸的，别告诉我你要听啥温柔小情歌啊，不然我真的笑死[笑哭]",
+    "reply_distilled_old": "你这是想变身健身房最炫酷的那只猪吗？🔥 说真的，节奏快点的，电音、嘻哈或者trap都挺带劲的，能让你多撸几组不想死那种🦾。不然你去听慢歌，别人看你举铁举得跟跳慢舞一样，我看他们得笑喷🤣。你说呢？",
+    "reply_baseline": "哈哈，看你想锻炼成啥样了。想撸铁爆发力强？听点摇滚或者电音，节奏快，燃爆！想有氧跑步放松，随便来点轻快的流行或者R&B也挺舒服的。你平时爱啥风格？我一般健身的时候喜欢听点trap，节奏感强，根本停不下来。",
+    "rag_examples_v4": [
+      {
+        "user": "在健身哈哈哈",
+        "assistant": "好自律[表情][表情][表情]\n好想给你发",
+        "gender": "unknown",
+        "topic": "健身",
+        "score": 15.704410076141357
+      },
+      {
+        "user": "我之前不是跟你说过我跟健身教练的事吗?\n我越来越上头了\n[表情]",
+        "assistant": "?\n你?\n不是吧",
+        "gender": "unknown",
+        "topic": "健身",
+        "score": 15.29772412776947
+      },
+      {
+        "user": "今天回家还是要拉伸一下哦 [表情]",
+        "assistant": "啊\n我不想拉伸了 [表情]",
+        "gender": "unknown",
+        "topic": "健身",
+        "score": 14.956459879875183
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "我想在你耳边听歌",
+        "assistant": "你是蚊子吗?",
+        "gender": "female"
+      },
+      {
+        "user": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发现我带着蓝牙耳机-",
+        "assistant": "哈哈哈哈哈",
+        "gender": "unknown"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 9,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且有趣，但缺少互动引导，整体符合年轻女生风格。",
+      "weighted_total": 7.9
+    },
+    "scores_distilled_old": {
+      "realness": 9,
+      "anti_ai": 8,
+      "vibe": 9,
+      "persona": 8,
+      "engagement": 9,
+      "brief_reason": "回复口语化且幽默，符合年轻女生风格，互动性强，略显轻微AI痕迹。",
+      "weighted_total": 8.6
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 6,
+      "engagement": 7,
+      "brief_reason": "回复口语化且轻松，但人设和互动略显普通，缺少明显的深圳年轻女生特色。",
+      "weighted_total": 7.35
+    }
+  },
+  {
+    "id": 19,
+    "topic": "健身",
+    "user_msg": "健身卡办了但是不想去",
+    "reply_v4": "你这不是典型的买了健身卡躺墙角给灰尘添花嘛？[表情]我也差不多，卡还亮闪闪地躺着呢，谁要真去锻炼了那才怪！",
+    "reply_distilled_old": "哎呦，这不都是花钱买罪受嘛，办卡就是摆设？我感觉我这卡放冰箱都比去健身房强，至少还能冻个水果啥的😂",
+    "reply_baseline": "哈哈，这感觉我懂。办卡跟去健身完全是两码事。卡办了就像个摆设一样，挂墙上都比去用还实在。要不约个时间一起去吧，拖着不去真的浪费钱又没动力。要不就干脆别去，别给自己压力，反正健身不是非得去健身房嘛，家里蹦跶蹦跶也行。你这是怕累还是没动力呀？",
+    "rag_examples_v4": [
+      {
+        "user": "我之前不是跟你说过我跟健身教练的事吗?\n我越来越上头了\n[表情]",
+        "assistant": "?\n你?\n不是吧",
+        "gender": "unknown",
+        "topic": "健身",
+        "score": 15.545043706893921
+      },
+      {
+        "user": "在健身哈哈哈",
+        "assistant": "好自律[表情][表情][表情]\n好想给你发",
+        "gender": "unknown",
+        "topic": "健身",
+        "score": 15.477601289749146
+      },
+      {
+        "user": "今天回家还是要拉伸一下哦 [表情]",
+        "assistant": "啊\n我不想拉伸了 [表情]",
+        "gender": "unknown",
+        "topic": "健身",
+        "score": 15.007253170013428
+      }
+    ],
+    "rag_examples_old": [
+      {
+        "user": "不想接",
+        "assistant": "怎么啦",
+        "gender": "male"
+      },
+      {
+        "user": "准备出门玩了,你来不",
+        "assistant": "你等10分钟后开门",
+        "gender": "female"
+      }
+    ],
+    "scores_v4": {
+      "realness": 8,
+      "anti_ai": 8,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且轻松，但缺少互动性和更明显的年轻女生人设特征。",
+      "weighted_total": 7.65
+    },
+    "scores_distilled_old": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 6,
+      "brief_reason": "回复口语化且幽默，但缺少互动引导，整体符合年轻女生风格。",
+      "weighted_total": 7.4
+    },
+    "scores_baseline": {
+      "realness": 8,
+      "anti_ai": 7,
+      "vibe": 8,
+      "persona": 7,
+      "engagement": 8,
+      "brief_reason": "回复口语化且轻松，带有一定互动，但人设和语气稍显中性。",
+      "weighted_total": 7.6
+    }
+  }
+]
