@@ -19,7 +19,7 @@ MANUS_API_KEY = os.environ.get("OPENAI_API_KEY", "")
 MANUS_BASE_URL = os.environ.get("OPENAI_BASE_URL", "https://api.openai.com/v1")
 JUDGE_MODEL = "gemini-2.5-flash"
 
-RESULTS_FILE = "eval_200_results.json"
+RESULTS_FILE = "eval_200_results_v2.json"
 NUM_WORKERS = 8  # 并发数
 MAX_RETRIES = 3
 
@@ -200,7 +200,7 @@ async def main():
     # 加载 RAG
     print("Loading RAG database...")
     from style_rag import StyleRAG
-    rag = StyleRAG(persist_dir='style_rag_db', few_shot_path='final_few_shot.md')
+    rag = StyleRAG(persist_dir='chroma_style_db')
     
     # 加载 soul
     with open('SOUL.md', 'r') as f:
