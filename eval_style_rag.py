@@ -14,7 +14,7 @@ from openai import OpenAI
 # Compass API - Gemini 3 Flash Preview (用于回复生成)
 compass_client = OpenAI(
     api_key='9a3d58cc61234d927b3d5d0223a1277b106ca171d9a9608a6ff298d1544562a1',
-    base_url='https://edmonton-yesterday-instead-ballot.trycloudflare.com/compass-api/v1'
+    base_url='https://forum-stan-towers-quest.trycloudflare.com/compass-api/v1'
 )
 GEN_MODEL = "gemini-3-flash-preview"
 

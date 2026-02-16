@@ -13,7 +13,7 @@ from test_cases_200 import TEST_CASES_200
 
 # API 配置
 COMPASS_API_KEY = '9a3d58cc61234d927b3d5d0223a1277b106ca171d9a9608a6ff298d1544562a1'
-COMPASS_BASE_URL = 'https://edmonton-yesterday-instead-ballot.trycloudflare.com/compass-api/v1'
+COMPASS_BASE_URL = 'https://forum-stan-towers-quest.trycloudflare.com/compass-api/v1'
 GEN_MODEL = "gemini-3-flash-preview"
 
 MANUS_API_KEY = os.environ.get("OPENAI_API_KEY", "")
