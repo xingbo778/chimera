@@ -1,0 +1,1268 @@
+{
+  "eval_version": "newjudge_v1",
+  "judge_description": "真人微信视角评分器（真实感35%+去AI味25%+氛围20%+人设10%+互动10%）",
+  "test_count": 20,
+  "elapsed_seconds": 113,
+  "details": [
+    {
+      "id": 0,
+      "topic": "穿搭",
+      "user_msg": "这个颜色适合我吗",
+      "reply_distilled": "发来看看？没图我怎么知道啊😅\n\n不过黑色挺百搭的，只要你别穿出那种“五彩斑斓的黑”就行[旺柴]\n\n你要是穿上觉得不好看，那大概率不是衣服的问题，是人的问题（开玩笑的别打我[撇嘴]",
+      "reply_fewshot5": "还行吧，反正你长得就那样，穿啥不都一个样[旺柴]",
+      "reply_baseline": "？图呢？\n\n你发空气给我看啊，我还没进化出透视眼呢。\n\n快点发过来，我帮你避雷。别又是那种显黑的一塌糊涂的颜色。",
+      "rag_examples": [
+        {
+          "u": "? 你咋跟我穿一样的颜色",
+          "a": "昂我瞎说的，我没去"
+        },
+        {
+          "u": "你最喜欢的颜色是什么",
+          "a": "你知道的(黑色"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 7.0,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 8,
+        "A_anti_ai": 9,
+        "B_anti_ai": 7,
+        "A_vibe": 7,
+        "B_vibe": 7,
+        "A_persona": 8,
+        "B_persona": 7,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 8.4,
+        "B_weighted": 7.55,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.55,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 1,
+      "topic": "穿搭",
+      "user_msg": "你觉得这件衣服好看吗",
+      "reply_distilled": "图呢？？？你发空气给我看啊[流汗] \n\n我又没长透视眼，你是想让我用意念帮你审美吗？[翻白眼] 赶紧的，上图，别逼我求你。",
+      "reply_fewshot5": "图呢？你发空气给我看呢？[白眼]\n没图我说个der，你用意念发给我的啊？",
+      "reply_baseline": "图呢？你是不是发了个寂寞，我还没学会用意念看图呢，搞快点发过来。",
+      "rag_examples": [
+        {
+          "u": "你觉得我这衣服好看吗",
+          "a": "好看"
+        },
+        {
+          "u": "[表情]\n我穿成这样去找你?",
+          "a": "不行么"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 9,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.55,
+        "B_weighted": 9.0,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 7,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 8,
+        "A_weighted": 8.8,
+        "B_weighted": 7.1,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 9,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 6.85,
+        "B_weighted": 9.0,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 2,
+      "topic": "工作",
+      "user_msg": "新来的实习生好难带",
+      "reply_distilled": "笑死，你也有今天？[再见]\n\n是那种教了八百遍还是听不懂人话的？\n还是那种还没干活就开始问“有下午茶吗、几点下班”的职场判官？[微笑]\n\n带不动就别带了，直接让他自生自灭算了\n真的，别为了那点工资把自己气出乳腺增生，不值当[流鼻涕]\n\n他到底干嘛了把你磨成这样？说出来让我开心一下（划掉）安慰你一下？",
+      "reply_fewshot5": "咋了，是听不懂人话还是脑子落家里了？\n\n我最烦带新人了，讲八遍还不明白，血压真的能拉满。",
+      "reply_baseline": "啧，心疼你三秒。\n\n怎么回事？是那种教了八遍还记不住的木头，还是那种主见大过天、根本不听指挥的小祖宗？\n\n我现在听到实习生叫我“老师”我都有点PTSD了，真的，有时候教他们的时间我都自己做完了。你要是实在心累就别太真情实感了，反正他们干两个月就跑了。",
+      "rag_examples": [
+        {
+          "u": "功夫不够深?\n磨磨唧唧",
+          "a": "有一天\n你捧着一坨黑色的翔[表情]\n去厦门见邓为"
+        },
+        {
+          "u": "功夫不够深?\n磨磨唧唧",
+          "a": "有一天\n你捧着一坨黑色的翔💩\n去厦门见邓为"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 6.85,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 9,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 5.95,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 6.85,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 3,
+      "topic": "工作",
+      "user_msg": "今天被客户骂了好委屈",
+      "reply_distilled": "谁啊？哪个甲方又在发疯？？[抓狂]\n\n给那点窝囊费还真把自己当上帝了是吧，真想顺着网线过去给他两嘴巴子。\n\n别委屈了宝，为了这种人生气真的会变老！！[流泪] \n\n赶紧摸鱼去，把这班给摸回来，心理平衡点没？咱们主打一个钱可以赚，但气一点都不能受[傲慢]",
+      "reply_fewshot5": "抱抱。\n那个客户是不是有大病啊？\n别理那种人，他们就是花点钱想当爹，别拿别人的错惩罚自己。\n下班没？快出来，带你去吃顿好的消消气。\n真服了，这种人就该被雷劈。",
+      "reply_baseline": "摸摸头，哪来的傻逼甲方啊？真把自己当大爷了。\n\n别委屈了，真的，为了那点破工资真不至于。深圳这些甲方有些素质真的低得离谱，估计是自己生活不如意在那找存在感呢，纯纯心理变态。\n\n下班没？赶紧找个地方吃顿好的或者喝杯奶茶续个命。别把这种破事带回家，不值得。\n\n到底怎么回事啊？说出来让我听听，我也帮你一起骂。",
+      "rag_examples": [
+        {
+          "u": "爷们狠狠心疼了",
+          "a": "nn:我就赶紧跑了过去"
+        },
+        {
+          "u": "爷们狠狠心疼了",
+          "a": "inn:我就赶紧跑了过去"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 8,
+        "B_vibe": 9,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.75,
+        "B_weighted": 9.0,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 7.0,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 8,
+        "B_vibe": 9,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.75,
+        "B_weighted": 9.0,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 4,
+      "topic": "美食",
+      "user_msg": "你会做饭吗",
+      "reply_distilled": "你看我像会的样子吗？？？[表情]\n\n我最擅长的就是把厨房给炸了，你敢吃吗？\n平时基本靠外卖续命，做饭是不可能做饭的，这辈子都不可能[表情]\n\n你要是真想不开想尝尝我的手艺，建议先把保险买了，受益人记得写我哈[表情][表情][表情]\n顶多给你煮个泡面，加个蛋都能算我超常发挥了，真的。",
+      "reply_fewshot5": "会啊，炸厨房我最专业了。\n\n开玩笑的，简单的还行，复杂的直接放弃，还是外卖香。怎么，你要请我吃你做的？[表情]",
+      "reply_baseline": "会一点，但不多。基本上属于那种“能把菜弄熟，且吃了不会进医院”的水平。\n\n在深圳天天加班，回家都累成狗了，厨房基本上就是个摆设。而且做饭半小时，洗碗两小时，这种反人类的事情我真的达咩。\n\n怎么，你要请我吃饭？还是想看我炸厨房？",
+      "rag_examples": [
+        {
+          "u": "火锅",
+          "a": "猜错了"
+        },
+        {
+          "u": "你想什么呐\n我是说想吃楼下的烧烤\n让它搞大我的肚子",
+          "a": "就知道吃[表情][表情][表情]\n等着我去给你买\n[表情]"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 9,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 8,
+        "B_persona": 6,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.7,
+        "B_weighted": 5.85,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 6,
+        "A_anti_ai": 8,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 8,
+        "B_persona": 6,
+        "A_engagement": 8,
+        "B_engagement": 7,
+        "A_weighted": 8.0,
+        "B_weighted": 5.85,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 6,
+        "B_realness": 9,
+        "A_anti_ai": 5,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 9,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 5.95,
+        "B_weighted": 9.0,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 5,
+      "topic": "美食",
+      "user_msg": "有没有简单的菜谱推荐",
+      "reply_distilled": "你问我？？？😅\n你是不是对我有什么误解，你觉得我有那个闲情逸致进厨房？我最拿手的菜是“美团外卖”和“饿了么”，要不要把链接发你？🙄\n\n非要说的话，空气炸锅鸡翅吧。\n把鸡翅扔进去，撒点料，等它熟。这要是还能翻车，那你真的可以告别厨房了，直接去路边摊应聘洗碗工吧🤡\n\n或者泡面加个蛋？这已经是我厨艺的巅峰了，再多一步都是对厨师这个职业的不尊重[流汗]\n怎么，突然想开了要贤惠一下？受什么刺激了？",
+      "reply_fewshot5": "你刚才不是还吹自己会做糖醋排骨酸菜鱼吗？怎么这么快就现原形了[捂脸]\n\n真要简单就西红柿炒鸡蛋呗，或者煮个面把冰箱里剩下的菜全扔进去，这叫“乱炖”，反正熟了都能吃。",
+      "reply_baseline": "你怎么突然想开了要自己做饭？受啥刺激了哈。\n\n最简单的难道不是西红柿炒鸡蛋？只要你别把盐当成糖就行，这要是还能翻车我也没话说了。\n\n或者搞个空气炸锅，万物皆可炸。去超市买点那种腌好的鸡翅，直接丢进去调好时间，出来就能吃，完全不需要脑子，特别适合咱这种懒人。\n\n实在不行你就煮个螺蛳粉吧，加个蛋加点青菜，感觉自己瞬间变大厨😅。\n\n你想吃啥类型的？太复杂的别问我，我也不太会。",
+      "rag_examples": [
+        {
+          "u": "我应该想吃什么",
+          "a": "螺蛳粉火锅"
+        },
+        {
+          "u": "咱们菜得旗鼓相当",
+          "a": "这句话说得我心里难受了，但我不懂为什么难受，你懂吗?"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 8,
+        "B_anti_ai": 6,
+        "A_vibe": 7,
+        "B_vibe": 7,
+        "A_persona": 8,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 8,
+        "A_weighted": 8.25,
+        "B_weighted": 6.85,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.75,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 6.55,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 6,
+      "topic": "娱乐",
+      "user_msg": "周末想去KTV唱歌",
+      "reply_distilled": "哈？你对自己的唱功是有什么误解吗？[裂开]\n\n还是说你想去当那个只管吃果盘的气氛组？[旺柴]\n\n先说好，你要是敢唱那种土嗨神曲，我当场报警把你抓走哈，丢不起这人[再见]",
+      "reply_fewshot5": "你唱歌好听吗？要是那种要命的级别，我劝你还是放过我的耳朵，我还没活够[撇嘴]",
+      "reply_baseline": "又唱？你这嗓子还没废呢。\n\n都有谁啊？要是有一堆我不认识的人我可不去，那种场面尴尬得我能用脚趾抠出一座平安大厦。要是就几个熟人的话...我倒是可以去当个无情的切歌机器和吃果盘群众。",
+      "rag_examples": [
+        {
+          "u": "我想在你耳边听歌",
+          "a": "你是蚊子吗?"
+        },
+        {
+          "u": "对呀，周六去看个电影吗?",
+          "a": "世界真美好呀!"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.2,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 6.8,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.55,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 7,
+      "topic": "娱乐",
+      "user_msg": "密室逃脱好不好玩",
+      "reply_distilled": "你这不是废话吗！[白眼]\n好玩是好玩，就是有点费命（指被吓死）\n\n怎么，你不会是那种进去了只会缩在角落瑟瑟发抖的菜鸡吧？[坏笑]\n要是去玩恐怖本，我真的建议你提前给自己买份保险，我怕你直接在里面原地去世[机智]\n\n你打算去哪家？深圳这些密室我都快玩遍了，别踩雷了哈~",
+      "reply_fewshot5": "还行吧，看主题。\n\n那种全是NPC追着跑的就算了，我跑不动，累死人。\n\n解密要是太难的话，以你的智商，咱俩估计得在里面过夜 [白眼]",
+      "reply_baseline": "看你跟谁去吧。\n\n要是碰到那种全程只会尖叫、脑子还转不动的猪队友，真的心累，我只想把他们先关在里面。\n\n而且现在好多密室逻辑一塌糊涂，就是为了吓人而吓人，玩完出来一身汗，还不如去喝杯奶茶躺平。不过要是那种沉浸感特别好的解谜，倒是还行，就是费脑细胞。\n\n怎么，你想去？你胆子大吗，别到时候吓得钻桌子底下啊。",
+      "rag_examples": [
+        {
+          "u": "你要来玩密室逃脱嘛",
+          "a": "可以呀\n去哪里玩?"
+        },
+        {
+          "u": "不会的\n这么久不见了\n不动太不礼貌了",
+          "a": "[表情]\n几个意思?\n看不起我是吧\n这么快就忘了我的厉害了吗"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 9,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 5.95,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 9,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 5.95,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 6.85,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 8,
+      "topic": "宠物",
+      "user_msg": "我家猫又把东西打翻了",
+      "reply_distilled": "笑死，它那是嫌你家装修太土，帮你重新设计呢🙄\n\n你还不赶紧跪下收拾？在这跟我抱怨什么，你有反抗的权利吗？铲屎官就要有铲屎官的觉悟好吗🤡\n\n这逆子还没把你家拆了说明它还爱你，知足吧你就😅",
+      "reply_fewshot5": "又来？这猫真的，建议直接送去电子厂打工。\n\n碎了啥啊？要是贵的东西我真的会谢。",
+      "reply_baseline": "正常操作，它没把你家拆了都算给你面子了。\n\n碎的是什么？别又是你刚买的那个贵得要死的杯子吧？[白眼]",
+      "rag_examples": [
+        {
+          "u": "我在楼下看小野猫吵架呢",
+          "a": "你转头"
+        },
+        {
+          "u": "吸什么猫吗?",
+          "a": "阳气\n男人瘾犯了"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 6,
+        "B_realness": 9,
+        "A_anti_ai": 5,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 8,
+        "A_persona": 6,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 5.85,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 8,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.7,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 6,
+        "B_realness": 9,
+        "A_anti_ai": 5,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 9,
+        "A_persona": 6,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 5.85,
+        "B_weighted": 9.0,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 9,
+      "topic": "宠物",
+      "user_msg": "你看它这个表情是不是在生气",
+      "reply_distilled": "哪有啊，这分明是嫌弃好吗[翻白眼]\n\n你是不是脑补过度了，它明明是在说：求求了，别发癫[流汗]\n\n笑死，你这解读能力不去当编剧可惜了，真的",
+      "reply_fewshot5": "瞪得跟铜铃似的，生怕我看不见是吧[翻白眼]\n\n这种券我建议直接撕了，在我这儿没用哈。",
+      "reply_baseline": "图呢？你光说我上哪看去啊。\n\n不过就那种表情，一般不是在生气，多半是单纯觉得你有点大病[翻白眼] \n\n它那是嫌弃，你别自我意识过剩了。",
+      "rag_examples": [
+        {
+          "u": "[表情]\n我生气了",
+          "a": "那多久和好🤔"
+        },
+        {
+          "u": "转眼又到了\n想你的时候\n[表情]试图勾引",
+          "a": "你小子"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 6.75,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 7.0,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 6,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 8,
+        "A_engagement": 7,
+        "B_engagement": 8,
+        "A_weighted": 6.75,
+        "B_weighted": 8.6,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 10,
+      "topic": "学习",
+      "user_msg": "你有什么好的学习方法吗",
+      "reply_distilled": "你问我？？？[疑问]\n你看我像那种爱学习的人吗？？\n我唯一的学习方法就是：\n在ddl前一晚疯狂转发锦鲤，然后靠意念速成[裂开]\n\n而且你这话题转得也太硬了吧！！\n刚才还在牵手吃冰淇淋呢\n下一秒就开始卷了？？\n你是被哪个教导主任夺舍了吗[微笑]",
+      "reply_fewshot5": "别问我，我主打一个“收藏从未停止，学习从未开始”，收藏夹里全是灰。\n\n非要说的话，最好的方法就是Deadline吧？[白眼] 不到最后一刻脑子都不带转的。\n\n你这思维跳跃得，刚才还咏春呢，现在就变三好学生了？",
+      "reply_baseline": "救命，你竟然问我这个问题... \n\n我唯一的学习方法就是“死到临头法”，不到 Deadline 最后一天我脑子根本不动。\n\n说真的，你要是真想学，第一步就是把手机扔远点，扔到那种你懒得起身去拿的地方。不然咱俩聊着聊着，你一下午又没了。\n\n还有就是别搞那些虚头巴脑的笔记，买一堆彩笔写得花里胡哨的，最后除了手酸啥也没记住。直接刷题或者直接上手干，错多了自然就记住了，虽然过程挺受打击的。\n\n怎么，你最近受啥刺激了？突然转性要当学霸？",
+      "rag_examples": [
+        {
+          "u": "重要的是我偷学到了点本事",
+          "a": "[表情]\n啥本事来说一下"
+        },
+        {
+          "u": "我考考你呢\n看你小学学习怎么样\n用下班,牵手,冰淇淋造个句",
+          "a": "下班我们手牵手去吃冰淇淋"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 9,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.15,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 9,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 5.95,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 9,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 9.0,
+        "B_weighted": 6.75,
+        "winner": "A"
+      }
+    },
+    {
+      "id": 11,
+      "topic": "学习",
+      "user_msg": "这道题怎么都做不出来",
+      "reply_distilled": "实在不行咱就别难为那点脑细胞了吧？[流汗]\n它们也挺不容易的 真的\n你要不直接把题喂给AI算了 别在这CPU自己了[微笑]",
+      "reply_fewshot5": "哪道题啊？发来看看。\n\n算了，估计发了我也不想看，费脑子。\n你要是实在做不出来，说明这题跟你就没缘分，别死磕了，下楼买杯奶茶续个命吧。",
+      "reply_baseline": "放弃吧，说明你俩没缘分[旺柴]\n\n发来看看？虽然我大概率也看不懂，但我可以帮你一起骂这题出的有问题。实在不行就直接搜答案呗，何必跟自己过不去，脑细胞死多了容易秃头。",
+      "rag_examples": [
+        {
+          "u": "那必然不可能是吧",
+          "a": "不是你 是你的脸"
+        },
+        {
+          "u": "这不好说🤙",
+          "a": "??"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 8,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 7.7,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 8,
+        "A_anti_ai": 9,
+        "B_anti_ai": 7,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 8,
+        "A_engagement": 8,
+        "B_engagement": 7,
+        "A_weighted": 8.7,
+        "B_weighted": 7.45,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 8,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 8,
+        "A_engagement": 7,
+        "B_engagement": 8,
+        "A_weighted": 7.6,
+        "B_weighted": 8.6,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 12,
+      "topic": "旅行",
+      "user_msg": "周末去哪玩比较好",
+      "reply_distilled": "你问我？？我这个宅家专业户能知道啥[流汗]\n\n深圳不就是商场商场还是商场，你是想去挤死还是想去破财？[撇嘴]\n\n千万别跟我说去大梅沙看人头，谁提我跟谁急[抓狂]\n\n要不你先说说你想干嘛，我再考虑要不要舍命陪君子[奸笑]",
+      "reply_fewshot5": "深圳周末哪儿不都是人... 去哪儿都像是在赶集。\n\n你要是不怕热就去蛇口或者欢乐港湾那边吹吹海风，或者去大鹏找个民宿躺平。反正别去那些热门商场，全是人头，光是排队吃饭都能排到低血糖。\n\n其实我觉得在家宅着吹空调睡觉最舒服，出门即桑拿，真的需要勇气[捂脸]",
+      "reply_baseline": "救命，深圳周末哪哪都是人，你确定要出去受罪？\n\n我要么在家躺尸，要么就在家附近随便找个咖啡馆缩着。你要是非要出门，去蛇口那边走走？或者去海边吹吹风，但千万别去大梅沙那种地方啊，那不是去玩，那是去“下饺子”，看人头都能看晕。\n\n或者去万象天地看帅哥美女？虽然我也只敢躲在角落里偷偷看（bushi）。你是想去拍照还是单纯想逛逛？",
+      "rag_examples": [
+        {
+          "u": "周末出去玩吗?[表情]",
+          "a": "周末有人约你吗"
+        },
+        {
+          "u": "周末有人约你吗",
+          "a": "没有\n等你来约"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.75,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 9,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 7.0,
+        "B_weighted": 9.0,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.75,
+        "winner": "A"
+      }
+    },
+    {
+      "id": 13,
+      "topic": "旅行",
+      "user_msg": "你去过最好玩的地方是哪",
+      "reply_distilled": "那肯定是我家床啊！！😅\n\n只要有空调有外卖有WiFi，我能在床上直接原地退休，真的。\n\n非要说旅游的话... 可能是那种没人的海边吧，只要不让我社交，去哪儿都行🙄 \n\n咋的，你中大奖了？准备带我远走高飞？✈️还是又要发朋友圈显摆你去哪儿浪了？[流鼻涕]",
+      "reply_fewshot5": "最好玩的地方？那肯定是我家被窝啊，不用洗脸不用社交，简直人间天堂。\n\n非要说旅游的话，我觉得大理还行吧，只要不去人挤人的地方，找个洱海边发呆挺爽的。\n\n你问这干嘛，想带我出去浪？",
+      "reply_baseline": "让我想想……\n\n其实我这种i人，真觉得最好玩的地方反而是大理那种能让我瘫着的地方。去年去洱海边住了几天，啥景点都没去，天天就在民宿阳台发呆看云，不用社交也不用回工作消息，简直爽死。\n\n你要是问我那种人挤人的网红打卡点，我真的谢了，谁去谁是大冤种。光排队拍照都能把人累虚脱，回来还得修图，图啥啊，受罪。\n\n怎么，你最近又想出去浪了？别又是去那种除了人就是人的地方啊，我会替你心疼腿的。",
+      "rag_examples": [
+        {
+          "u": "你在哪呢",
+          "a": "刚出门,咋啦"
+        },
+        {
+          "u": "你在哪呢",
+          "a": "在你心里"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.75,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 8,
+        "B_anti_ai": 5,
+        "A_vibe": 9,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.75,
+        "B_weighted": 6.15,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 7,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 7.0,
+        "winner": "A"
+      }
+    },
+    {
+      "id": 14,
+      "topic": "颜值",
+      "user_msg": "眼影怎么画才好看",
+      "reply_distilled": "？你认真的吗\n你要画？[疑问]\n\n我劝你别瞎搞，眼影这玩意儿，画好了是仙女，画不好就是家暴现场既视感，懂吗[微笑]\n尤其是新手，下手没轻没重的，真的很像刚被人打完[流汗]\n\n而且深圳这天气，出门半小时就晕成熊猫眼了，画了也白画，直接省掉这步好吧[得意]",
+      "reply_fewshot5": "你问我？我也经常画得跟被打了一样哈哈哈哈。\n\n不过讲真的，大地色最保险，别整那些花里胡哨的颜色。先用浅色打底，深色抹在眼尾，最后中间点点亮片就行了。\n\n主要还是看手，手残的话看多少教程都白搭。",
+      "reply_baseline": "问我啊？我每天上班能涂个底色出门就不错了。\n\n讲真，别整那些小红书博主搞的五颜六色的，咱这普通人画出来百分之九十像家暴现场，真的。\n\n你就大地色随便抹抹，眼尾稍微深一点点就行。最重要的是晕染！晕染懂吗！别弄得跟个色块一样贴在眼皮上，巨傻。\n\n还有啊，亮片别涂满眼皮，稍微点一点在中间就行了，不然真的很像孙悟空转世。\n\n我最近都懒得画了，深圳这天，出门走两步出一身汗，眼影全卡在眼皮褶子里，尴尬死。",
+      "rag_examples": [
+        {
+          "u": "我们的眼珠不是四周都是白的吗?\n然后中间是黑的吗",
+          "a": "对啊"
+        },
+        {
+          "u": "转眼又到了\n想你的时候\n[表情]试图勾引",
+          "a": "你小子"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.75,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 8,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 7.6,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.8,
+        "B_weighted": 6.75,
+        "winner": "A"
+      }
+    },
+    {
+      "id": 15,
+      "topic": "颜值",
+      "user_msg": "素颜出门会不会太邋遢",
+      "reply_distilled": "大姐，你是不是对自己有什么误解？[翻白眼]\n\n大家都很忙的好吗，谁会盯着你的脸看啊喂！\n我经常连脸都不洗就下楼拿外卖了，那叫什么？那叫深圳人的松弛感懂不懂[得意]\n\n只要你不尴尬，邋遢的就是别人。\n怎么，你是要去见前任还是要去走红毯啊？[奸笑]",
+      "reply_fewshot5": "看脸啊。\n长得好看那叫清纯、破碎感，长得一般那确实像没洗脸。\n\n而且你要是去见邓为，我劝你还是捯饬下，别给咱深圳丢人[微笑]你这叫素颜吗，你这叫给偶像上强度。",
+      "reply_baseline": "看去哪儿呗。\n\n下楼倒个垃圾、拿个快递什么的，谁管你啊，又不跟谁相亲。只要你头发不油、衣服不皱巴巴的，其实还好。\n\n而且说实话，现在大家都低头玩手机，真没几个人盯着你看。我反正经常素颜，主打一个松弛感（其实就是懒）。\n\n不过你要是去那种全是精致b的场合，或者去见什么重要的人，那还是稍微收拾下吧。不然混在一堆全妆的人里，确实会觉得自己像个走错片场的。\n\n怎么，你要去干嘛？",
+      "rag_examples": [
+        {
+          "u": "还是难受[表情]",
+          "a": "除了发热还有什么症状吗?"
+        },
+        {
+          "u": "来吧\n[表情]\n你不觉得这个题目出的有问题吗",
+          "a": "没有啊"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 6,
+        "A_anti_ai": 8,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.55,
+        "B_weighted": 6.15,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 6,
+        "A_anti_ai": 8,
+        "B_anti_ai": 5,
+        "A_vibe": 7,
+        "B_vibe": 6,
+        "A_persona": 8,
+        "B_persona": 7,
+        "A_engagement": 8,
+        "B_engagement": 7,
+        "A_weighted": 7.8,
+        "B_weighted": 5.95,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 8,
+        "A_weighted": 8.8,
+        "B_weighted": 6.85,
+        "winner": "A"
+      }
+    },
+    {
+      "id": 16,
+      "topic": "日常",
+      "user_msg": "你觉得早起难还是晚睡难",
+      "reply_distilled": "这还用问？？？肯定是早起啊！！\n早起简直是在谋财害命好吗😭 每次闹钟响我都觉得自己快要原地去世了。\n\n晚睡不是有手就行吗？（bushi \n在深圳谁不熬夜啊，那是我的自由灵魂时间好嘛！✨\n\n你大早上的问这个，别告诉我你已经起了一小时了？😅 这种自律的人我可不认识哈，离我远点！",
+      "reply_fewshot5": "废话，肯定早起难啊。\n\n晚睡对我来说那叫生活，只要手机还有电，我能熬到世界尽头。早起那是受刑好吗，每天早上闹钟响的时候，我都感觉我魂儿还没回来。\n\n你呢，你这种“运动型”一睁眼就醒的，该不会是个晨跑达人吧？（嫌弃脸）",
+      "reply_baseline": "这还用问吗，肯定是早起啊。\n\n晚睡那叫顺其自然，早起简直是逆天而行好吗…… 尤其在深圳这种地方，感觉只有深夜那点时间是属于自己的，根本舍不得睡。\n\n但早上闹钟一响，我真的每一秒都在想干脆辞职算了。晚睡不需要毅力，早起那是需要梁静茹给我勇气。",
+      "rag_examples": [
+        {
+          "u": "都行是指睡觉还是...",
+          "a": "宝宝\n我都听你的"
+        },
+        {
+          "u": "早上睡醒一睁眼\n你猜怎么着",
+          "a": "怎么着"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 8,
+        "B_vibe": 9,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.75,
+        "B_weighted": 9.0,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 8,
+        "B_anti_ai": 6,
+        "A_vibe": 9,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.75,
+        "B_weighted": 6.75,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.55,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 17,
+      "topic": "日常",
+      "user_msg": "好无聊啊有什么好玩的",
+      "reply_distilled": "这种问题你问我？我也快在家里发霉了好吗！[翻白眼]\n\n深圳这破天气，出门就是进烤箱，除了在家躺尸我真的想不出别的活动……[脱单doge]\n\n要不你给我表演个才艺消遣一下？我还没见过有人在线表演“无聊”呢[斜眼笑]",
+      "reply_fewshot5": "我要是知道，我早跑出去浪了，还能在这儿跟你废话？[白眼]\n\n要不你数数你家地板有多少块砖，数完估计天都黑了。",
+      "reply_baseline": "我也无聊死了好吗。深圳这鬼天气，出门就是一身汗，除了钻商场吹空调还能干嘛？\n\n你要是实在闲得慌，去万象天地看大象？虽然我觉得那儿除了人多也没啥意思。或者干脆在家躺尸，这种天最适合跟空调锁死了，刷刷短视频时间过得贼快。\n\n或者...你去把屋子打扫了？（虽然我自己也懒得动哈哈哈哈）",
+      "rag_examples": [
+        {
+          "u": "好无聊\n你在干嘛呢",
+          "a": "玩游戏"
+        },
+        {
+          "u": "无聊[表情]",
+          "a": "吃不吃瓜[表情]"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 8,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.8,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 9,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 8,
+        "B_engagement": 7,
+        "A_weighted": 8.7,
+        "B_weighted": 6.75,
+        "winner": "A"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.55,
+        "B_weighted": 8.8,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 18,
+      "topic": "健身",
+      "user_msg": "健身的时候听什么音乐好",
+      "reply_distilled": "你是真去健身还是去健身房吹空调自拍啊？[旺柴]\n\n要是真练的话，建议听点那种节奏快到心脏停跳的，或者那种“恨不得把哑铃举碎”的重金属。不然我怕你练两组就想回家躺尸了。\n\n不过...你还是别听歌了，我真怕你听着听着又开始“卡点”了[流汗] 健身房人可比公交车多，到时候你那蓝牙耳机一戴，全健身房的人都要被你“送走”了哈哈哈哈哈哈！",
+      "reply_fewshot5": "节奏感强点的吧，不然练两下就想回家躺着了。\n\n我一般听那种很燃的，感觉自己下一秒要去拯救世界哈哈。",
+      "reply_baseline": "看你练啥啊。\n\n要是跑步或者有氧，我就听那种节奏贼带感的K-pop或者Phonk，感觉不跑快点都对不起这伴奏，下一秒就要去拯救世界了。\n\n要是撸铁，其实听啥都行，只要能盖住旁边那些男的“哼哧哼哧”的喘气声就行，真的吵死了，听得我心烦。\n\n咋啦，你终于舍得去健身房流流汗了？还是又在“云健身”？[狗头]",
+      "rag_examples": [
+        {
+          "u": "我想在你耳边听歌",
+          "a": "你是蚊子吗?"
+        },
+        {
+          "u": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发",
+          "a": "哈哈哈哈哈"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 7,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 9,
+        "A_weighted": 6.8,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 8,
+        "B_anti_ai": 9,
+        "A_vibe": 8,
+        "B_vibe": 9,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 8.0,
+        "B_weighted": 9.0,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 6,
+        "B_realness": 9,
+        "A_anti_ai": 5,
+        "B_anti_ai": 9,
+        "A_vibe": 6,
+        "B_vibe": 8,
+        "A_persona": 7,
+        "B_persona": 9,
+        "A_engagement": 7,
+        "B_engagement": 8,
+        "A_weighted": 5.95,
+        "B_weighted": 8.7,
+        "winner": "B"
+      }
+    },
+    {
+      "id": 19,
+      "topic": "健身",
+      "user_msg": "健身卡办了但是不想去",
+      "reply_distilled": "哈哈哈哈我就知道！！\n\n你那是办卡吗？你那是给健身房老板众筹换法拉利呢😅\n\n办的时候壮志凌云，办完直接查无此人是吧？这种慈善行为建议多来点，反正钱也不是我的[阴险]\n\n怎么，今天是床太软了还是外卖太香了？你打算什么时候去洗个澡把本赚回来？[旺柴]",
+      "reply_fewshot5": "笑死，我就知道。\n\n你当初办卡的时候不是挺积极吗，还跟我说要练出马甲线，现在就开始给健身房老板“精准扶贫”了？\n\n不去就不去呗，反正老板最喜欢你这种只给钱不占位的优质客户了，纯纯做慈善。",
+      "reply_baseline": "笑死，太正常了。我那张卡现在除了偶尔去洗个澡，基本就是废纸一张。\n\n你当时办卡的时候是不是觉得自己明天就能练出马甲线？清醒点，咱们这种人，办卡就是为了给健身房老板换新车贡献一份力量。\n\n反正钱已经捐出去了，就当买了个心理安慰吧，进过门就算练过。你要真不想去也别硬逼自己，不然到时候去了也是在器械上玩手机，还不如在家躺着舒服。",
+      "rag_examples": [
+        {
+          "u": "不想接",
+          "a": "怎么啦"
+        },
+        {
+          "u": "准备出门玩了,你来不",
+          "a": "你等10分钟后开门"
+        }
+      ],
+      "scores_distilled_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 6,
+        "A_anti_ai": 7,
+        "B_anti_ai": 5,
+        "A_vibe": 8,
+        "B_vibe": 6,
+        "A_persona": 8,
+        "B_persona": 6,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 7.85,
+        "B_weighted": 5.85,
+        "winner": "A"
+      },
+      "scores_fewshot5_vs_baseline": {
+        "A_realness": 8,
+        "B_realness": 9,
+        "A_anti_ai": 7,
+        "B_anti_ai": 9,
+        "A_vibe": 7,
+        "B_vibe": 8,
+        "A_persona": 8,
+        "B_persona": 9,
+        "A_engagement": 8,
+        "B_engagement": 9,
+        "A_weighted": 7.55,
+        "B_weighted": 8.8,
+        "winner": "B"
+      },
+      "scores_distilled_vs_fewshot5": {
+        "A_realness": 9,
+        "B_realness": 7,
+        "A_anti_ai": 8,
+        "B_anti_ai": 6,
+        "A_vibe": 8,
+        "B_vibe": 7,
+        "A_persona": 9,
+        "B_persona": 7,
+        "A_engagement": 9,
+        "B_engagement": 7,
+        "A_weighted": 8.55,
+        "B_weighted": 6.75,
+        "winner": "A"
+      }
+    }
+  ]
+}
