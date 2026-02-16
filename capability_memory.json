@@ -1,0 +1,13 @@
+{
+  "browse_web": {
+    "capability_id": "browse_web",
+    "description": "打开网页看内容，能看到文字和图片",
+    "first_discovered": 1771178668.3593836,
+    "use_count": 1,
+    "last_used": 1771178668.3593836,
+    "examples": [
+      "刷小红书看到了xhs"
+    ],
+    "source_action": "scroll_feed"
+  }
+}

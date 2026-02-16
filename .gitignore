@@ -1,0 +1,4 @@
+__pycache__/
+*.pyc
+.DS_Store
+chroma_style_db_v1_backup/
