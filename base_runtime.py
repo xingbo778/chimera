@@ -427,7 +427,7 @@ class WorldClient:
 def call_llm(system_prompt, user_prompt, max_tokens=500, temperature=0.9, model=None):
     try:
         response = client.chat.completions.create(
-            model=model or "gpt-4.1-mini",
+            model=model or "openai/gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -445,7 +445,7 @@ def call_llm_multi(system_prompt, messages, max_tokens=300, temperature=0.9, mod
     try:
         full_messages = [{"role": "system", "content": system_prompt}] + messages
         response = client.chat.completions.create(
-            model=model or "gpt-4.1-mini",
+            model=model or "openai/gpt-4.1-mini",
             messages=full_messages,
             max_tokens=max_tokens,
             temperature=temperature,
@@ -459,7 +459,7 @@ def call_llm_multi(system_prompt, messages, max_tokens=300, temperature=0.9, mod
 def call_llm_json(system_prompt, user_prompt, max_tokens=500, temperature=0.7, model=None):
     try:
         response = client.chat.completions.create(
-            model=model or "gpt-4.1-mini",
+            model=model or "openai/gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -1228,7 +1228,7 @@ class AgentRuntime:
                 prompt,
                 max_tokens=60,
                 temperature=0.8,
-                model="gpt-4.1-nano",
+                model="openai/gpt-4.1-nano",
             )
             return result.strip().strip('"') if result else None
         except Exception as e:
@@ -1829,7 +1829,7 @@ class AgentRuntime:
 如果内容无聊/广告/太普通，回答 no。"""
             
             resp = client.chat.completions.create(
-                model="gpt-4.1-nano",
+                model="openai/gpt-4.1-nano",
                 messages=[{"role": "user", "content": judge_prompt}],
                 max_tokens=5,
                 temperature=0.3,
@@ -1926,7 +1926,7 @@ class AgentRuntime:
 
         try:
             extracted = client.chat.completions.create(
-                model="gemini-2.5-flash",
+                model="google/gemini-2.5-flash",
                 messages=[
                     {"role": "system", "content": extract_prompt},
                     {"role": "user", "content": f"以下是浏览到的内容：\n\n{content[:4000]}"},
@@ -2061,7 +2061,7 @@ class AgentRuntime:
         
         try:
             extracted = client.chat.completions.create(
-                model="gpt-4.1-nano",
+                model="openai/gpt-4.1-nano",
                 messages=[
                     {"role": "system", "content": extract_prompt},
                 ],

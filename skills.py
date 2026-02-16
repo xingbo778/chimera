@@ -341,7 +341,7 @@ def build_selfie_prompt(location_id="home_xiaoyue", hour=14, weather="晴天",
     if custom_prompt:
         try:
             translated = client.chat.completions.create(
-                model="gpt-4.1-nano",
+                model="openai/gpt-4.1-nano",
                 messages=[
                     {"role": "system", "content": "Translate the user's photo request into a short English description for image generation. Focus on outfit, pose, and setting. Keep it under 30 words. If the request is about swimsuit/bikini, describe a tasteful swimsuit photo. If about specific clothing, describe that clothing."},
                     {"role": "user", "content": custom_prompt},
@@ -420,7 +420,7 @@ def analyze_photo_request(desc, current_hour=None, current_location="home_xiaoyu
         current_hour = (datetime.now(timezone.utc) + timedelta(hours=8)).hour
     try:
         result = client.chat.completions.create(
-            model="gpt-4.1-nano",
+            model="openai/gpt-4.1-nano",
             messages=[
                 {"role": "system", "content": """Analyze a photo description from a chat. Return JSON with:
 - photo_type (str): one of "selfie", "mirror", "scene".
@@ -464,7 +464,7 @@ Return ONLY valid JSON, no markdown."""},
         }
 
 
-def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/selfies",
+def skill_take_photo(desc, photo_type="scene", output_dir="/app/selfies",
                      world_context=None, override_hour=None):
     """
     统一的拍照函数。
@@ -500,7 +500,7 @@ def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/
             "Output ONLY the English prompt."
         )
         translated = client.chat.completions.create(
-            model="gpt-4.1-nano",
+            model="openai/gpt-4.1-nano",
             messages=[
                 {"role": "system", "content": translate_instruction},
                 {"role": "user", "content": desc},
@@ -776,7 +776,7 @@ def _take_selfie(en_desc, location_id, hour, weather, activity, output_dir, head
 
 
 def skill_generate_selfie(scene="casual", custom_prompt=None,
-                          output_dir="/home/ubuntu/chimera/selfies",
+                          output_dir="/app/selfies",
                           world_context=None, override_hour=None):
     """兼容入口：内部调用 skill_take_photo(photo_type='selfie')"""
     desc = custom_prompt or scene or "casual selfie"
@@ -784,7 +784,7 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
                             world_context=world_context, override_hour=override_hour)
 
 
-def skill_generate_scene_photo(prompt_desc, output_dir="/home/ubuntu/chimera/selfies",
+def skill_generate_scene_photo(prompt_desc, output_dir="/app/selfies",
                                world_context=None):
     """兼容入口：内部调用 skill_take_photo(photo_type='scene')"""
     return skill_take_photo(prompt_desc, photo_type="scene", output_dir=output_dir,
@@ -817,7 +817,7 @@ def skill_understand_image(image_path_or_url, question="这张图片里有什么
             })
 
         response = client.chat.completions.create(
-            model="gpt-4.1-mini",
+            model="openai/gpt-4.1-mini",
             messages=[{"role": "user", "content": content}],
             max_tokens=500,
         )
@@ -834,7 +834,7 @@ def skill_read_link(url):
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4.1-mini",
+            model="openai/gpt-4.1-mini",
             messages=[
                 {"role": "system", "content": "你是一个阅读助手。请用中文简要总结以下网页内容，2-3句话即可。"},
                 {"role": "user", "content": f"请总结这个网页的内容：\n\n{fetch_result['content']}"},
@@ -850,7 +850,7 @@ def skill_read_link(url):
 # Skill 4: 语音（TTS）
 # ============================================================
 
-def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="zh-CN-XiaoxiaoNeural"):
+def skill_text_to_speech(text, output_dir="/app/voice", voice="zh-CN-XiaoxiaoNeural"):
     """用 edge-tts 生成自然中文语音。
     
     可选 voice:
@@ -926,7 +926,7 @@ def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="z
 YUNWU_BASE_URL = "https://yunwu.ai"
 
 
-def skill_generate_video(prompt, image_path=None, output_dir="/home/ubuntu/chimera/videos",
+def skill_generate_video(prompt, image_path=None, output_dir="/app/videos",
                          aspect_ratio="9:16"):
     """用 veo3.1-fast 生成短视频。如果没有image_path，先生成一张自拍作为起始帧。"""
     os.makedirs(output_dir, exist_ok=True)

@@ -1014,7 +1014,7 @@ def _exec_browser_action(inputs, skill_name, agent_soul):
                 screenshot_path = None
                 if screenshot_result:
                     # 尝试从结果中提取截图路径
-                    screenshot_path = f"/home/ubuntu/chimera/selfies/browser_action_{int(time.time())}.png"
+                    screenshot_path = f"/app/selfies/browser_action_{int(time.time())}.png"
                 
                 return {
                     "description": summary,
