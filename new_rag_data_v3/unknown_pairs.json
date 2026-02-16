@@ -1,0 +1,7031 @@
+[
+  {
+    "user_msg": "你对象跟你住一起吗",
+    "assistant_msg": "在一起呢[表情]\n你俩住床上 我住沙发",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_00b0ce24.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "在一起呢[表情]\n你俩住床上 我住沙发",
+    "assistant_msg": "???\n你特么",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_00b0ce24.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你对象跟你住一起吗"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "???\n你特么",
+    "assistant_msg": "大大方方\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_00b0ce24.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你对象跟你住一起吗"
+      },
+      {
+        "role": "user",
+        "text": "在一起呢[表情]\n你俩住床上 我住沙发"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "大大方方\n[表情]",
+    "assistant_msg": "不行咱去看看呢?是不是招东西了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_00b0ce24.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你对象跟你住一起吗"
+      },
+      {
+        "role": "user",
+        "text": "在一起呢[表情]\n你俩住床上 我住沙发"
+      },
+      {
+        "role": "user",
+        "text": "???\n你特么"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "我又怕问了得不到我想要的答案",
+    "assistant_msg": "xxy是不是sb啊\n快点说\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_0561ae2b.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "突然想吃烤肉了啊\n咱们今天一起去吃呀!",
+    "assistant_msg": "好啊好啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_077f4e0c.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "好啊好啊",
+    "assistant_msg": "那咱们AB制去吃吧!不然我吃的不安心[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_077f4e0c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "突然想吃烤肉了啊\n咱们今天一起去吃呀!"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "那咱们AB制去吃吧!不然我吃的不安心[表情]",
+    "assistant_msg": "啊?啥AB制呀!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_077f4e0c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "突然想吃烤肉了啊\n咱们今天一起去吃呀!"
+      },
+      {
+        "role": "user",
+        "text": "好啊好啊"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "啊?啥AB制呀!",
+    "assistant_msg": "就是你A钱然后我舔个B脸去吃\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_077f4e0c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "突然想吃烤肉了啊\n咱们今天一起去吃呀!"
+      },
+      {
+        "role": "user",
+        "text": "好啊好啊"
+      },
+      {
+        "role": "user",
+        "text": "那咱们AB制去吃吧!不然我吃的不安心[表情]"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "就是你A钱然后我舔个B脸去吃\n[表情]",
+    "assistant_msg": "哈哈哈啊哈哈我可真是服了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_077f4e0c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "突然想吃烤肉了啊\n咱们今天一起去吃呀!"
+      },
+      {
+        "role": "user",
+        "text": "好啊好啊"
+      },
+      {
+        "role": "user",
+        "text": "那咱们AB制去吃吧!不然我吃的不安心[表情]"
+      },
+      {
+        "role": "user",
+        "text": "啊?啥AB制呀!"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "公交车司机的名字叫“假如你”\n姓假",
+    "assistant_msg": "[表情] 我TM......\n想要哥哥v你50就直说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_07d1cb58.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "[表情] 我TM......\n想要哥哥v你50就直说",
+    "assistant_msg": "[表情] 开门见山吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_07d1cb58.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "公交车司机的名字叫“假如你”\n姓假"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "[表情] 开门见山吧",
+    "assistant_msg": "¥500.00 已被接收",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_07d1cb58.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "公交车司机的名字叫“假如你”\n姓假"
+      },
+      {
+        "role": "user",
+        "text": "[表情] 我TM......\n想要哥哥v你50就直说"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "¥500.00 已被接收",
+    "assistant_msg": "[表情]\n谢主隆恩\n¥500.00 已收款",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_07d1cb58.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "公交车司机的名字叫“假如你”\n姓假"
+      },
+      {
+        "role": "user",
+        "text": "[表情] 我TM......\n想要哥哥v你50就直说"
+      },
+      {
+        "role": "user",
+        "text": "[表情] 开门见山吧"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "[表情]\n谢主隆恩\n¥500.00 已收款",
+    "assistant_msg": "再准备19道不一样的题",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_07d1cb58.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "公交车司机的名字叫“假如你”\n姓假"
+      },
+      {
+        "role": "user",
+        "text": "[表情] 我TM......\n想要哥哥v你50就直说"
+      },
+      {
+        "role": "user",
+        "text": "[表情] 开门见山吧"
+      },
+      {
+        "role": "user",
+        "text": "¥500.00 已被接收"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "再准备19道不一样的题",
+    "assistant_msg": "哈哈哈哈\n那我不是要发财了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_07d1cb58.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情] 我TM......\n想要哥哥v你50就直说"
+      },
+      {
+        "role": "user",
+        "text": "[表情] 开门见山吧"
+      },
+      {
+        "role": "user",
+        "text": "¥500.00 已被接收"
+      },
+      {
+        "role": "user",
+        "text": "[表情]\n谢主隆恩\n¥500.00 已收款"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "没死",
+    "assistant_msg": "在干嘛?",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "assistant",
+        "text": "在吗?"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "呼吸",
+    "assistant_msg": "你叫什么?",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "assistant",
+        "text": "在吗?"
+      },
+      {
+        "role": "user",
+        "text": "没死"
+      },
+      {
+        "role": "assistant",
+        "text": "在干嘛?"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "我没叫啊",
+    "assistant_msg": "你多大?",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "没死"
+      },
+      {
+        "role": "assistant",
+        "text": "在干嘛?"
+      },
+      {
+        "role": "user",
+        "text": "呼吸"
+      },
+      {
+        "role": "assistant",
+        "text": "你叫什么?"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "未成年",
+    "assistant_msg": "很高兴认识你",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "呼吸"
+      },
+      {
+        "role": "assistant",
+        "text": "你叫什么?"
+      },
+      {
+        "role": "user",
+        "text": "我没叫啊"
+      },
+      {
+        "role": "assistant",
+        "text": "你多大?"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "你高兴的太早了",
+    "assistant_msg": "你什么时候有空?",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我没叫啊"
+      },
+      {
+        "role": "assistant",
+        "text": "你多大?"
+      },
+      {
+        "role": "user",
+        "text": "未成年"
+      },
+      {
+        "role": "assistant",
+        "text": "很高兴认识你"
+      }
+    ],
+    "turn_index": 9,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "只要你有空我就没有空",
+    "assistant_msg": "明天请你吃饭",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "未成年"
+      },
+      {
+        "role": "assistant",
+        "text": "很高兴认识你"
+      },
+      {
+        "role": "user",
+        "text": "你高兴的太早了"
+      },
+      {
+        "role": "assistant",
+        "text": "你什么时候有空?"
+      }
+    ],
+    "turn_index": 11,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "明天是谁?",
+    "assistant_msg": "那个 我想给你整个世界",
+    "user_gender": "female",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_09c8c6ce.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你高兴的太早了"
+      },
+      {
+        "role": "assistant",
+        "text": "你什么时候有空?"
+      },
+      {
+        "role": "user",
+        "text": "只要你有空我就没有空"
+      },
+      {
+        "role": "assistant",
+        "text": "明天请你吃饭"
+      }
+    ],
+    "turn_index": 13,
+    "total_turns": 14
+  },
+  {
+    "user_msg": "微信转账 ¥520.00 新年快乐[表情]",
+    "assistant_msg": "哇塞 祝哥哥在新的一年里!\n不劳而获 无功受禄!\n坐享其成 一步登天!\n多挣大钱少生气!\n年年大赚人民币!\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_0b030842.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "在不在在不在",
+    "assistant_msg": "咋了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_0c64783c.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "咋了",
+    "assistant_msg": "我想问你个事儿",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_0c64783c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在不在在不在"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我想问你个事儿",
+    "assistant_msg": "什么",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_0c64783c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在不在在不在"
+      },
+      {
+        "role": "user",
+        "text": "咋了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我看这个月的账单\n又花了乱七八糟的钱",
+    "assistant_msg": "这说明你是一个善良的人!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_128c3a26.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "人支出\n性本善嘛",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_128c3a26.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我看这个月的账单\n又花了乱七八糟的钱"
+      },
+      {
+        "role": "user",
+        "text": "这说明你是一个善良的人!"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我今天下午打游戏肯德基连跪了一下午啊啊啊肯德基然后还有个队友一直喷我们肯德基真的是气死我啦肯德基肯德基",
+    "assistant_msg": "把肯德基当逗号呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_14a33a72.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "把肯德基当逗号呢",
+    "assistant_msg": "是吗!我都没注意!\n可能是我太想吃肯德基了\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_14a33a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我今天下午打游戏肯德基连跪了一下午啊啊啊肯德基然后还有个队友一直喷我们肯德基真的是气死我啦肯德基肯德基"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "滚\n其实我骗了你",
+    "assistant_msg": "说啊\n又骗我什么了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_14ac319f.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "说啊\n又骗我什么了",
+    "assistant_msg": "其实我是来自魔仙堡的一个魔仙,我是侍奉魔仙堡女王的小魔仙,很多年前,小兰姐姐接到女王殿下的命令来到人间,我在旁边偷听到跟着小蓝姐姐一起下界,然后找不到了回去的路",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_14ac319f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "滚\n其实我骗了你"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "其实我是来自魔仙堡的一个魔仙,我是侍奉魔仙堡女王的小魔仙,很多年前,小兰姐姐接到女王殿下的命令来到人间,我在旁边偷听到跟着小蓝姐姐一起下界,然后找不到了回去的路",
+    "assistant_msg": "你是不是有病啊\n我老家有只鸡你要看吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_14ac319f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "滚\n其实我骗了你"
+      },
+      {
+        "role": "user",
+        "text": "说啊\n又骗我什么了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "对面拿你人头是给提成吗\n我也感动了",
+    "assistant_msg": "我被圆圆她们的精神感动了[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "我被圆圆她们的精神感动了[表情]",
+    "assistant_msg": "你要请她们吃饭才行的程度",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对面拿你人头是给提成吗\n我也感动了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "你要请她们吃饭才行的程度",
+    "assistant_msg": "面对这么菜的队友她们也不嫌弃",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对面拿你人头是给提成吗\n我也感动了"
+      },
+      {
+        "role": "user",
+        "text": "我被圆圆她们的精神感动了[表情]"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "面对这么菜的队友她们也不嫌弃",
+    "assistant_msg": "女孩子车队真温暖",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对面拿你人头是给提成吗\n我也感动了"
+      },
+      {
+        "role": "user",
+        "text": "我被圆圆她们的精神感动了[表情]"
+      },
+      {
+        "role": "user",
+        "text": "你要请她们吃饭才行的程度"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "女孩子车队真温暖",
+    "assistant_msg": "一直鼓励着我",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对面拿你人头是给提成吗\n我也感动了"
+      },
+      {
+        "role": "user",
+        "text": "我被圆圆她们的精神感动了[表情]"
+      },
+      {
+        "role": "user",
+        "text": "你要请她们吃饭才行的程度"
+      },
+      {
+        "role": "user",
+        "text": "面对这么菜的队友她们也不嫌弃"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "一直鼓励着我",
+    "assistant_msg": "这句话也温暖",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我被圆圆她们的精神感动了[表情]"
+      },
+      {
+        "role": "user",
+        "text": "你要请她们吃饭才行的程度"
+      },
+      {
+        "role": "user",
+        "text": "面对这么菜的队友她们也不嫌弃"
+      },
+      {
+        "role": "user",
+        "text": "女孩子车队真温暖"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "这句话也温暖",
+    "assistant_msg": "还是喜欢跟你玩",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你要请她们吃饭才行的程度"
+      },
+      {
+        "role": "user",
+        "text": "面对这么菜的队友她们也不嫌弃"
+      },
+      {
+        "role": "user",
+        "text": "女孩子车队真温暖"
+      },
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "还是喜欢跟你玩",
+    "assistant_msg": "这句话一点也不温暖，怎么说出来的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "面对这么菜的队友她们也不嫌弃"
+      },
+      {
+        "role": "user",
+        "text": "女孩子车队真温暖"
+      },
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      },
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "这句话一点也不温暖，怎么说出来的",
+    "assistant_msg": "咱们菜得旗鼓相当",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "女孩子车队真温暖"
+      },
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      },
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      },
+      {
+        "role": "user",
+        "text": "还是喜欢跟你玩"
+      }
+    ],
+    "turn_index": 8,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "咱们菜得旗鼓相当",
+    "assistant_msg": "这句话说得我心里难受了，但我不懂为什么难受，你懂吗?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      },
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      },
+      {
+        "role": "user",
+        "text": "还是喜欢跟你玩"
+      },
+      {
+        "role": "user",
+        "text": "这句话一点也不温暖，怎么说出来的"
+      }
+    ],
+    "turn_index": 9,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "这句话说得我心里难受了，但我不懂为什么难受，你懂吗?",
+    "assistant_msg": "彼此都不会有所谓的压力",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1816dc42.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      },
+      {
+        "role": "user",
+        "text": "还是喜欢跟你玩"
+      },
+      {
+        "role": "user",
+        "text": "这句话一点也不温暖，怎么说出来的"
+      },
+      {
+        "role": "user",
+        "text": "咱们菜得旗鼓相当"
+      }
+    ],
+    "turn_index": 10,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "你不会还没起床吧\n快起床\n太阳晒屁股了",
+    "assistant_msg": "没关系\n往屁股上涂点防晒霜",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_1a7ae3f4.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "没关系\n往屁股上涂点防晒霜",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_1a7ae3f4.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你不会还没起床吧\n快起床\n太阳晒屁股了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我跟你讲!!\n我下班路上看到了算命先生给人算命\n我就很好奇 在旁边看着",
+    "assistant_msg": "然后呢?\n偷听到了什么故事",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1ccb915f.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "然后呢?\n偷听到了什么故事",
+    "assistant_msg": "故事不重要\n重要的是我偷学到了点本事",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_1ccb915f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我跟你讲!!\n我下班路上看到了算命先生给人算命\n我就很好奇 在旁边看着"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "你是不是有病啊\n我老家有只鸡你要看吗",
+    "assistant_msg": "滚",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2115e1da.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "滚",
+    "assistant_msg": "真的\n真的有一只\n贼可爱啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2115e1da.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你是不是有病啊\n我老家有只鸡你要看吗"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "真的\n真的有一只\n贼可爱啊",
+    "assistant_msg": "滚",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2115e1da.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你是不是有病啊\n我老家有只鸡你要看吗"
+      },
+      {
+        "role": "user",
+        "text": "滚"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "大大方方\n[表情]",
+    "assistant_msg": "不行咱去看看呢？是不是招东西了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2118d68a.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你对象跟你住一起吗"
+      },
+      {
+        "role": "user",
+        "text": "在一起呢[表情]\n你俩住床上 我住沙发"
+      },
+      {
+        "role": "user",
+        "text": "???\n你特么"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "重要的是我偷学到了点本事",
+    "assistant_msg": "[表情]\n啥本事来说一下",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2244660d.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "[表情]\n啥本事来说一下",
+    "assistant_msg": "算命的把戏被我学到了一点皮毛\n!!!!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2244660d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "重要的是我偷学到了点本事"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "算命的把戏被我学到了一点皮毛\n!!!!",
+    "assistant_msg": "???",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2244660d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "重要的是我偷学到了点本事"
+      },
+      {
+        "role": "user",
+        "text": "[表情]\n啥本事来说一下"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "???",
+    "assistant_msg": "不信吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2244660d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "重要的是我偷学到了点本事"
+      },
+      {
+        "role": "user",
+        "text": "[表情]\n啥本事来说一下"
+      },
+      {
+        "role": "user",
+        "text": "算命的把戏被我学到了一点皮毛\n!!!!"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "不信吗",
+    "assistant_msg": "怎么证明",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2244660d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "重要的是我偷学到了点本事"
+      },
+      {
+        "role": "user",
+        "text": "[表情]\n啥本事来说一下"
+      },
+      {
+        "role": "user",
+        "text": "算命的把戏被我学到了一点皮毛\n!!!!"
+      },
+      {
+        "role": "user",
+        "text": "???"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "怎么证明",
+    "assistant_msg": "我给你演示一个",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2244660d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]\n啥本事来说一下"
+      },
+      {
+        "role": "user",
+        "text": "算命的把戏被我学到了一点皮毛\n!!!!"
+      },
+      {
+        "role": "user",
+        "text": "???"
+      },
+      {
+        "role": "user",
+        "text": "不信吗"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你和你说",
+    "assistant_msg": "哈哈哈哈哈哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_23d511a1.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "哈哈哈哈哈哈哈",
+    "assistant_msg": "笑什么\n我还没说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_23d511a1.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你和你说"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "笑什么\n我还没说",
+    "assistant_msg": "不好意思笑早了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_23d511a1.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你和你说"
+      },
+      {
+        "role": "user",
+        "text": "哈哈哈哈哈哈哈"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "早上睡醒一睁眼\n你猜怎么着",
+    "assistant_msg": "怎么着",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_24f307a9.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "怎么着",
+    "assistant_msg": "嘿,醒了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_24f307a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "早上睡醒一睁眼\n你猜怎么着"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "嘿,醒了",
+    "assistant_msg": "哎哟喂您这厉害了,醒了竟然\n一睁眼就醒 偏运动\n一睁眼又睡了偏商务",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_24f307a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "早上睡醒一睁眼\n你猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "怎么着"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "哎哟喂您这厉害了,醒了竟然\n一睁眼就醒 偏运动\n一睁眼又睡了偏商务",
+    "assistant_msg": "我是运动型",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_24f307a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "早上睡醒一睁眼\n你猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "怎么着"
+      },
+      {
+        "role": "user",
+        "text": "嘿,醒了"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "我是运动型",
+    "assistant_msg": "那我是商务型",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_24f307a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "早上睡醒一睁眼\n你猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "怎么着"
+      },
+      {
+        "role": "user",
+        "text": "嘿,醒了"
+      },
+      {
+        "role": "user",
+        "text": "哎哟喂您这厉害了,醒了竟然\n一睁眼就醒 偏运动\n一睁眼又睡了偏商务"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "公交车司机的名字叫“假如你”\n姓假\n我TM......",
+    "assistant_msg": "想要哥哥v你50就直说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2a16dc70.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "想要哥哥v你50就直说",
+    "assistant_msg": "开门见山吧\n[表情]\n谢主隆恩",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2a16dc70.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "公交车司机的名字叫“假如你”\n姓假\n我TM......"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "开门见山吧\n[表情]\n谢主隆恩",
+    "assistant_msg": "再准备19道不一样的题",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2a16dc70.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "公交车司机的名字叫“假如你”\n姓假\n我TM......"
+      },
+      {
+        "role": "user",
+        "text": "想要哥哥v你50就直说"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "[表情]\n真令人兴奋",
+    "assistant_msg": "小朋友，你知道的有点多了\n我要灭口",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2a81175a.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "[表情]\n这种表情包都能找到🤔",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2a81175a.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]\n真令人兴奋"
+      },
+      {
+        "role": "user",
+        "text": "小朋友，你知道的有点多了\n我要灭口"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "[表情]\n这种表情包都能找到🤔",
+    "assistant_msg": "搜到的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2a81175a.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]\n真令人兴奋"
+      },
+      {
+        "role": "user",
+        "text": "小朋友，你知道的有点多了\n我要灭口"
+      },
+      {
+        "role": "user",
+        "text": "[表情]"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "跟你说个事，不要告诉别人",
+    "assistant_msg": "好的，我发誓不说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2b74c676.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "好的，我发誓不说",
+    "assistant_msg": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发现我带着蓝牙耳机-",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2b74c676.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "跟你说个事，不要告诉别人"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发现我带着蓝牙耳机-",
+    "assistant_msg": "[表情]\n哈哈哈哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2b74c676.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "跟你说个事，不要告诉别人"
+      },
+      {
+        "role": "user",
+        "text": "好的，我发誓不说"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "[表情]\n哈哈哈哈哈",
+    "assistant_msg": "大哭\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_2b74c676.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "跟你说个事，不要告诉别人"
+      },
+      {
+        "role": "user",
+        "text": "好的，我发誓不说"
+      },
+      {
+        "role": "user",
+        "text": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发现我带着蓝牙耳机-"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "我跟你说\n我已经不是当年那个傻子了",
+    "assistant_msg": "是今年的傻子",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2f934737.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "是今年的傻子",
+    "assistant_msg": "你什么意思",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_2f934737.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我跟你说\n我已经不是当年那个傻子了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "他居然\n[表情]",
+    "assistant_msg": "说啥呢?!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_336ad70a.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "说啥呢?!",
+    "assistant_msg": "[表情]\n最后她\n[表情]\n是不是 很震惊!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_336ad70a.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "他居然\n[表情]"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "就是把这个梦告诉给十个傻子\n哈哈哈哈",
+    "assistant_msg": "滚犊子\n你大爷的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_33ae75a4.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "滚犊子\n你大爷的",
+    "assistant_msg": "停\n你先别急\n事情还有反转",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_33ae75a4.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "就是把这个梦告诉给十个傻子\n哈哈哈哈"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "让你看的庆余年1看了没有啊\n马上出第二部了",
+    "assistant_msg": "快了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_344df823.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "快了",
+    "assistant_msg": "快了是什么意思",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_344df823.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "让你看的庆余年1看了没有啊\n马上出第二部了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "快了是什么意思",
+    "assistant_msg": "到预告片了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_344df823.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "让你看的庆余年1看了没有啊\n马上出第二部了"
+      },
+      {
+        "role": "user",
+        "text": "快了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "到预告片了",
+    "assistant_msg": "我就多余问你",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_344df823.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "让你看的庆余年1看了没有啊\n马上出第二部了"
+      },
+      {
+        "role": "user",
+        "text": "快了"
+      },
+      {
+        "role": "user",
+        "text": "快了是什么意思"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "我就多余问你",
+    "assistant_msg": "你不要给我哇哇叫",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_344df823.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "让你看的庆余年1看了没有啊\n马上出第二部了"
+      },
+      {
+        "role": "user",
+        "text": "快了"
+      },
+      {
+        "role": "user",
+        "text": "快了是什么意思"
+      },
+      {
+        "role": "user",
+        "text": "到预告片了"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "退一万步来讲",
+    "assistant_msg": "就在这说吧\n退一万步\n谁听的清啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_37ca7276.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "一个人的寂寞\n两个人的错\n爱她为何还要选择我\n我懂我也知道你没有舍不得\n希望他是真的爱我还要爱你\n我才会逼自己离开",
+    "assistant_msg": "这是演的哪一出\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_39e2a66e.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "听吗",
+    "assistant_msg": "听",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3bd0dcac.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "听",
+    "assistant_msg": "开始讲了哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3bd0dcac.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "听吗"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "开始讲了哈",
+    "assistant_msg": "行",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3bd0dcac.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "听吗"
+      },
+      {
+        "role": "user",
+        "text": "听"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "zxr咋还不来\n焦急等人中",
+    "assistant_msg": "你打开自拍",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3c26b096.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "你打开自拍",
+    "assistant_msg": "为啥",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3c26b096.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "zxr咋还不来\n焦急等人中"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "为啥",
+    "assistant_msg": "打开了吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3c26b096.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "zxr咋还不来\n焦急等人中"
+      },
+      {
+        "role": "user",
+        "text": "你打开自拍"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "打开了吗",
+    "assistant_msg": "打开了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3c26b096.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "zxr咋还不来\n焦急等人中"
+      },
+      {
+        "role": "user",
+        "text": "你打开自拍"
+      },
+      {
+        "role": "user",
+        "text": "为啥"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "打开了",
+    "assistant_msg": "人中是不是在你脸上",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3c26b096.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "zxr咋还不来\n焦急等人中"
+      },
+      {
+        "role": "user",
+        "text": "你打开自拍"
+      },
+      {
+        "role": "user",
+        "text": "为啥"
+      },
+      {
+        "role": "user",
+        "text": "打开了吗"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "在家看剧呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3cc92e8f.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "在家看剧呢",
+    "assistant_msg": "别看了退出去，看朋友圈有瓜",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3cc92e8f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "别看了退出去，看朋友圈有瓜",
+    "assistant_msg": "不急，马上看完这集",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3cc92e8f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家看剧呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "不急，马上看完这集",
+    "assistant_msg": "一会儿他就删了，速度\n真删了，你看不到了\n? 人呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3cc92e8f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家看剧呢"
+      },
+      {
+        "role": "user",
+        "text": "别看了退出去，看朋友圈有瓜"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "他居然",
+    "assistant_msg": "说啥呢?!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3d408816.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "说啥呢?!",
+    "assistant_msg": "最后她\n是不是 很震惊!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_3d408816.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "他居然"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "求求了给我巴结一下吧",
+    "assistant_msg": "我今年好像咖啡都没喝过几杯...你懂我意思",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "我今年好像咖啡都没喝过几杯...你懂我意思",
+    "assistant_msg": "?富婆秒变讨口子",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "求求了给我巴结一下吧"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "?富婆秒变讨口子",
+    "assistant_msg": "你知道的...我过得很拮据",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "求求了给我巴结一下吧"
+      },
+      {
+        "role": "user",
+        "text": "我今年好像咖啡都没喝过几杯...你懂我意思"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "你知道的...我过得很拮据",
+    "assistant_msg": "停停停,你上个月刚提的车哪来的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "求求了给我巴结一下吧"
+      },
+      {
+        "role": "user",
+        "text": "我今年好像咖啡都没喝过几杯...你懂我意思"
+      },
+      {
+        "role": "user",
+        "text": "?富婆秒变讨口子"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "停停停,你上个月刚提的车哪来的",
+    "assistant_msg": "路边捡的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "求求了给我巴结一下吧"
+      },
+      {
+        "role": "user",
+        "text": "我今年好像咖啡都没喝过几杯...你懂我意思"
+      },
+      {
+        "role": "user",
+        "text": "?富婆秒变讨口子"
+      },
+      {
+        "role": "user",
+        "text": "你知道的...我过得很拮据"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "路边捡的",
+    "assistant_msg": "资本你赢了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我今年好像咖啡都没喝过几杯...你懂我意思"
+      },
+      {
+        "role": "user",
+        "text": "?富婆秒变讨口子"
+      },
+      {
+        "role": "user",
+        "text": "你知道的...我过得很拮据"
+      },
+      {
+        "role": "user",
+        "text": "停停停,你上个月刚提的车哪来的"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "资本你赢了",
+    "assistant_msg": "其实主要是想喝瑞幸新品了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "?富婆秒变讨口子"
+      },
+      {
+        "role": "user",
+        "text": "你知道的...我过得很拮据"
+      },
+      {
+        "role": "user",
+        "text": "停停停,你上个月刚提的车哪来的"
+      },
+      {
+        "role": "user",
+        "text": "路边捡的"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "其实主要是想喝瑞幸新品了",
+    "assistant_msg": "我给你点两杯,快告诉我去哪捡",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3d461a72.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你知道的...我过得很拮据"
+      },
+      {
+        "role": "user",
+        "text": "停停停,你上个月刚提的车哪来的"
+      },
+      {
+        "role": "user",
+        "text": "路边捡的"
+      },
+      {
+        "role": "user",
+        "text": "资本你赢了"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "那是什么\n你得说啊",
+    "assistant_msg": "你要为知识付费\n先给钱",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3eb18106.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "你要为知识付费\n先给钱",
+    "assistant_msg": "这知识\n不要也罢\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3eb18106.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "那是什么\n你得说啊"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "这知识\n不要也罢\n[表情]",
+    "assistant_msg": "不行，不许耍赖",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3eb18106.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "那是什么\n你得说啊"
+      },
+      {
+        "role": "user",
+        "text": "你要为知识付费\n先给钱"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "不行，不许耍赖",
+    "assistant_msg": "没钱啊\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_3eb18106.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "那是什么\n你得说啊"
+      },
+      {
+        "role": "user",
+        "text": "你要为知识付费\n先给钱"
+      },
+      {
+        "role": "user",
+        "text": "这知识\n不要也罢\n[表情]"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "分手了\n这次应该不会和好了\n对方已拒绝 📞",
+    "assistant_msg": "呵\n菊花出气也就图一乐\n真放屁还得看你的嘴",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_446b3169.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "在市中心还有很大的房子\n属于是赚了很多钱的家庭嘛\n然后阴差阳错的,她闺蜜就代替了她成为了她爸爸的女儿\n离不离谱你们说",
+    "assistant_msg": "这是什么小说照进现实\n[表情]\n后来呢,继续说,我瓜子还有,不怕嗑完!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_47211721.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "这是什么小说照进现实\n[表情]\n后来呢,继续说,我瓜子还有,不怕嗑完!",
+    "assistant_msg": "然后这个女的就很气啊,准备跟她闺蜜绝交了\n但是后面了解完之后发现她闺蜜其实也有一些不得已的苦衷来着\n加上这个女生心软,后面也就原谅她闺蜜了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_47211721.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在市中心还有很大的房子\n属于是赚了很多钱的家庭嘛\n然后阴差阳错的,她闺蜜就代替了她成为了她爸爸的女儿\n离不离谱你们说"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "然后这个女的就很气啊,准备跟她闺蜜绝交了\n但是后面了解完之后发现她闺蜜其实也有一些不得已的苦衷来着\n加上这个女生心软,后面也就原谅她闺蜜了",
+    "assistant_msg": "?这还是闺蜜吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_47211721.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在市中心还有很大的房子\n属于是赚了很多钱的家庭嘛\n然后阴差阳错的,她闺蜜就代替了她成为了她爸爸的女儿\n离不离谱你们说"
+      },
+      {
+        "role": "user",
+        "text": "这是什么小说照进现实\n[表情]\n后来呢,继续说,我瓜子还有,不怕嗑完!"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "在吗\n在吗",
+    "assistant_msg": "咋了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "咋了",
+    "assistant_msg": "你有事吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在吗\n在吗"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "你有事吗",
+    "assistant_msg": "咋了你说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在吗\n在吗"
+      },
+      {
+        "role": "user",
+        "text": "咋了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "咋了你说",
+    "assistant_msg": "你有事吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在吗\n在吗"
+      },
+      {
+        "role": "user",
+        "text": "咋了"
+      },
+      {
+        "role": "user",
+        "text": "你有事吗"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "你有事吗",
+    "assistant_msg": "没事",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在吗\n在吗"
+      },
+      {
+        "role": "user",
+        "text": "咋了"
+      },
+      {
+        "role": "user",
+        "text": "你有事吗"
+      },
+      {
+        "role": "user",
+        "text": "咋了你说"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "没事",
+    "assistant_msg": "没事你发什么消息\n我很忙的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "咋了"
+      },
+      {
+        "role": "user",
+        "text": "你有事吗"
+      },
+      {
+        "role": "user",
+        "text": "咋了你说"
+      },
+      {
+        "role": "user",
+        "text": "你有事吗"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "没事你发什么消息\n我很忙的",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4843135c.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你有事吗"
+      },
+      {
+        "role": "user",
+        "text": "咋了你说"
+      },
+      {
+        "role": "user",
+        "text": "你有事吗"
+      },
+      {
+        "role": "user",
+        "text": "没事"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "真的有用吗\n[表情]我没招了",
+    "assistant_msg": "真的有用\n它抑菌率高达99.9%\n用了之后很清爽也没有异味\n我现在就去给你买!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4a4bd1d5.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "行\n小狗咋地呢",
+    "assistant_msg": "对呀\n我也很纳闷\n于是我赶紧问了他原因\n他给我说了一个破解的方法",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4a4c5e45.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "对呀\n我也很纳闷\n于是我赶紧问了他原因\n他给我说了一个破解的方法",
+    "assistant_msg": "啥方法",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4a4c5e45.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "行\n小狗咋地呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_4e8b130a.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我已经看不上那些小帅了\n有没有大帅\n你给我找个大帅来"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "你说的这是啥话啊",
+    "assistant_msg": "安徒生童话",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_50bb2483.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "安徒生童话",
+    "assistant_msg": "......\n[表情]你怎么可以酱紫",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_50bb2483.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你说的这是啥话啊"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "我还有个想法\n[表情]",
+    "assistant_msg": "放",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_50fcc0c7.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "放",
+    "assistant_msg": "你回太快了\n我还没想好",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_50fcc0c7.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我还有个想法\n[表情]"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你回太快了\n我还没想好",
+    "assistant_msg": "逗我玩是吧?\n[表情]\n到底有没有想法",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_50fcc0c7.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我还有个想法\n[表情]"
+      },
+      {
+        "role": "user",
+        "text": "放"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我是她男朋友\n看不惯你老带她打游戏\n删了，给我走",
+    "assistant_msg": "???\n我是她亲弟弟\n你真的牛，你给我等着，以后你能进我家门算你厉害\n你俩以后结婚的时候，我就抱着户口本不撒手，打死不给[表情]\n[表情]掐洗你!!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_546afeef.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "她爸爸知道后，就两父女相认了嘛，还非要带回家\n但是别忘了他家里还有老婆在的\n所以带这个女生回家后的剧情可相当精彩了",
+    "assistant_msg": "多精彩，你快说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_558136bb.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "多精彩，你快说",
+    "assistant_msg": "具体的我也差不多忘了\n如果你想知道的话\n可以上网搜索一下还珠格格",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_558136bb.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她爸爸知道后，就两父女相认了嘛，还非要带回家\n但是别忘了他家里还有老婆在的\n所以带这个女生回家后的剧情可相当精彩了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "具体的我也差不多忘了\n如果你想知道的话\n可以上网搜索一下还珠格格",
+    "assistant_msg": "6到我了[表情]\n你还我妈生瓜!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_558136bb.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她爸爸知道后，就两父女相认了嘛，还非要带回家\n但是别忘了他家里还有老婆在的\n所以带这个女生回家后的剧情可相当精彩了"
+      },
+      {
+        "role": "user",
+        "text": "多精彩，你快说"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "给我舍友找男朋友啦~\n1号佳丽 166cm 102kg\n2号佳丽 165cm 100kg\n3号佳丽 168cm 110kg\n谢谢墙墙\n不腻噢~ [表情]",
+    "assistant_msg": "同学,这里是校园墙不是承重墙",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_56b19a1c.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "她闺蜜了",
+    "assistant_msg": "?这还是闺蜜吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "?这还是闺蜜吗",
+    "assistant_msg": "后面一次偶然的机会，她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她闺蜜了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "后面一次偶然的机会，她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着",
+    "assistant_msg": "咋了咋了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她闺蜜了"
+      },
+      {
+        "role": "user",
+        "text": "?这还是闺蜜吗"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "咋了咋了",
+    "assistant_msg": "然后她爸爸竟然觉得这个女生给她一种初恋的感觉\n就是说她爸爸看上了自己的亲女儿!!!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她闺蜜了"
+      },
+      {
+        "role": "user",
+        "text": "?这还是闺蜜吗"
+      },
+      {
+        "role": "user",
+        "text": "后面一次偶然的机会，她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "然后她爸爸竟然觉得这个女生给她一种初恋的感觉\n就是说她爸爸看上了自己的亲女儿!!!",
+    "assistant_msg": "?\n?\n(尖叫跑开\n劲爆!这瓜爱吃",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她闺蜜了"
+      },
+      {
+        "role": "user",
+        "text": "?这还是闺蜜吗"
+      },
+      {
+        "role": "user",
+        "text": "后面一次偶然的机会，她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "咋了咋了"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "?\n?\n(尖叫跑开\n劲爆!这瓜爱吃",
+    "assistant_msg": "因为这个女的妈妈就是她爸的初恋，亲女儿能不像吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "?这还是闺蜜吗"
+      },
+      {
+        "role": "user",
+        "text": "后面一次偶然的机会，她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "咋了咋了"
+      },
+      {
+        "role": "user",
+        "text": "然后她爸爸竟然觉得这个女生给她一种初恋的感觉\n就是说她爸爸看上了自己的亲女儿!!!"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "因为这个女的妈妈就是她爸的初恋，亲女儿能不像吗",
+    "assistant_msg": "这得有多像才会这样[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_5ba2dc85.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "后面一次偶然的机会，她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "咋了咋了"
+      },
+      {
+        "role": "user",
+        "text": "然后她爸爸竟然觉得这个女生给她一种初恋的感觉\n就是说她爸爸看上了自己的亲女儿!!!"
+      },
+      {
+        "role": "user",
+        "text": "?\n?\n(尖叫跑开\n劲爆!这瓜爱吃"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "滚",
+    "assistant_msg": "说啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_5ec376a9.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "说啊",
+    "assistant_msg": "其实我骗了你",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_5ec376a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "滚"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "其实我骗了你",
+    "assistant_msg": "又骗我什么了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_5ec376a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "滚"
+      },
+      {
+        "role": "user",
+        "text": "说啊"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "又骗我什么了",
+    "assistant_msg": "其实我是来自魔仙堡的一个魔仙，我是侍奉魔仙堡女王的小魔仙，很多年前，小兰姐姐接到女王殿下的命令来到人间，我在旁边偷听到跟着小蓝姐姐一起下界，然后找不到了回去的路",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_5ec376a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "滚"
+      },
+      {
+        "role": "user",
+        "text": "说啊"
+      },
+      {
+        "role": "user",
+        "text": "其实我骗了你"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "其实我是来自魔仙堡的一个魔仙，我是侍奉魔仙堡女王的小魔仙，很多年前，小兰姐姐接到女王殿下的命令来到人间，我在旁边偷听到跟着小蓝姐姐一起下界，然后找不到了回去的路",
+    "assistant_msg": "你是不是有病啊\n我老家有只鸡你要看吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_5ec376a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "滚"
+      },
+      {
+        "role": "user",
+        "text": "说啊"
+      },
+      {
+        "role": "user",
+        "text": "其实我骗了你"
+      },
+      {
+        "role": "user",
+        "text": "又骗我什么了"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "雪糕晚上应该到了，他没打通你电话\n到时候联系一下",
+    "assistant_msg": "暗号已对接\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_600a1880.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "暗号已对接\n[表情]",
+    "assistant_msg": "我买的好像不是违禁品吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_600a1880.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "雪糕晚上应该到了，他没打通你电话\n到时候联系一下"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "交易成功后发个信息给我",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_600a1880.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "雪糕晚上应该到了，他没打通你电话\n到时候联系一下"
+      },
+      {
+        "role": "user",
+        "text": "暗号已对接\n[表情]"
+      },
+      {
+        "role": "user",
+        "text": "我买的好像不是违禁品吧"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "交易成功后发个信息给我",
+    "assistant_msg": "毒聪收到",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_600a1880.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "雪糕晚上应该到了，他没打通你电话\n到时候联系一下"
+      },
+      {
+        "role": "user",
+        "text": "暗号已对接\n[表情]"
+      },
+      {
+        "role": "user",
+        "text": "我买的好像不是违禁品吧"
+      },
+      {
+        "role": "user",
+        "text": "[表情]"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发现我带着蓝牙耳机-",
+    "assistant_msg": "哈哈哈哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_61a51624.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "跟你说个事，不要告诉别人"
+      },
+      {
+        "role": "user",
+        "text": "好的，我发誓不说"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "哈哈哈哈哈",
+    "assistant_msg": "大哭",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_61a51624.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "跟你说个事，不要告诉别人"
+      },
+      {
+        "role": "user",
+        "text": "好的，我发誓不说"
+      },
+      {
+        "role": "user",
+        "text": "昨天我乘公交车\n车里忍不住放屁，但我又不想尴尬\n还好车里在放音乐 于是我就跟着音乐的节奏卡点放\n把屁声掩盖过去\n事后我发现我带着蓝牙耳机-"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "听说你要给我看腹肌",
+    "assistant_msg": "听谁说的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_62d871a0.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "听谁说的",
+    "assistant_msg": "nobody\n我捏造的\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_62d871a0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "听说你要给我看腹肌"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "nobody\n我捏造的\n[表情]",
+    "assistant_msg": "那是充vip才能看的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_62d871a0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "听说你要给我看腹肌"
+      },
+      {
+        "role": "user",
+        "text": "听谁说的"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "啧\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_651c5fc7.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "让我看看\n别说 还有点吓人"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "好烦\n今天出门太急了\n地铁都坐反了",
+    "assistant_msg": "没关系的\n地球是圆的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_65ac1764.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "没关系的\n地球是圆的",
+    "assistant_msg": "...",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_65ac1764.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "好烦\n今天出门太急了\n地铁都坐反了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "功夫不够深?\n磨磨唧唧",
+    "assistant_msg": "有一天\n你捧着一坨黑色的翔[表情]\n去厦门见邓为",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_66cded82.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "有一天\n你捧着一坨黑色的翔[表情]\n去厦门见邓为",
+    "assistant_msg": "你先闭嘴\n这个命我不算了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_66cded82.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "功夫不够深?\n磨磨唧唧"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "你先闭嘴\n这个命我不算了",
+    "assistant_msg": "(施主这边不介绍中途反悔[表情]\n结果邓为对你说了一句\n“傻逼!滚!!”",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_66cded82.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "功夫不够深?\n磨磨唧唧"
+      },
+      {
+        "role": "user",
+        "text": "有一天\n你捧着一坨黑色的翔[表情]\n去厦门见邓为"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "(施主这边不介绍中途反悔[表情]\n结果邓为对你说了一句\n“傻逼!滚!!”",
+    "assistant_msg": "我踏马要你命",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_66cded82.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "功夫不够深?\n磨磨唧唧"
+      },
+      {
+        "role": "user",
+        "text": "有一天\n你捧着一坨黑色的翔[表情]\n去厦门见邓为"
+      },
+      {
+        "role": "user",
+        "text": "你先闭嘴\n这个命我不算了"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "我真太生气了\n我生气了什么都做得出来\n这什么玩意这",
+    "assistant_msg": "浙江省高考物理真题\n你不是什么都做得出来吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_684d30dc.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "终于放假了\n开启假期模式[表情]",
+    "assistant_msg": "我也放假了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_688888cb.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我也放假了",
+    "assistant_msg": "你不是早就放假了吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_688888cb.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "终于放假了\n开启假期模式[表情]"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你不是早就放假了吗",
+    "assistant_msg": "这次放是例假",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_688888cb.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "终于放假了\n开启假期模式[表情]"
+      },
+      {
+        "role": "user",
+        "text": "我也放假了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我又不敢问你我又不想憋着我有点难以启齿",
+    "assistant_msg": "你[表情]吧的想咋地啊\n快点说\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_70005192.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "我和你说",
+    "assistant_msg": "哈哈哈哈哈哈哈哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_72dea010.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "哈哈哈哈哈哈哈哈哈",
+    "assistant_msg": "笑什么\n我还没说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_72dea010.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我和你说"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "笑什么\n我还没说",
+    "assistant_msg": "不好意思\n笑早了\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_72dea010.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我和你说"
+      },
+      {
+        "role": "user",
+        "text": "哈哈哈哈哈哈哈哈哈"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "对啊",
+    "assistant_msg": "但是日本有一对夫妻\n生了个小孩\n眼珠子中间是白色的\n四周都是黑的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7993d68b.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "但是日本有一对夫妻\n生了个小孩\n眼珠子中间是白色的\n四周都是黑的",
+    "assistant_msg": "我去\n核废水导致的吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7993d68b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对啊"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我去\n核废水导致的吧",
+    "assistant_msg": "不知道",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7993d68b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对啊"
+      },
+      {
+        "role": "user",
+        "text": "但是日本有一对夫妻\n生了个小孩\n眼珠子中间是白色的\n四周都是黑的"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "老板，我辞职不干了",
+    "assistant_msg": "不干可以，你这个月工资没了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7a28e36d.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "不干可以，你这个月工资没了",
+    "assistant_msg": "确定吗？",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7a28e36d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "老板，我辞职不干了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "确定吗？",
+    "assistant_msg": "十分确定",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7a28e36d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "老板，我辞职不干了"
+      },
+      {
+        "role": "user",
+        "text": "不干可以，你这个月工资没了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "十分确定",
+    "assistant_msg": "我考上公务员了\n准备去税务局上班",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7a28e36d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "老板，我辞职不干了"
+      },
+      {
+        "role": "user",
+        "text": "不干可以，你这个月工资没了"
+      },
+      {
+        "role": "user",
+        "text": "确定吗？"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "我考上公务员了\n准备去税务局上班",
+    "assistant_msg": "和您开玩笑的啦[表情]\n工资和年终奖都一并打到您卡上了\n还有一台最新的iPhone给您安排",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7a28e36d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "老板，我辞职不干了"
+      },
+      {
+        "role": "user",
+        "text": "不干可以，你这个月工资没了"
+      },
+      {
+        "role": "user",
+        "text": "确定吗？"
+      },
+      {
+        "role": "user",
+        "text": "十分确定"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "服了\n服服帖帖",
+    "assistant_msg": "就问你这学费值不值[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7e7221a5.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "就问你这学费值不值[表情]",
+    "assistant_msg": "值\n太值了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_7e7221a5.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "服了\n服服帖帖"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "晚上吃什么",
+    "assistant_msg": "我就不吃了，减肥",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_827f4099.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我就不吃了，减肥",
+    "assistant_msg": "又多少斤了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_827f4099.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "晚上吃什么"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "又多少斤了",
+    "assistant_msg": "不好意思，只接受党和组织的考验\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_827f4099.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "晚上吃什么"
+      },
+      {
+        "role": "user",
+        "text": "我就不吃了，减肥"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我跟你讲!!\n我下班路上看到了算命先生给人算命\n我就很好奇在旁边看着",
+    "assistant_msg": "然后呢?\n偷听到了什么故事",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_83523528.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "[表情]我心情不好，能陪我聊聊天吗？",
+    "assistant_msg": "不行，我心情好，别影响我",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_874bd254.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "不行，我心情好，别影响我",
+    "assistant_msg": "我们是好朋友吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_874bd254.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]我心情不好，能陪我聊聊天吗？"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "我们是好朋友吗",
+    "assistant_msg": "是啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_874bd254.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]我心情不好，能陪我聊聊天吗？"
+      },
+      {
+        "role": "user",
+        "text": "不行，我心情好，别影响我"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "是啊",
+    "assistant_msg": "好朋友不是可以替对的舔伤口的嘛！\n好朋友不是可以替对方舔伤口的嘛",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_874bd254.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]我心情不好，能陪我聊聊天吗？"
+      },
+      {
+        "role": "user",
+        "text": "不行，我心情好，别影响我"
+      },
+      {
+        "role": "user",
+        "text": "我们是好朋友吗"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "好朋友不是可以替对的舔伤口的嘛！\n好朋友不是可以替对方舔伤口的嘛",
+    "assistant_msg": "你要这么说\n我痔疮犯了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_874bd254.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]我心情不好，能陪我聊聊天吗？"
+      },
+      {
+        "role": "user",
+        "text": "不行，我心情好，别影响我"
+      },
+      {
+        "role": "user",
+        "text": "我们是好朋友吗"
+      },
+      {
+        "role": "user",
+        "text": "是啊"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你要这么说\n我痔疮犯了",
+    "assistant_msg": "……滚",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_874bd254.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "不行，我心情好，别影响我"
+      },
+      {
+        "role": "user",
+        "text": "我们是好朋友吗"
+      },
+      {
+        "role": "user",
+        "text": "是啊"
+      },
+      {
+        "role": "user",
+        "text": "好朋友不是可以替对的舔伤口的嘛！\n好朋友不是可以替对方舔伤口的嘛"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "对不起\n不生气了好不好",
+    "assistant_msg": "不好\n绝交",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_88209945.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "不好\n绝交",
+    "assistant_msg": "又绝交\n这次绝哪只手\n嗯?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_88209945.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对不起\n不生气了好不好"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "不干可以，你这个月工资没了",
+    "assistant_msg": "确定吗?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_8d592501.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "老板，我辞职不干了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "确定吗?",
+    "assistant_msg": "十分确定",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_8d592501.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "老板，我辞职不干了"
+      },
+      {
+        "role": "user",
+        "text": "不干可以，你这个月工资没了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "阿狗在公司当牛做马",
+    "assistant_msg": "阿狗你在干嘛",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "阿狗你在干嘛",
+    "assistant_msg": "下次不能开了，会扫堂腿也不行",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "阿狗在公司当牛做马"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "下次不能开了，会扫堂腿也不行",
+    "assistant_msg": "但我一想最近我学了几招咏春拳所以就打开门了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "阿狗在公司当牛做马"
+      },
+      {
+        "role": "user",
+        "text": "阿狗你在干嘛"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "但我一想最近我学了几招咏春拳所以就打开门了",
+    "assistant_msg": "有相声味儿了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "阿狗在公司当牛做马"
+      },
+      {
+        "role": "user",
+        "text": "阿狗你在干嘛"
+      },
+      {
+        "role": "user",
+        "text": "下次不能开了，会扫堂腿也不行"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "有相声味儿了",
+    "assistant_msg": "嘿你猜怎么着?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "阿狗在公司当牛做马"
+      },
+      {
+        "role": "user",
+        "text": "阿狗你在干嘛"
+      },
+      {
+        "role": "user",
+        "text": "下次不能开了，会扫堂腿也不行"
+      },
+      {
+        "role": "user",
+        "text": "但我一想最近我学了几招咏春拳所以就打开门了"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "嘿你猜怎么着?",
+    "assistant_msg": "这邻居能处是吧，比咱们上个家的邻居强多了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "阿狗你在干嘛"
+      },
+      {
+        "role": "user",
+        "text": "下次不能开了，会扫堂腿也不行"
+      },
+      {
+        "role": "user",
+        "text": "但我一想最近我学了几招咏春拳所以就打开门了"
+      },
+      {
+        "role": "user",
+        "text": "有相声味儿了"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "这邻居能处是吧，比咱们上个家的邻居强多了",
+    "assistant_msg": "邻居说她家装修打扰我们了！所以送了我一袋大芒果",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "下次不能开了，会扫堂腿也不行"
+      },
+      {
+        "role": "user",
+        "text": "但我一想最近我学了几招咏春拳所以就打开门了"
+      },
+      {
+        "role": "user",
+        "text": "有相声味儿了"
+      },
+      {
+        "role": "user",
+        "text": "嘿你猜怎么着?"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "邻居说她家装修打扰我们了！所以送了我一袋大芒果",
+    "assistant_msg": "对呀，周六去看个电影吗?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "但我一想最近我学了几招咏春拳所以就打开门了"
+      },
+      {
+        "role": "user",
+        "text": "有相声味儿了"
+      },
+      {
+        "role": "user",
+        "text": "嘿你猜怎么着?"
+      },
+      {
+        "role": "user",
+        "text": "这邻居能处是吧，比咱们上个家的邻居强多了"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "对呀，周六去看个电影吗?",
+    "assistant_msg": "世界真美好呀!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "有相声味儿了"
+      },
+      {
+        "role": "user",
+        "text": "嘿你猜怎么着?"
+      },
+      {
+        "role": "user",
+        "text": "这邻居能处是吧，比咱们上个家的邻居强多了"
+      },
+      {
+        "role": "user",
+        "text": "邻居说她家装修打扰我们了！所以送了我一袋大芒果"
+      }
+    ],
+    "turn_index": 8,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "世界真美好呀!",
+    "assistant_msg": "除了上个邻居，我忘不了她把垃圾堆在咱们家门口还振振有词",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "嘿你猜怎么着?"
+      },
+      {
+        "role": "user",
+        "text": "这邻居能处是吧，比咱们上个家的邻居强多了"
+      },
+      {
+        "role": "user",
+        "text": "邻居说她家装修打扰我们了！所以送了我一袋大芒果"
+      },
+      {
+        "role": "user",
+        "text": "对呀，周六去看个电影吗?"
+      }
+    ],
+    "turn_index": 9,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "除了上个邻居，我忘不了她把垃圾堆在咱们家门口还振振有词",
+    "assistant_msg": "世上还是善良的人最多是吧!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_8f4ca6c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "这邻居能处是吧，比咱们上个家的邻居强多了"
+      },
+      {
+        "role": "user",
+        "text": "邻居说她家装修打扰我们了！所以送了我一袋大芒果"
+      },
+      {
+        "role": "user",
+        "text": "对呀，周六去看个电影吗?"
+      },
+      {
+        "role": "user",
+        "text": "世界真美好呀!"
+      }
+    ],
+    "turn_index": 10,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "然后",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_8fb445e3.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "就是"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "服了。。鼻子又痛又痒",
+    "assistant_msg": "说了别让你把脚往鼻子里塞",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_913f5309.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "说了别让你把脚往鼻子里塞",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_913f5309.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "服了。。鼻子又痛又痒"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "?",
+    "assistant_msg": "这下好了\n鼻子得脚气了吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_913f5309.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "服了。。鼻子又痛又痒"
+      },
+      {
+        "role": "user",
+        "text": "说了别让你把脚往鼻子里塞"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "我是她男朋友\n看不惯你老带她打游戏\n删了，给我走",
+    "assistant_msg": "???\n我是她亲弟弟\n你真的牛，你给我等着，以后你能进我家门算你厉害\n你俩以后结婚的时候，我就抱着户口本不撒手，打死不给[表情]\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_93941013.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "先和你说对不起",
+    "assistant_msg": "嗯那你说啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_941db102.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "嗯那你说啊",
+    "assistant_msg": "你还会继续跟我玩的对吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_941db102.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "先和你说对不起"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你还会继续跟我玩的对吧",
+    "assistant_msg": "不是你道是说嘛",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_941db102.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "先和你说对不起"
+      },
+      {
+        "role": "user",
+        "text": "嗯那你说啊"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "不是你道是说嘛",
+    "assistant_msg": "我已经知道错了\n在也不会瞒着你了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_941db102.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "先和你说对不起"
+      },
+      {
+        "role": "user",
+        "text": "嗯那你说啊"
+      },
+      {
+        "role": "user",
+        "text": "你还会继续跟我玩的对吧"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "我已经知道错了\n在也不会瞒着你了",
+    "assistant_msg": "那你说嘛没事的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_941db102.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "先和你说对不起"
+      },
+      {
+        "role": "user",
+        "text": "嗯那你说啊"
+      },
+      {
+        "role": "user",
+        "text": "你还会继续跟我玩的对吧"
+      },
+      {
+        "role": "user",
+        "text": "不是你道是说嘛"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "那你说嘛没事的",
+    "assistant_msg": "其实我并不是人类，是一种来自南美洲西部的一种稀有蝴蝶一我的名字是~沃斯尼蝶~",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_941db102.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "嗯那你说啊"
+      },
+      {
+        "role": "user",
+        "text": "你还会继续跟我玩的对吧"
+      },
+      {
+        "role": "user",
+        "text": "不是你道是说嘛"
+      },
+      {
+        "role": "user",
+        "text": "我已经知道错了\n在也不会瞒着你了"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "今晚跟我一块吃饭不",
+    "assistant_msg": "不跟\n[表情]\n我这么说你还会吃饭吗\n还是说不吃了直接",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_98e52b97.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "不跟\n[表情]\n我这么说你还会吃饭吗\n还是说不吃了直接",
+    "assistant_msg": "我选择绝食\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_98e52b97.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "今晚跟我一块吃饭不"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "在家拼图呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "在家拼图呢",
+    "assistant_msg": "停一停，你往后面窗户看",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "停一停，你往后面窗户看",
+    "assistant_msg": "我后面是墙",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家拼图呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "我后面是墙",
+    "assistant_msg": "你转一下后面就是窗户了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家拼图呢"
+      },
+      {
+        "role": "user",
+        "text": "停一停，你往后面窗户看"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "你转一下后面就是窗户了",
+    "assistant_msg": "你要是逗我你就完了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家拼图呢"
+      },
+      {
+        "role": "user",
+        "text": "停一停，你往后面窗户看"
+      },
+      {
+        "role": "user",
+        "text": "我后面是墙"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "你要是逗我你就完了",
+    "assistant_msg": "啊没事，不用看了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在家拼图呢"
+      },
+      {
+        "role": "user",
+        "text": "停一停，你往后面窗户看"
+      },
+      {
+        "role": "user",
+        "text": "我后面是墙"
+      },
+      {
+        "role": "user",
+        "text": "你转一下后面就是窗户了"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "啊没事，不用看了",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_9b87b046.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "停一停，你往后面窗户看"
+      },
+      {
+        "role": "user",
+        "text": "我后面是墙"
+      },
+      {
+        "role": "user",
+        "text": "你转一下后面就是窗户了"
+      },
+      {
+        "role": "user",
+        "text": "你要是逗我你就完了"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "?这还是闺蜜吗",
+    "assistant_msg": "后面一次偶然的机会,她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_9c463970.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她闺蜜了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "后面一次偶然的机会,她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着",
+    "assistant_msg": "咋了咋了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_9c463970.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她闺蜜了"
+      },
+      {
+        "role": "user",
+        "text": "?这还是闺蜜吗"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "?\n?\n(尖叫跑开\n劲爆!这瓜爱吃",
+    "assistant_msg": "因为这个女的妈妈就是她爸的初恋,亲女儿能不像吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_9c463970.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "?这还是闺蜜吗"
+      },
+      {
+        "role": "user",
+        "text": "后面一次偶然的机会,她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "咋了咋了"
+      },
+      {
+        "role": "user",
+        "text": "然后她爸爸竟然觉得这个女生给她一种初恋的感觉\n就是说她爸爸看上了自己的亲女儿!!!"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "因为这个女的妈妈就是她爸的初恋,亲女儿能不像吗",
+    "assistant_msg": "这得有多像才会这样[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_9c463970.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "后面一次偶然的机会,她闺蜜就把这女生带到她爸爸面前了\n你们猜怎么着"
+      },
+      {
+        "role": "user",
+        "text": "咋了咋了"
+      },
+      {
+        "role": "user",
+        "text": "然后她爸爸竟然觉得这个女生给她一种初恋的感觉\n就是说她爸爸看上了自己的亲女儿!!!"
+      },
+      {
+        "role": "user",
+        "text": "?\n?\n(尖叫跑开\n劲爆!这瓜爱吃"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "¥520.00 新年快乐",
+    "assistant_msg": "感谢老板!\n祝老板顺风顺水顺财神\n朝朝暮暮有我疼\n[表情]我们好一辈子!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_9fd6de7a.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "我忘记交作业了\n时间截止了",
+    "assistant_msg": "[表情]那你快去找老师啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a0365e00.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "[表情]那你快去找老师啊",
+    "assistant_msg": "找了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a0365e00.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我忘记交作业了\n时间截止了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "找了",
+    "assistant_msg": "老师咋说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a0365e00.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我忘记交作业了\n时间截止了"
+      },
+      {
+        "role": "user",
+        "text": "[表情]那你快去找老师啊"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "老师咋说",
+    "assistant_msg": "teacher",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a0365e00.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我忘记交作业了\n时间截止了"
+      },
+      {
+        "role": "user",
+        "text": "[表情]那你快去找老师啊"
+      },
+      {
+        "role": "user",
+        "text": "找了"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "teacher",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a0365e00.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我忘记交作业了\n时间截止了"
+      },
+      {
+        "role": "user",
+        "text": "[表情]那你快去找老师啊"
+      },
+      {
+        "role": "user",
+        "text": "找了"
+      },
+      {
+        "role": "user",
+        "text": "老师咋说"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "你在干嘛\n你咋不回信息",
+    "assistant_msg": "我准备登机了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a2af75a6.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我准备登机了",
+    "assistant_msg": "你要去哪\n咋不跟我说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a2af75a6.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在干嘛\n你咋不回信息"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你要去哪\n咋不跟我说",
+    "assistant_msg": "麻将机\n商务舱 只有四个人的位置",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a2af75a6.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在干嘛\n你咋不回信息"
+      },
+      {
+        "role": "user",
+        "text": "我准备登机了"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "烦人\n昨天晚上又失眠了",
+    "assistant_msg": "自己都睡不好\n怎么睡别人\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a3cd9cbf.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "图书馆呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a510e52b.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "图书馆呢",
+    "assistant_msg": "这么巧阿,我也在\n我在3楼呢,来找我",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a510e52b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "这么巧阿,我也在\n我在3楼呢,来找我",
+    "assistant_msg": "这本书真不错",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a510e52b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "图书馆呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "这本书真不错",
+    "assistant_msg": "?来找我阿,3楼",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a510e52b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "图书馆呢"
+      },
+      {
+        "role": "user",
+        "text": "这么巧阿,我也在\n我在3楼呢,来找我"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "?来找我阿,3楼",
+    "assistant_msg": "是我读过最好的小说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a510e52b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "图书馆呢"
+      },
+      {
+        "role": "user",
+        "text": "这么巧阿,我也在\n我在3楼呢,来找我"
+      },
+      {
+        "role": "user",
+        "text": "这本书真不错"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "是我读过最好的小说",
+    "assistant_msg": "转人工",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a510e52b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "图书馆呢"
+      },
+      {
+        "role": "user",
+        "text": "这么巧阿,我也在\n我在3楼呢,来找我"
+      },
+      {
+        "role": "user",
+        "text": "这本书真不错"
+      },
+      {
+        "role": "user",
+        "text": "?来找我阿,3楼"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "对面拿你人头是给提成吗\n我也感动了",
+    "assistant_msg": "我被圆圆她们的精神感动了😭",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a56f1222.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "我被圆圆她们的精神感动了😭",
+    "assistant_msg": "你要请她们吃饭才行的程度",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a56f1222.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "对面拿你人头是给提成吗\n我也感动了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "还是喜欢跟你玩",
+    "assistant_msg": "这句话一点也不温暖,怎么说出来的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a56f1222.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "面对这么菜的队友她们也不嫌弃"
+      },
+      {
+        "role": "user",
+        "text": "女孩子车队真温暖"
+      },
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      },
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "这句话一点也不温暖,怎么说出来的",
+    "assistant_msg": "咱们菜得旗鼓相当",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a56f1222.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "女孩子车队真温暖"
+      },
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      },
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      },
+      {
+        "role": "user",
+        "text": "还是喜欢跟你玩"
+      }
+    ],
+    "turn_index": 8,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "咱们菜得旗鼓相当",
+    "assistant_msg": "这句话说得我心里难受了,但我不懂为什么难受,你懂吗?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a56f1222.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "一直鼓励着我"
+      },
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      },
+      {
+        "role": "user",
+        "text": "还是喜欢跟你玩"
+      },
+      {
+        "role": "user",
+        "text": "这句话一点也不温暖,怎么说出来的"
+      }
+    ],
+    "turn_index": 9,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "这句话说得我心里难受了,但我不懂为什么难受,你懂吗?",
+    "assistant_msg": "彼此都不会有所谓的压力",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a56f1222.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "这句话也温暖"
+      },
+      {
+        "role": "user",
+        "text": "还是喜欢跟你玩"
+      },
+      {
+        "role": "user",
+        "text": "这句话一点也不温暖,怎么说出来的"
+      },
+      {
+        "role": "user",
+        "text": "咱们菜得旗鼓相当"
+      }
+    ],
+    "turn_index": 10,
+    "total_turns": 11
+  },
+  {
+    "user_msg": "好累啊好累啊\n感觉要被掏空了",
+    "assistant_msg": "叮!你的专属美少女按摩师已送达\n请给五星好评~[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a5b298fc.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "叮!你的专属美少女按摩师已送达\n请给五星好评~[表情]",
+    "assistant_msg": "好评!但她们用的是月光力量按\n完我会变身吗?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a5b298fc.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "好累啊好累啊\n感觉要被掏空了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "好评!但她们用的是月光力量按\n完我会变身吗?",
+    "assistant_msg": "变不变身看运气但用元宝生成这\n图我快笑变身了太好玩!\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_a5b298fc.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "好累啊好累啊\n感觉要被掏空了"
+      },
+      {
+        "role": "user",
+        "text": "叮!你的专属美少女按摩师已送达\n请给五星好评~[表情]"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我要喝奶茶了\n茉莉毛驴",
+    "assistant_msg": "你要点这个吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a7f973c0.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你要点这个吗",
+    "assistant_msg": "奶龙\n奶绿\n茉莉奶龙",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a7f973c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我要喝奶茶了\n茉莉毛驴"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "奶龙\n奶绿\n茉莉奶龙",
+    "assistant_msg": "你点错成假酒了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a7f973c0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我要喝奶茶了\n茉莉毛驴"
+      },
+      {
+        "role": "user",
+        "text": "你要点这个吗"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我听说了一个惊天大八卦\n有没有要听的",
+    "assistant_msg": "1\n听\n赶紧的，瓜子已备好",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a96b4da5.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "1\n听\n赶紧的，瓜子已备好",
+    "assistant_msg": "是我同事说的，她有一个朋友\n家庭情况就比较坎坷\n她的爸爸在她出生之前就出去赚钱了\n到现在还没回来过，也没见过这个女儿\n但是她爸爸中途找过她们一次",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_a96b4da5.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我听说了一个惊天大八卦\n有没有要听的"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "随便吃点漂亮饭说是",
+    "assistant_msg": "富婆一枚",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_aa113715.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "富婆一枚",
+    "assistant_msg": "别人请客的\n能懂?\n我很高贵",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_aa113715.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "随便吃点漂亮饭说是"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "别人请客的\n能懂?\n我很高贵",
+    "assistant_msg": "那我还能巴结上你吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_aa113715.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "随便吃点漂亮饭说是"
+      },
+      {
+        "role": "user",
+        "text": "富婆一枚"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "那我还能巴结上你吗",
+    "assistant_msg": "难度不小\n我只能这么跟你说",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_aa113715.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "随便吃点漂亮饭说是"
+      },
+      {
+        "role": "user",
+        "text": "富婆一枚"
+      },
+      {
+        "role": "user",
+        "text": "别人请客的\n能懂?\n我很高贵"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "感觉最近又胖了。。。。。",
+    "assistant_msg": "没事\n我不是你男朋友\n我们不do",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_aaa7faf4.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "没事\n我不是你男朋友\n我们不do",
+    "assistant_msg": "求求你棍",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_aaa7faf4.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "感觉最近又胖了。。。。。"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "在家写论文呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "在家写论文呢",
+    "assistant_msg": "你拿起来手机",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "你拿起来手机",
+    "assistant_msg": "我不拿手机用啥回的你消息",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家写论文呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "我不拿手机用啥回的你消息",
+    "assistant_msg": "不是拿你的，拿意恩爱夫皮的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家写论文呢"
+      },
+      {
+        "role": "user",
+        "text": "你拿起来手机"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "不是拿你的，拿意恩爱夫皮的",
+    "assistant_msg": "拿了，咋的了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家写论文呢"
+      },
+      {
+        "role": "user",
+        "text": "你拿起来手机"
+      },
+      {
+        "role": "user",
+        "text": "我不拿手机用啥回的你消息"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "拿了，咋的了",
+    "assistant_msg": "好的，放下吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在家写论文呢"
+      },
+      {
+        "role": "user",
+        "text": "你拿起来手机"
+      },
+      {
+        "role": "user",
+        "text": "我不拿手机用啥回的你消息"
+      },
+      {
+        "role": "user",
+        "text": "不是拿你的，拿意恩爱夫皮的"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "好的，放下吧",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_abf28934.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你拿起来手机"
+      },
+      {
+        "role": "user",
+        "text": "我不拿手机用啥回的你消息"
+      },
+      {
+        "role": "user",
+        "text": "不是拿你的，拿意恩爱夫皮的"
+      },
+      {
+        "role": "user",
+        "text": "拿了，咋的了"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 7
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "在楼下买麻辣烫呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_ad7c391d.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "在楼下买麻辣烫呢",
+    "assistant_msg": "你转头，看见我没有",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_ad7c391d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你转头，看见我没有",
+    "assistant_msg": "看见了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_ad7c391d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在楼下买麻辣烫呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "看见了",
+    "assistant_msg": "你看见啥了，我在家呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_ad7c391d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在楼下买麻辣烫呢"
+      },
+      {
+        "role": "user",
+        "text": "你转头，看见我没有"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你看见啥了，我在家呢",
+    "assistant_msg": "其实我想逗逗你\n我在家呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_ad7c391d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在楼下买麻辣烫呢"
+      },
+      {
+        "role": "user",
+        "text": "你转头，看见我没有"
+      },
+      {
+        "role": "user",
+        "text": "看见了"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "其实我想逗逗你\n我在家呢",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_ad7c391d.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在楼下买麻辣烫呢"
+      },
+      {
+        "role": "user",
+        "text": "你转头，看见我没有"
+      },
+      {
+        "role": "user",
+        "text": "看见了"
+      },
+      {
+        "role": "user",
+        "text": "你看见啥了，我在家呢"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "吓屎惹",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_b5675161.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "吓屎惹",
+    "assistant_msg": "你不贱会死吗\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_b5675161.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你不贱会死吗\n[表情]",
+    "assistant_msg": "哈哈哈\n和你说个真的\n我昨晚做了个梦",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_b5675161.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]"
+      },
+      {
+        "role": "user",
+        "text": "吓屎惹"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "刚刚去看了劳斯莱斯\n驾驶感确实不错\n也很符合我的气质",
+    "assistant_msg": "富姐要展示自己的终极实力了吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_b990a9d0.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "富姐要展示自己的终极实力了吗",
+    "assistant_msg": "但我思考许久\n还是选择了上亿的地铁\n毕竟我这个人喜欢人多热闹\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_b990a9d0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "刚刚去看了劳斯莱斯\n驾驶感确实不错\n也很符合我的气质"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "但我思考许久\n还是选择了上亿的地铁\n毕竟我这个人喜欢人多热闹\n[表情]",
+    "assistant_msg": "还是减碳富姐\n格局大大滴",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_b990a9d0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "刚刚去看了劳斯莱斯\n驾驶感确实不错\n也很符合我的气质"
+      },
+      {
+        "role": "user",
+        "text": "富姐要展示自己的终极实力了吗"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你是真行!!\n伤害性不强 侮辱性极大\n你今天算废了!!!\n给我等着",
+    "assistant_msg": "你撤回了一条消息\n[表情]\n哈哈哈哈哈哈哈哈哈哈哈\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_babc84a5.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "哈哈哈哈哈哈哈哈哈哈哈\n哈哈哈哈哈哈哈哈哈哈哈",
+    "assistant_msg": "晚安玛卡巴卡\n今天不接待朋友",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_bc5835bb.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "我今天去书店看到一本书挺喜欢的",
+    "assistant_msg": "什么书",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bcb8244f.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "什么书",
+    "assistant_msg": "叫《解决你人生50%的问题》\n所以我一口气买了俩本\n人生\n易如反掌",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bcb8244f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我今天去书店看到一本书挺喜欢的"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "叫《解决你人生50%的问题》\n所以我一口气买了俩本\n人生\n易如反掌",
+    "assistant_msg": "如果没事的话\n把肩膀中间那个当痘挤了吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bcb8244f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我今天去书店看到一本书挺喜欢的"
+      },
+      {
+        "role": "user",
+        "text": "什么书"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "但是没找到，就以为她和她妈妈已经去世了",
+    "assistant_msg": "[表情]\n这么曲折",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bf1c83b9.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "[表情]\n这么曲折",
+    "assistant_msg": "然后她爸爸就回了老家，也找了老婆，已经生了几个孩子了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bf1c83b9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "但是没找到，就以为她和她妈妈已经去世了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "然后她爸爸就回了老家，也找了老婆，已经生了几个孩子了",
+    "assistant_msg": "那不得给她赔偿一点钱啊\n这么多年了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bf1c83b9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "但是没找到，就以为她和她妈妈已经去世了"
+      },
+      {
+        "role": "user",
+        "text": "[表情]\n这么曲折"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "那不得给她赔偿一点钱啊\n这么多年了",
+    "assistant_msg": "这个女的后面知道这件事后，就决定去找她爸爸\n然后呢顺便把这件事跟她闺蜜说了\n然后你们猜怎么着\n她这个爸爸呢，算是比较有钱的家族\n在市中心还有很大的房子",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_bf1c83b9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "但是没找到，就以为她和她妈妈已经去世了"
+      },
+      {
+        "role": "user",
+        "text": "[表情]\n这么曲折"
+      },
+      {
+        "role": "user",
+        "text": "然后她爸爸就回了老家，也找了老婆，已经生了几个孩子了"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "瘦了\n皇天不负有心人\n通过不断努力\n终于瘦下来了\n为了庆祝这一刻\n晚上我们去麻辣火锅吧\n你请[表情]",
+    "assistant_msg": "这里面的心酸只有我知道\n我们再加份小龙虾吧\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_c09901cd.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "在不在\n给你讲个恐怖故事\n[表情]",
+    "assistant_msg": "? 什么",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_c319f29b.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "? 什么",
+    "assistant_msg": "我们的眼珠不是四周都是白的吗?\n然后中间是黑的吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_c319f29b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在不在\n给你讲个恐怖故事\n[表情]"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我们的眼珠不是四周都是白的吗?\n然后中间是黑的吗",
+    "assistant_msg": "对啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_c319f29b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在不在\n给你讲个恐怖故事\n[表情]"
+      },
+      {
+        "role": "user",
+        "text": "? 什么"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你作业写完了吗",
+    "assistant_msg": "确实有点私密\n还剩语文",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_c420d644.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "确实有点私密\n还剩语文",
+    "assistant_msg": "我写完了\n哈哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_c420d644.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你作业写完了吗"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我写完了\n哈哈哈",
+    "assistant_msg": "哦。\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_c420d644.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你作业写完了吗"
+      },
+      {
+        "role": "user",
+        "text": "确实有点私密\n还剩语文"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你明天起来就没有哥哥了",
+    "assistant_msg": "现在没有也行\n[表情]\n我不怕\n[表情]\n我超勇\n啊?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_c7cbeaa8.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]\n[表情]\n啊?"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "1\n听\n赶紧的，瓜子已备好",
+    "assistant_msg": "是我同事说的，她有一个朋友\n家庭情况就比较坎坷\n她的爸爸在她出生之前就出去赚钱\n了\n到现在还没回来过，也没见过这个\n女儿\n但是她爸爸中途找过她们一次",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_c84777a7.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我听说了一个惊天大八卦\n有没有要听的"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "头好痛",
+    "assistant_msg": "病了?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cbe05605.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "病了?",
+    "assistant_msg": "感觉有人在窃取我的智慧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cbe05605.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "头好痛"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "感觉有人在窃取我的智慧",
+    "assistant_msg": "不可能\n谁会往没有钱的钱包里取钱呀",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cbe05605.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "头好痛"
+      },
+      {
+        "role": "user",
+        "text": "病了?"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你想一夜暴富么?",
+    "assistant_msg": "我想",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "我想",
+    "assistant_msg": "你想衣食无忧么?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你想一夜暴富么?"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "你想衣食无忧么?",
+    "assistant_msg": "想,我还想继续被你洗脑",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你想一夜暴富么?"
+      },
+      {
+        "role": "user",
+        "text": "我想"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "想,我还想继续被你洗脑",
+    "assistant_msg": "你想生活不愁么?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你想一夜暴富么?"
+      },
+      {
+        "role": "user",
+        "text": "我想"
+      },
+      {
+        "role": "user",
+        "text": "你想衣食无忧么?"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "你想生活不愁么?",
+    "assistant_msg": "想",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你想一夜暴富么?"
+      },
+      {
+        "role": "user",
+        "text": "我想"
+      },
+      {
+        "role": "user",
+        "text": "你想衣食无忧么?"
+      },
+      {
+        "role": "user",
+        "text": "想,我还想继续被你洗脑"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "想",
+    "assistant_msg": "那我们两个一起想\n毕竟人多力量大",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我想"
+      },
+      {
+        "role": "user",
+        "text": "你想衣食无忧么?"
+      },
+      {
+        "role": "user",
+        "text": "想,我还想继续被你洗脑"
+      },
+      {
+        "role": "user",
+        "text": "你想生活不愁么?"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "那我们两个一起想\n毕竟人多力量大",
+    "assistant_msg": "哈哈哈哈好好好\n我允许了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你想衣食无忧么?"
+      },
+      {
+        "role": "user",
+        "text": "想,我还想继续被你洗脑"
+      },
+      {
+        "role": "user",
+        "text": "你想生活不愁么?"
+      },
+      {
+        "role": "user",
+        "text": "想"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "哈哈哈哈好好好\n我允许了",
+    "assistant_msg": "哈哈哈哈哈",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_cfd70015.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "想,我还想继续被你洗脑"
+      },
+      {
+        "role": "user",
+        "text": "你想生活不愁么?"
+      },
+      {
+        "role": "user",
+        "text": "想"
+      },
+      {
+        "role": "user",
+        "text": "那我们两个一起想\n毕竟人多力量大"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "我在纠结是 pro还是 pro Max\n我怕 pro Max 太重了\n躺床上玩手机砸脸上都痛",
+    "assistant_msg": "那你开个飞行模式呗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d2728800.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "那你开个飞行模式呗",
+    "assistant_msg": "啥意思",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d2728800.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我在纠结是 pro还是 pro Max\n我怕 pro Max 太重了\n躺床上玩手机砸脸上都痛"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "啥意思",
+    "assistant_msg": "平时不想拿开个飞行模式让它飞走",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d2728800.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我在纠结是 pro还是 pro Max\n我怕 pro Max 太重了\n躺床上玩手机砸脸上都痛"
+      },
+      {
+        "role": "user",
+        "text": "那你开个飞行模式呗"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "平时不想拿开个飞行模式让它飞走",
+    "assistant_msg": "绝交了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d2728800.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我在纠结是 pro还是 pro Max\n我怕 pro Max 太重了\n躺床上玩手机砸脸上都痛"
+      },
+      {
+        "role": "user",
+        "text": "那你开个飞行模式呗"
+      },
+      {
+        "role": "user",
+        "text": "啥意思"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "最喜欢的城市是",
+    "assistant_msg": "厦门",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d32dc4c5.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "厦门",
+    "assistant_msg": "你骂人最常用的一个词",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d32dc4c5.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "最喜欢的城市是"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "你骂人最常用的一个词",
+    "assistant_msg": "傻逼\n没骂你的意思",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d32dc4c5.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "最喜欢的城市是"
+      },
+      {
+        "role": "user",
+        "text": "厦门"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "傻逼\n没骂你的意思",
+    "assistant_msg": "好的施主 本大师基本算完了\n现在公布",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d32dc4c5.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "最喜欢的城市是"
+      },
+      {
+        "role": "user",
+        "text": "厦门"
+      },
+      {
+        "role": "user",
+        "text": "你骂人最常用的一个词"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "好的施主 本大师基本算完了\n现在公布",
+    "assistant_msg": "你倒是快点",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d32dc4c5.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "最喜欢的城市是"
+      },
+      {
+        "role": "user",
+        "text": "厦门"
+      },
+      {
+        "role": "user",
+        "text": "你骂人最常用的一个词"
+      },
+      {
+        "role": "user",
+        "text": "傻逼\n没骂你的意思"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "商场，准备吃火锅呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d3da8d2b.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "商场，准备吃火锅呢",
+    "assistant_msg": "你转头，我看见你了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d3da8d2b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你转头，我看见你了",
+    "assistant_msg": "你逗我呢，没有你",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d3da8d2b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "商场，准备吃火锅呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你逗我呢，没有你",
+    "assistant_msg": "你咋就看不着呢\n上身穿个绿衣服，下身穿个黑裤",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d3da8d2b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "商场，准备吃火锅呢"
+      },
+      {
+        "role": "user",
+        "text": "你转头，我看见你了"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你咋就看不着呢\n上身穿个绿衣服，下身穿个黑裤",
+    "assistant_msg": "? 你咋跟我穿一样的颜色",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d3da8d2b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "商场，准备吃火锅呢"
+      },
+      {
+        "role": "user",
+        "text": "你转头，我看见你了"
+      },
+      {
+        "role": "user",
+        "text": "你逗我呢，没有你"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "? 你咋跟我穿一样的颜色",
+    "assistant_msg": "昂我瞎说的，我没去",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_d3da8d2b.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "商场，准备吃火锅呢"
+      },
+      {
+        "role": "user",
+        "text": "你转头，我看见你了"
+      },
+      {
+        "role": "user",
+        "text": "你逗我呢，没有你"
+      },
+      {
+        "role": "user",
+        "text": "你咋就看不着呢\n上身穿个绿衣服，下身穿个黑裤"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你和一百度的开水一样",
+    "assistant_msg": "啥意思",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_d4e06eb0.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "啥意思",
+    "assistant_msg": "都是沸物",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_d4e06eb0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你和一百度的开水一样"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "都是沸物",
+    "assistant_msg": "[表情]这辈子也是玩完了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_d4e06eb0.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你和一百度的开水一样"
+      },
+      {
+        "role": "user",
+        "text": "啥意思"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "但是她爸爸也还找过她们一次\n但是没找到，就以为她和她妈妈已经去世了",
+    "assistant_msg": "[表情]\n这么曲折",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_d5afb281.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "怎么不回我",
+    "assistant_msg": "你等一下\n给你排的晚班",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_d5c281a8.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "你等一下\n给你排的晚班",
+    "assistant_msg": "[图片]学会煎墙",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_d5c281a8.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "怎么不回我"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "具体的我也差不多忘了\n如果你想知道的话\n可以上网搜索一下还珠格格",
+    "assistant_msg": "6到我了\n你还我妈生瓜!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_dae582a9.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "她爸爸知道后，就两父女相认了嘛，还非要带回家\n但是别忘了他家里还有老婆在的\n所以带这个女生回家后的剧情可相当精彩了"
+      },
+      {
+        "role": "user",
+        "text": "多精彩，你快说"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "到底怎么样才能跨越阶层\n我在想",
+    "assistant_msg": "坐电梯",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_e0cbc716.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "坐电梯",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_e0cbc716.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "到底怎么样才能跨越阶层\n我在想"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "?",
+    "assistant_msg": "你就说对不对吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_e0cbc716.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "到底怎么样才能跨越阶层\n我在想"
+      },
+      {
+        "role": "user",
+        "text": "坐电梯"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你在哪呢",
+    "assistant_msg": "在家泡脚呢",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e1af058f.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "在家泡脚呢",
+    "assistant_msg": "擦擦脚吧，来开门",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e1af058f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "擦擦脚吧，来开门",
+    "assistant_msg": "你来了?\n我告诉过你我家在哪吗",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e1af058f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家泡脚呢"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "你来了?\n我告诉过你我家在哪吗",
+    "assistant_msg": "我问我哥们了，来开门",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e1af058f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家泡脚呢"
+      },
+      {
+        "role": "user",
+        "text": "擦擦脚吧，来开门"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "我问我哥们了，来开门",
+    "assistant_msg": "他快回来了，一会他给你开",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e1af058f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "你在哪呢"
+      },
+      {
+        "role": "user",
+        "text": "在家泡脚呢"
+      },
+      {
+        "role": "user",
+        "text": "擦擦脚吧，来开门"
+      },
+      {
+        "role": "user",
+        "text": "你来了?\n我告诉过你我家在哪吗"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "他快回来了，一会他给你开",
+    "assistant_msg": "?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e1af058f.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "在家泡脚呢"
+      },
+      {
+        "role": "user",
+        "text": "擦擦脚吧，来开门"
+      },
+      {
+        "role": "user",
+        "text": "你来了?\n我告诉过你我家在哪吗"
+      },
+      {
+        "role": "user",
+        "text": "我问我哥们了，来开门"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 6
+  },
+  {
+    "user_msg": "不跟\n[表情]\n我这么说你还会吃饭吗\n还是说不吃了直接",
+    "assistant_msg": "我选择绝食",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_e4269648.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "今晚跟我一块吃饭不"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 2
+  },
+  {
+    "user_msg": "功夫不够深?\n磨磨唧唧",
+    "assistant_msg": "有一天\n你捧着一坨黑色的翔💩\n去厦门见邓为",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e943d9b6.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "有一天\n你捧着一坨黑色的翔💩\n去厦门见邓为",
+    "assistant_msg": "你先闭嘴\n这个命我不算了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e943d9b6.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "功夫不够深?\n磨磨唧唧"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "你先闭嘴\n这个命我不算了",
+    "assistant_msg": "(施主这边不介绍中途反悔😁\n结果邓为对你说了一句\n“傻逼!滚!!”",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e943d9b6.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "功夫不够深?\n磨磨唧唧"
+      },
+      {
+        "role": "user",
+        "text": "有一天\n你捧着一坨黑色的翔💩\n去厦门见邓为"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "(施主这边不介绍中途反悔😁\n结果邓为对你说了一句\n“傻逼!滚!!”",
+    "assistant_msg": "我踏马要你命",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_e943d9b6.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "功夫不够深?\n磨磨唧唧"
+      },
+      {
+        "role": "user",
+        "text": "有一天\n你捧着一坨黑色的翔💩\n去厦门见邓为"
+      },
+      {
+        "role": "user",
+        "text": "你先闭嘴\n这个命我不算了"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "不理我\n无所谓\n我的眼睛会疯狂下雨\n下小雨🌧️\n下中雨🌧️🌧️\n下暴雨🌧️🌧️🌧️\n[表情]",
+    "assistant_msg": "😭😭一觉睡醒天塌了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_f04fd70c.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "[表情]\n这种表情包都能找到[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_f30dcb92.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]\n真令人兴奋"
+      },
+      {
+        "role": "user",
+        "text": "小朋友，你知道的有点多了\n我要灭口"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "[表情]\n这种表情包都能找到[表情]",
+    "assistant_msg": "搜到的",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_f30dcb92.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "[表情]\n真令人兴奋"
+      },
+      {
+        "role": "user",
+        "text": "小朋友，你知道的有点多了\n我要灭口"
+      },
+      {
+        "role": "user",
+        "text": "[表情]"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 5
+  },
+  {
+    "user_msg": "必须有啊\n对你可太有了\n我发现你是个三好学生\n好笨好傻好蠢",
+    "assistant_msg": "[表情]龙颜大不悦",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_f46793fb.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "什么书",
+    "assistant_msg": "叫《解决你人生50%的问题》\n所以我一口气买了俩本\n人生\n[表情]\n易如反掌",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_f5cd52da.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我今天去书店看到一本书挺喜欢的"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "叫《解决你人生50%的问题》\n所以我一口气买了俩本\n人生\n[表情]\n易如反掌",
+    "assistant_msg": "如果没事的话\n把肩膀中间那个当痘挤了吧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_f5cd52da.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我今天去书店看到一本书挺喜欢的"
+      },
+      {
+        "role": "user",
+        "text": "什么书"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "我就想问你一个问题你平时吃哪一牌子的猪饲料",
+    "assistant_msg": "?\n滚。。。\n[表情]",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "batch_f66a8521.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "[表情]啊啊啊啊啊\n我要开始闹了",
+    "assistant_msg": "女人\n看来你不知道我的厉害\n你成功触到了我的逆鳞\n你要知道,我的逆鳞可不是轻易可以触碰的\n你会后悔的\n[表情]骂骂咧咧",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_f995b1b0.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 1
+  },
+  {
+    "user_msg": "[表情]",
+    "assistant_msg": "你回太慢了\n我忘记了",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_fa2fc083.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我有个大胆的想法"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "你回太慢了\n我忘记了",
+    "assistant_msg": "别太荒谬\n就半分钟",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_fa2fc083.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "我有个大胆的想法"
+      },
+      {
+        "role": "user",
+        "text": "[表情]"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 3
+  },
+  {
+    "user_msg": "嗯嗯\n知道呢\n我有几次机会",
+    "assistant_msg": "给你三次机会",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_fa77b665.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "给你三次机会",
+    "assistant_msg": "3\n是不是",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_fa77b665.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "嗯嗯\n知道呢\n我有几次机会"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "3\n是不是",
+    "assistant_msg": "不对哦\n还有机会加油",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_fa77b665.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "嗯嗯\n知道呢\n我有几次机会"
+      },
+      {
+        "role": "user",
+        "text": "给你三次机会"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "不对哦\n还有机会加油",
+    "assistant_msg": "6",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "其他",
+    "source": "batch_fa77b665.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "嗯嗯\n知道呢\n我有几次机会"
+      },
+      {
+        "role": "user",
+        "text": "给你三次机会"
+      },
+      {
+        "role": "user",
+        "text": "3\n是不是"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 4
+  },
+  {
+    "user_msg": "怎么了",
+    "assistant_msg": "电话\n有事",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [],
+    "turn_index": 0,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "电话\n有事",
+    "assistant_msg": "谁的?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "怎么了"
+      }
+    ],
+    "turn_index": 1,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "谁的?",
+    "assistant_msg": "亲人过世",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "怎么了"
+      },
+      {
+        "role": "user",
+        "text": "电话\n有事"
+      }
+    ],
+    "turn_index": 2,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "亲人过世",
+    "assistant_msg": "[表情][表情][表情]\n是谁啊",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "怎么了"
+      },
+      {
+        "role": "user",
+        "text": "电话\n有事"
+      },
+      {
+        "role": "user",
+        "text": "谁的?"
+      }
+    ],
+    "turn_index": 3,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "[表情][表情][表情]\n是谁啊",
+    "assistant_msg": "大姨",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "怎么了"
+      },
+      {
+        "role": "user",
+        "text": "电话\n有事"
+      },
+      {
+        "role": "user",
+        "text": "谁的?"
+      },
+      {
+        "role": "user",
+        "text": "亲人过世"
+      }
+    ],
+    "turn_index": 4,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "大姨",
+    "assistant_msg": "亲吗?",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "电话\n有事"
+      },
+      {
+        "role": "user",
+        "text": "谁的?"
+      },
+      {
+        "role": "user",
+        "text": "亲人过世"
+      },
+      {
+        "role": "user",
+        "text": "[表情][表情][表情]\n是谁啊"
+      }
+    ],
+    "turn_index": 5,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "亲吗?",
+    "assistant_msg": "表哥一家还算好",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "谁的?"
+      },
+      {
+        "role": "user",
+        "text": "亲人过世"
+      },
+      {
+        "role": "user",
+        "text": "[表情][表情][表情]\n是谁啊"
+      },
+      {
+        "role": "user",
+        "text": "大姨"
+      }
+    ],
+    "turn_index": 6,
+    "total_turns": 8
+  },
+  {
+    "user_msg": "表哥一家还算好",
+    "assistant_msg": "[表情][表情][表情]\n那咋办!",
+    "user_gender": "unknown",
+    "assistant_gender": "unknown",
+    "chat_type": "朋友",
+    "source": "和男朋友_68f9d4180000000003012eeb_5_d4598326.webp",
+    "context": [
+      {
+        "role": "user",
+        "text": "亲人过世"
+      },
+      {
+        "role": "user",
+        "text": "[表情][表情][表情]\n是谁啊"
+      },
+      {
+        "role": "user",
+        "text": "大姨"
+      },
+      {
+        "role": "user",
+        "text": "亲吗?"
+      }
+    ],
+    "turn_index": 7,
+    "total_turns": 8
+  }
+]
