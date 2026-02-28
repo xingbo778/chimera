@@ -244,7 +244,7 @@ def _get_recipe(skill_name, skill_desc, context="", capability_memory=None):
 
     try:
         resp = client.chat.completions.create(
-            model="gpt-4.1-mini",  # Recipe 生成需要更强的推理能力
+            model="gemini-3-flash-preview",  # Recipe 生成需要更强的推理能力
             messages=[{"role": "user", "content": prompt}],
             max_tokens=500,
             temperature=0.3,
@@ -548,7 +548,7 @@ def _exec_browser_action(inputs, skill_name, agent_soul):
 只返回 JSON。"""
 
             resp = client.chat.completions.create(
-                model="gpt-4.1-mini",  # browser action 需要更强的模型
+                model="gemini-3-flash-preview",  # browser action 需要更强的模型
                 messages=[{"role": "user", "content": decide_prompt}],
                 max_tokens=200,
                 temperature=0.2,

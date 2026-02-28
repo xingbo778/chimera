@@ -27,7 +27,7 @@ class AgentConfig:
     world_engine_url: str = "http://127.0.0.1:5000"
 
     # === LLM ===
-    llm_model: str = "gpt-4.1-mini"
+    llm_model: str = "gemini-3-flash-preview"
 
     # === 语音 ===
     tts_voice: str = "zh-CN-XiaoyiNeural"  # edge-tts 声音名

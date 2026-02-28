@@ -341,7 +341,7 @@ def build_selfie_prompt(location_id="home_xiaoyue", hour=14, weather="晴天",
     if custom_prompt:
         try:
             translated = client.chat.completions.create(
-                model="gpt-4.1-nano",
+                model="gemini-3-flash-preview",
                 messages=[
                     {"role": "system", "content": "Translate the user's photo request into a short English description for image generation. Focus on outfit, pose, and setting. Keep it under 30 words. If the request is about swimsuit/bikini, describe a tasteful swimsuit photo. If about specific clothing, describe that clothing."},
                     {"role": "user", "content": custom_prompt},
@@ -420,7 +420,7 @@ def analyze_photo_request(desc, current_hour=None, current_location="home_xiaoyu
         current_hour = (datetime.now(timezone.utc) + timedelta(hours=8)).hour
     try:
         result = client.chat.completions.create(
-            model="gpt-4.1-nano",
+            model="gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": """Analyze a photo description from a chat. Return JSON with:
 - photo_type (str): one of "selfie", "mirror", "scene".
@@ -500,7 +500,7 @@ def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/
             "Output ONLY the English prompt."
         )
         translated = client.chat.completions.create(
-            model="gpt-4.1-nano",
+            model="gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": translate_instruction},
                 {"role": "user", "content": desc},
@@ -817,7 +817,7 @@ def skill_understand_image(image_path_or_url, question="这张图片里有什么
             })
 
         response = client.chat.completions.create(
-            model="gpt-4.1-mini",
+            model="gemini-3-flash-preview",
             messages=[{"role": "user", "content": content}],
             max_tokens=500,
         )
@@ -834,7 +834,7 @@ def skill_read_link(url):
 
     try:
         response = client.chat.completions.create(
-            model="gpt-4.1-mini",
+            model="gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": "你是一个阅读助手。请用中文简要总结以下网页内容，2-3句话即可。"},
                 {"role": "user", "content": f"请总结这个网页的内容：\n\n{fetch_result['content']}"},

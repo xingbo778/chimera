@@ -8,7 +8,7 @@ import random
 from openai import OpenAI
 
 client = OpenAI()
-MODEL = "gemini-2.5-flash"
+MODEL = "gemini-3-flash-preview"
 
 # 新的测试场景（避免重复第一轮）
 SCENARIOS = [

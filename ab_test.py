@@ -103,7 +103,7 @@ def run_test():
         # 生成三个版本
         reply_a = generate_reply(STRATEGY_A_SYSTEM, FEW_SHOT_A, scenario['user'], "gpt-4.1-mini", 1.0)
         reply_b = generate_reply(STRATEGY_B_SYSTEM, FEW_SHOT_B, scenario['user'], "gpt-4.1-mini", 1.0)
-        reply_c = generate_reply(STRATEGY_C_SYSTEM, FEW_SHOT_C, scenario['user'], "gemini-2.5-flash", 1.0)
+        reply_c = generate_reply(STRATEGY_C_SYSTEM, FEW_SHOT_C, scenario['user'], "gemini-3-flash-preview", 1.0)
         
         # 随机打乱顺序
         options = [

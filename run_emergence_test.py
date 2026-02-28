@@ -50,7 +50,7 @@ async def run_test():
         telegram_token="DUMMY_TOKEN", # 随便填，不会真的用
         home_location="home_xiaoyue",
         world_engine_url="http://127.0.0.1:5000",
-        llm_model="gpt-4.1-mini",
+        llm_model="gemini-3-flash-preview",
         tts_voice="zh-CN-XiaoyiNeural",
         reference_face_url="https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/BXkKRXipEynsUiTN.jpg",
         style_guide=XIAOYUE_STYLE_GUIDE,

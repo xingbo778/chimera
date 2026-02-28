@@ -427,7 +427,7 @@ class WorldClient:
 def call_llm(system_prompt, user_prompt, max_tokens=500, temperature=0.9, model=None):
     try:
         response = client.chat.completions.create(
-            model=model or "gpt-4.1-mini",
+            model=model or "gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_prompt},
@@ -445,7 +445,7 @@ def call_llm_multi(system_prompt, messages, max_tokens=300, temperature=0.9, mod
     try:
         full_messages = [{"role": "system", "content": system_prompt}] + messages
         response = client.chat.completions.create(
-            model=model or "gpt-4.1-mini",
+            model=model or "gemini-3-flash-preview",
             messages=full_messages,
             max_tokens=max_tokens,
             temperature=temperature,
@@ -459,24 +459,31 @@ def call_llm_multi(system_prompt, messages, max_tokens=300, temperature=0.9, mod
 def call_llm_json(system_prompt, user_prompt, max_tokens=500, temperature=0.7, model=None):
     try:
         response = client.chat.completions.create(
-            model=model or "gpt-4.1-mini",
+            model=model or "gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
+                {"role": "user", "content": user_prompt + "\n\n请只返回合法的 JSON，不要有任何额外文字或 markdown 代码块。"},
             ],
             max_tokens=max_tokens,
             temperature=temperature,
-            response_format={"type": "json_object"},
         )
         raw = response.choices[0].message.content
-        if raw and raw.strip().startswith('```'):
-            raw = raw.strip()
+        if not raw:
+            return None
+        print(f"[DEBUG JSON raw] {repr(raw[:300])}")
+        raw = raw.strip()
+        if raw.startswith('```'):
             lines = raw.split('\n')
             if lines[0].startswith('```'):
                 lines = lines[1:]
             if lines and lines[-1].strip() == '```':
                 lines = lines[:-1]
             raw = '\n'.join(lines)
+        # 提取第一个 { ... } 块
+        start = raw.find('{')
+        end = raw.rfind('}')
+        if start != -1 and end != -1:
+            raw = raw[start:end+1]
         return json.loads(raw)
     except Exception as e:
         print(f"LLM JSON调用失败: {e}")
@@ -718,7 +725,7 @@ class AgentRuntime:
 尽量不要重复最近做过的事情，生活要有变化。
 回复JSON格式：{{"action": "动作", "desc": "简短描述", "skill_name": "技能名(仅use_skill时)", "target_agent": "对方名字(仅chat_with_agent时)", "platform": "xhs/weibo/douban(仅scroll_feed时)", "follow_up": "做完这件事后想接着做什么，没有则留空"}}"""
 
-        result = call_llm_json(self.SOUL, prompt, max_tokens=100, temperature=0.9)
+        result = call_llm_json(self.SOUL, prompt, max_tokens=800, temperature=0.9)
         if not result:
             return None
         return result
@@ -937,7 +944,7 @@ class AgentRuntime:
 结果：{real_result.get('description', '')}
 情境：{context_str}
 用一两句话描述你的体验和感受。要具体、自然。"""
-                    experience = call_llm(self.SOUL, real_desc_prompt, max_tokens=60, temperature=0.9)
+                    experience = call_llm(self.SOUL, real_desc_prompt, max_tokens=400, temperature=0.9)
                     if not experience:
                         experience = real_result.get("description", f"用了{skill['name']}")
                     
@@ -968,7 +975,7 @@ class AgentRuntime:
                             share_msg = call_llm(
                                 self.SOUL,
                                 f"你刚{skill['name']}，做出了一个作品。想分享给朋友看。写一句自然的分享语，比如'看我画的！'或'嘿嘿画了个东西'。一句话就好。",
-                                max_tokens=20, temperature=0.9
+                                max_tokens=400, temperature=0.9
                             ) or "看我做的！"
                             asyncio.run_coroutine_threadsafe(
                                 self._send_proactive_photo(self.authorized_chat_id, filepath, share_msg), loop
@@ -1017,7 +1024,7 @@ class AgentRuntime:
             if target:
                 # 用 LLM 生成一句跟对方说的话
                 chat_prompt = f"你在{LOCATION_NAMES.get(location, location)}遇到了{target['name']}。你想跟她说什么？一句话就好。"
-                msg = call_llm(self.SOUL, chat_prompt, max_tokens=30, temperature=0.9)
+                msg = call_llm(self.SOUL, chat_prompt, max_tokens=400, temperature=0.9)
                 if msg:
                     # 发送到对方的 inbox
                     self.world.send_message_to_agent(target["id"], msg)
@@ -1100,7 +1107,7 @@ class AgentRuntime:
 画了一只歪歪扭扭的猫
 越看越像我家那只"""
 
-        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=30, temperature=0.9, model=self.LLM_MODEL)
+        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=400, temperature=0.9, model=self.LLM_MODEL)
         return msg
 
     async def _send_proactive_message(self, chat_id, message):
@@ -1130,7 +1137,7 @@ class AgentRuntime:
                 msg = call_llm(
                     self.SOUL + "\n\n" + self.STYLE,
                     f"刚拍了张照片想发给朋友。原因：{caption}\n写一句配图的话。",
-                    max_tokens=50, temperature=0.9,
+                    max_tokens=400, temperature=0.9,
                 )
                 if msg:
                     await self.telegram_app.bot.send_message(chat_id=chat_id, text=msg)
@@ -1660,7 +1667,7 @@ class AgentRuntime:
 
         try:
             extracted = client.chat.completions.create(
-                model="gemini-2.5-flash",
+                model="gemini-3-flash-preview",
                 messages=[
                     {"role": "system", "content": extract_prompt},
                     {"role": "user", "content": f"以下是浏览到的内容：\n\n{content[:4000]}"},
@@ -1895,7 +1902,7 @@ class AgentRuntime:
                             self.memory.log_event(f"和{sender}聊了会儿天", importance=5)
                             # 用 LLM 生成回复
                             reply_prompt = f"{sender}跟你说：「{msg}」\n你怎么回她？一句话就好。"
-                            reply = call_llm(self.SOUL, reply_prompt, max_tokens=30, temperature=0.9)
+                            reply = call_llm(self.SOUL, reply_prompt, max_tokens=400, temperature=0.9)
                             if reply and sender_id:
                                 self.world.send_message_to_agent(sender_id, reply)
                                 print(f"💬 回复{sender}: {reply}")

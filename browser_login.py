@@ -216,7 +216,7 @@ def _get_login_task(platform: str, phone: str) -> str:
 
 
 async def login_platform(platform: str, phone: str,
-                         model: str = "gpt-4.1-mini") -> dict:
+                         model: str = "gemini-3-flash-preview") -> dict:
     """
     使用 Browser-Use Agent 登录指定平台。
 
@@ -344,7 +344,7 @@ def main():
     parser.add_argument("platform", choices=["xiaohongshu", "weibo", "douban", "all"],
                         help="要登录的平台")
     parser.add_argument("--phone", required=True, help="手机号")
-    parser.add_argument("--model", default="gpt-4.1-mini", help="LLM 模型")
+    parser.add_argument("--model", default="gemini-3-flash-preview", help="LLM 模型")
     args = parser.parse_args()
 
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")

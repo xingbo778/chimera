@@ -150,7 +150,7 @@ def discover_skills_from_content(content, agent_soul, existing_skills):
 
     try:
         resp = client.chat.completions.create(
-            model="gpt-4.1-mini",
+            model="gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": agent_soul},
                 {"role": "user", "content": prompt}
@@ -202,7 +202,7 @@ def execute_skill_simulated(skill, agent_soul, context=""):
 
     try:
         resp = client.chat.completions.create(
-            model="gpt-4.1-nano",
+            model="gemini-3-flash-preview",
             messages=[
                 {"role": "system", "content": agent_soul},
                 {"role": "user", "content": prompt}
