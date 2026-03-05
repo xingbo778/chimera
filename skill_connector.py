@@ -17,70 +17,11 @@ import time
 import random
 import logging
 import subprocess
-from openai import OpenAI
+
+from utils import get_llm_client, parse_json_robust
 
 logger = logging.getLogger(__name__)
-client = OpenAI()
-
-def _parse_json_robust(text):
-    """健壮的 JSON 解析：处理 markdown 代码块、尾部多余字符、截断等问题"""
-    # 去掉 markdown 代码块
-    text = re.sub(r'```json\s*', '', text)
-    text = re.sub(r'```\s*$', '', text)
-    text = text.strip()
-    
-    # 策略1：直接解析
-    try:
-        return json.loads(text)
-    except json.JSONDecodeError:
-        pass
-    
-    # 策略2：用 brace 匹配提取最外层 JSON 对象
-    brace_count = 0
-    start = -1
-    in_string = False
-    escape = False
-    for i, c in enumerate(text):
-        if escape:
-            escape = False
-            continue
-        if c == '\\':
-            escape = True
-            continue
-        if c == '"':
-            in_string = not in_string
-            continue
-        if in_string:
-            continue
-        if c == '{':
-            if brace_count == 0:
-                start = i
-            brace_count += 1
-        elif c == '}':
-            brace_count -= 1
-            if brace_count == 0 and start >= 0:
-                try:
-                    return json.loads(text[start:i+1])
-                except json.JSONDecodeError:
-                    start = -1
-    
-    # 策略3：如果 brace 不平衡（可能被截断），尝试补全
-    if start >= 0 and brace_count > 0:
-        partial = text[start:]
-        for _ in range(brace_count):
-            partial += '}'
-        # 还需要补全可能缺少的 ]
-        try:
-            return json.loads(partial)
-        except json.JSONDecodeError:
-            # 尝试补 ] 和 }
-            for suffix in [']', ']}', ']}]', ']}}']:
-                try:
-                    return json.loads(partial + suffix)
-                except json.JSONDecodeError:
-                    continue
-    
-    return None
+client = get_llm_client()
 
 
 # 意图匹配缓存：同一个技能只匹配一次，结果缓存起来
@@ -252,7 +193,7 @@ def _get_recipe(skill_name, skill_desc, context="", capability_memory=None):
         text = resp.choices[0].message.content.strip()
         
         # 提取 JSON（处理 markdown 代码块、多余字符等）
-        result = _parse_json_robust(text)
+        result = parse_json_robust(text)
         
         # 缓存结果
         if result:
@@ -588,7 +529,7 @@ def _exec_browser_action(inputs, skill_name, agent_soul):
                 screenshot_path = None
                 if screenshot_result:
                     # 尝试从结果中提取截图路径
-                    screenshot_path = f"/home/ubuntu/chimera/selfies/browser_action_{int(time.time())}.png"
+                    screenshot_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), f"selfies/browser_action_{int(time.time())}.png")
                 
                 return {
                     "description": summary,

@@ -9,14 +9,11 @@ import json
 import time
 import random
 import logging
-from datetime import datetime, timezone, timedelta
-from openai import OpenAI
+
+from utils import get_llm_client, beijing_now
 
 logger = logging.getLogger(__name__)
-client = OpenAI()
-
-def beijing_now():
-    return datetime.now(timezone(timedelta(hours=8)))
+client = get_llm_client()
 
 
 class SkillRegistry:

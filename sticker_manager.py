@@ -13,7 +13,7 @@ from datetime import datetime
 
 logger = logging.getLogger(__name__)
 
-STICKER_DB_PATH = "/home/ubuntu/chimera/sticker_library.json"
+STICKER_DB_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "sticker_library.json")
 
 
 class StickerManager:

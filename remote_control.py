@@ -12,19 +12,44 @@ remote_control.py - 浏览器远程控制服务器
 
 import asyncio
 import base64
+import hashlib
+import hmac
 import json
 import os
+import secrets
 import time
 import logging
 from typing import Optional
 
-from fastapi import FastAPI, WebSocket, WebSocketDisconnect
+from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Request, HTTPException
 from fastapi.responses import HTMLResponse, JSONResponse
 from fastapi.staticfiles import StaticFiles
 
 logger = logging.getLogger(__name__)
 
 app = FastAPI(title="Chimera Remote Control")
+
+# ============================================================
+# 认证：通过环境变量 CHIMERA_AUTH_TOKEN 设置 token
+# 未设置时仅允许 127.0.0.1 访问
+# ============================================================
+
+AUTH_TOKEN = os.environ.get("CHIMERA_AUTH_TOKEN", "")
+
+
+@app.middleware("http")
+async def auth_middleware(request: Request, call_next):
+    client_host = request.client.host if request.client else ""
+    is_local = client_host in ("127.0.0.1", "::1", "localhost")
+
+    if not is_local:
+        if not AUTH_TOKEN:
+            raise HTTPException(status_code=403, detail="Remote access requires CHIMERA_AUTH_TOKEN")
+        token = request.headers.get("Authorization", "").removeprefix("Bearer ").strip()
+        if not token or not hmac.compare_digest(token, AUTH_TOKEN):
+            raise HTTPException(status_code=401, detail="Invalid token")
+
+    return await call_next(request)
 
 # ============================================================
 # 配置

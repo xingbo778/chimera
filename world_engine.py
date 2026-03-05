@@ -3,6 +3,7 @@ World Engine - 世界引擎 API 服务
 一个跟现实时间1:1同步的世界模拟器，通过HTTP API暴露给外部agent。
 """
 
+import hmac
 import json
 import time
 import threading
@@ -10,10 +11,30 @@ import random
 import os
 import logging
 from datetime import datetime
-from flask import Flask, jsonify, request
+from functools import wraps
+from flask import Flask, jsonify, request, abort
 
 logger = logging.getLogger(__name__)
 app = Flask(__name__)
+
+# ============================================================
+# 认证：通过环境变量 WORLD_AUTH_TOKEN 设置 token
+# 未设置时仅允许 127.0.0.1 访问
+# ============================================================
+
+WORLD_AUTH_TOKEN = os.environ.get("WORLD_AUTH_TOKEN", "")
+
+
+@app.before_request
+def check_auth():
+    client_ip = request.remote_addr or ""
+    is_local = client_ip in ("127.0.0.1", "::1")
+    if not is_local:
+        if not WORLD_AUTH_TOKEN:
+            abort(403, description="Remote access requires WORLD_AUTH_TOKEN")
+        token = request.headers.get("Authorization", "").removeprefix("Bearer ").strip()
+        if not token or not hmac.compare_digest(token, WORLD_AUTH_TOKEN):
+            abort(401, description="Invalid token")
 
 # ============================================================
 # 线程安全锁

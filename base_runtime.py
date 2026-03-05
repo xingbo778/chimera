@@ -15,7 +15,8 @@ import threading
 import requests
 import re
 from datetime import datetime, timezone, timedelta
-from openai import OpenAI
+
+from utils import get_llm_client, beijing_now, parse_json_robust, PLATFORM_CN_NAMES
 
 logger = logging.getLogger(__name__)
 
@@ -59,7 +60,7 @@ from telegram.ext import Application, CommandHandler, MessageHandler, filters, C
 # 全局 LLM 客户端
 # ============================================================
 
-client = OpenAI()
+client = get_llm_client()
 
 # ============================================================
 # 工具函数
@@ -72,10 +73,6 @@ def load_text_file(path):
     except (IOError, OSError) as e:
         logger.debug("读取文件失败 %s: %s", path, e)
         return ""
-
-
-def beijing_now():
-    return datetime.now(timezone.utc) + timedelta(hours=8)
 
 
 # ============================================================
@@ -470,21 +467,7 @@ def call_llm_json(system_prompt, user_prompt, max_tokens=500, temperature=0.7, m
         raw = response.choices[0].message.content
         if not raw:
             return None
-        print(f"[DEBUG JSON raw] {repr(raw[:300])}")
-        raw = raw.strip()
-        if raw.startswith('```'):
-            lines = raw.split('\n')
-            if lines[0].startswith('```'):
-                lines = lines[1:]
-            if lines and lines[-1].strip() == '```':
-                lines = lines[:-1]
-            raw = '\n'.join(lines)
-        # 提取第一个 { ... } 块
-        start = raw.find('{')
-        end = raw.rfind('}')
-        if start != -1 and end != -1:
-            raw = raw[start:end+1]
-        return json.loads(raw)
+        return parse_json_robust(raw)
     except Exception as e:
         print(f"LLM JSON调用失败: {e}")
         return None
@@ -820,7 +803,7 @@ class AgentRuntime:
                     self.memory_rag.add_knowledge(topic, content[:500], source=platform)
                     self._try_learn_style_from_content(content)
                     # 💡 能力涌现：记录“我能浏览网页”的经验
-                    platform_cn = {"xhs": "小红书", "douban": "豆瓣", "weibo": "微博"}.get(platform, platform)
+                    platform_cn = PLATFORM_CN_NAMES.get(platform, platform)
                     self.capability_memory.record_capability(
                         "browse_web",
                         "打开网页看内容，能看到文字和图片",
@@ -843,7 +826,7 @@ class AgentRuntime:
             if life_detail:
                 self.life_buffer.add(life_detail, "scroll_feed")
 
-            platform_name = {"xhs": "小红书", "douban": "豆瓣", "weibo": "微博"}.get(platform, "手机")
+            platform_name = PLATFORM_CN_NAMES.get(platform, "手机")
             self.memory.emotional_state["happiness"] = min(100, self.memory.emotional_state["happiness"] + 3)
             self.memory.emotional_state["energy"] = max(0, self.memory.emotional_state["energy"] - 2)
             feedback = life_detail or f"刷了会儿{platform_name}"
@@ -944,7 +927,7 @@ class AgentRuntime:
 结果：{real_result.get('description', '')}
 情境：{context_str}
 用一两句话描述你的体验和感受。要具体、自然。"""
-                    experience = call_llm(self.SOUL, real_desc_prompt, max_tokens=400, temperature=0.9)
+                    experience = call_llm(self.SOUL, real_desc_prompt, max_tokens=100, temperature=0.9)
                     if not experience:
                         experience = real_result.get("description", f"用了{skill['name']}")
                     
@@ -975,7 +958,7 @@ class AgentRuntime:
                             share_msg = call_llm(
                                 self.SOUL,
                                 f"你刚{skill['name']}，做出了一个作品。想分享给朋友看。写一句自然的分享语，比如'看我画的！'或'嘿嘿画了个东西'。一句话就好。",
-                                max_tokens=400, temperature=0.9
+                                max_tokens=60, temperature=0.9
                             ) or "看我做的！"
                             asyncio.run_coroutine_threadsafe(
                                 self._send_proactive_photo(self.authorized_chat_id, filepath, share_msg), loop
@@ -1024,7 +1007,7 @@ class AgentRuntime:
             if target:
                 # 用 LLM 生成一句跟对方说的话
                 chat_prompt = f"你在{LOCATION_NAMES.get(location, location)}遇到了{target['name']}。你想跟她说什么？一句话就好。"
-                msg = call_llm(self.SOUL, chat_prompt, max_tokens=400, temperature=0.9)
+                msg = call_llm(self.SOUL, chat_prompt, max_tokens=60, temperature=0.9)
                 if msg:
                     # 发送到对方的 inbox
                     self.world.send_message_to_agent(target["id"], msg)
@@ -1107,7 +1090,7 @@ class AgentRuntime:
 画了一只歪歪扭扭的猫
 越看越像我家那只"""
 
-        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=400, temperature=0.9, model=self.LLM_MODEL)
+        msg = call_llm(self.SOUL + "\n\n" + self.config.style_guide, prompt, max_tokens=150, temperature=0.9, model=self.LLM_MODEL)
         return msg
 
     async def _send_proactive_message(self, chat_id, message):
@@ -1137,7 +1120,7 @@ class AgentRuntime:
                 msg = call_llm(
                     self.SOUL + "\n\n" + self.STYLE,
                     f"刚拍了张照片想发给朋友。原因：{caption}\n写一句配图的话。",
-                    max_tokens=400, temperature=0.9,
+                    max_tokens=60, temperature=0.9,
                 )
                 if msg:
                     await self.telegram_app.bot.send_message(chat_id=chat_id, text=msg)
@@ -1666,14 +1649,11 @@ class AgentRuntime:
 5. 找不到自然日常对话就回复"无"，宁缺毋滥"""
 
         try:
-            extracted = client.chat.completions.create(
-                model="gemini-3-flash-preview",
-                messages=[
-                    {"role": "system", "content": extract_prompt},
-                    {"role": "user", "content": f"以下是浏览到的内容：\n\n{content[:4000]}"},
-                ],
+            extracted = call_llm(
+                extract_prompt,
+                f"以下是浏览到的内容：\n\n{content[:4000]}",
                 max_tokens=600, temperature=0.3,
-            ).choices[0].message.content
+            )
         except Exception as e:
             print(f"🎓 LLM提取失败: {e}")
             return
@@ -1798,7 +1778,8 @@ class AgentRuntime:
 
         if self._pending_reply_task and not self._pending_reply_task.done():
             self._pending_reply_task.cancel()
-        self._pending_reply_task = asyncio.create_task(self._delayed_reply())
+        self._reply_generation += 1
+        self._pending_reply_task = asyncio.create_task(self._delayed_reply(self._reply_generation))
 
     async def _handle_collect_stickers(self, update: Update, context: ContextTypes.DEFAULT_TYPE):
         """命令 /collect_stickers <set_name> — 手动收集指定贴纸包"""
@@ -1902,7 +1883,7 @@ class AgentRuntime:
                             self.memory.log_event(f"和{sender}聊了会儿天", importance=5)
                             # 用 LLM 生成回复
                             reply_prompt = f"{sender}跟你说：「{msg}」\n你怎么回她？一句话就好。"
-                            reply = call_llm(self.SOUL, reply_prompt, max_tokens=400, temperature=0.9)
+                            reply = call_llm(self.SOUL, reply_prompt, max_tokens=60, temperature=0.9)
                             if reply and sender_id:
                                 self.world.send_message_to_agent(sender_id, reply)
                                 print(f"💬 回复{sender}: {reply}")

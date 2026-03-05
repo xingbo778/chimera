@@ -12,13 +12,20 @@ import logging
 import subprocess
 import requests
 from pathlib import Path
-from openai import OpenAI
+
+from utils import get_llm_client
 
 logger = logging.getLogger(__name__)
-client = OpenAI()
+client = get_llm_client()
 
 FAL_KEY = os.environ.get("FAL_KEY", "")  # 必须通过环境变量设置，不硬编码
 YUNWU_API_KEY = os.environ.get("YUNWU_API_KEY", "")
+
+# 基础目录：默认用当前文件所在目录
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+_DEFAULT_SELFIE_DIR = os.path.join(_BASE_DIR, "selfies")
+_DEFAULT_VOICE_DIR = os.path.join(_BASE_DIR, "voice")
+_DEFAULT_VIDEO_DIR = os.path.join(_BASE_DIR, "videos")
 
 # 小悦的参考图（上传后的公开URL）
 REFERENCE_FACE_URL = "https://files.manuscdn.com/user_upload_by_module/session_file/310519663220928499/BXkKRXipEynsUiTN.jpg"
@@ -464,7 +471,7 @@ Return ONLY valid JSON, no markdown."""},
         }
 
 
-def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/selfies",
+def skill_take_photo(desc, photo_type="scene", output_dir=None,
                      world_context=None, override_hour=None):
     """
     统一的拍照函数。
@@ -473,6 +480,8 @@ def skill_take_photo(desc, photo_type="scene", output_dir="/home/ubuntu/chimera/
     - "mirror": 对镜自拍，需要人脸参考图，手机可见，全身可见
     - "scene": 拍其他东西（风景/物品/别人/食物等），不需要人脸参考图
     """
+    if output_dir is None:
+        output_dir = _DEFAULT_SELFIE_DIR
     os.makedirs(output_dir, exist_ok=True)
     headers = {
         "Authorization": f"Key {FAL_KEY}",
@@ -776,7 +785,7 @@ def _take_selfie(en_desc, location_id, hour, weather, activity, output_dir, head
 
 
 def skill_generate_selfie(scene="casual", custom_prompt=None,
-                          output_dir="/home/ubuntu/chimera/selfies",
+                          output_dir=None,
                           world_context=None, override_hour=None):
     """兼容入口：内部调用 skill_take_photo(photo_type='selfie')"""
     desc = custom_prompt or scene or "casual selfie"
@@ -784,7 +793,7 @@ def skill_generate_selfie(scene="casual", custom_prompt=None,
                             world_context=world_context, override_hour=override_hour)
 
 
-def skill_generate_scene_photo(prompt_desc, output_dir="/home/ubuntu/chimera/selfies",
+def skill_generate_scene_photo(prompt_desc, output_dir=None,
                                world_context=None):
     """兼容入口：内部调用 skill_take_photo(photo_type='scene')"""
     return skill_take_photo(prompt_desc, photo_type="scene", output_dir=output_dir,
@@ -850,7 +859,7 @@ def skill_read_link(url):
 # Skill 4: 语音（TTS）
 # ============================================================
 
-def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="zh-CN-XiaoxiaoNeural"):
+def skill_text_to_speech(text, output_dir=None, voice="zh-CN-XiaoxiaoNeural"):
     """用 edge-tts 生成自然中文语音。
     
     可选 voice:
@@ -861,6 +870,8 @@ def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="z
     import asyncio
     import edge_tts
 
+    if output_dir is None:
+        output_dir = _DEFAULT_VOICE_DIR
     os.makedirs(output_dir, exist_ok=True)
     timestamp = int(time.time())
     # edge-tts 输出 mp3，Telegram 可以直接发送
@@ -926,9 +937,11 @@ def skill_text_to_speech(text, output_dir="/home/ubuntu/chimera/voice", voice="z
 YUNWU_BASE_URL = "https://yunwu.ai"
 
 
-def skill_generate_video(prompt, image_path=None, output_dir="/home/ubuntu/chimera/videos",
+def skill_generate_video(prompt, image_path=None, output_dir=None,
                          aspect_ratio="9:16"):
     """用 veo3.1-fast 生成短视频。如果没有image_path，先生成一张自拍作为起始帧。"""
+    if output_dir is None:
+        output_dir = _DEFAULT_VIDEO_DIR
     os.makedirs(output_dir, exist_ok=True)
 
     if not YUNWU_API_KEY:

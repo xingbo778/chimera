@@ -12,12 +12,10 @@ import os
 import hashlib
 import logging
 import chromadb
-from chromadb.utils import embedding_functions
+
+from memory_rag import get_shared_ef
 
 logger = logging.getLogger(__name__)
-
-# 使用 multilingual 模型，中文效果好
-EMBEDDING_MODEL = "paraphrase-multilingual-MiniLM-L12-v2"
 
 
 class StyleRAG:
@@ -32,10 +30,8 @@ class StyleRAG:
         self.few_shot_path = few_shot_path
         os.makedirs(persist_dir, exist_ok=True)
 
-        # 初始化 embedding function
-        self._ef = embedding_functions.SentenceTransformerEmbeddingFunction(
-            model_name=EMBEDDING_MODEL
-        )
+        # 复用 MemoryRAG 的共享 embedding function（避免模型加载两次）
+        self._ef = get_shared_ef()
 
         # 初始化 chromadb（持久化模式）
         self._client = chromadb.PersistentClient(path=persist_dir)
